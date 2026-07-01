@@ -13053,3 +13053,22 @@ builtins/exec.def,builtins/hash.def,builtins/help.def,builtins/history.def
 builtins/source.def,builtins/type.def
 	- sanitize command and file names used in error messages by calling
 	  printable_filename
+
+				   6/16
+				   ----
+lib/readline/display.c
+	- update_line: when we are deciding whether or not we have to redraw
+	  the prompt string because the first difference is in the middle of
+	  a prompt with potential invisible characters, check even if the
+	  cursor is at column 0 -- we might choose to move forward to the
+	  first difference by moving the cursor instead of redrawing chars,
+	  so we might skip over the initial part of a CSI sequence
+	  Report from Derek Schrock <dereks@lifeofadishwasher.com>
+
+				   6/26
+				   ----
+lib/readline/display.c
+	- rl_redisplay: make sure to use CHECK_INV_LBREAKS() when copying
+	  local_prompt_newlines into the inv_lbreaks array in case the
+	  prompt consumes more lines than the initial 256 inv_lbreaks size
+	  Report from Ben Kallus <benjamin.p.kallus.gr@dartmouth.edu>
