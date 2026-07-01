@@ -5915,8 +5915,13 @@ execute_disk_command (WORD_LIST *words, REDIRECT *redirects, char *command_line,
   command = (char *)NULL;
   if (restricted && mbschr (pathname, '/'))
     {
+      char *newfn;
+
+      newfn = printable_filename (pathname, 0);
       internal_error (_("%s: restricted: cannot specify `/' in command names"),
-		    pathname);
+		    newfn);
+      if (newfn != pathname)
+	free (newfn);
       result = last_command_exit_value = EXECUTION_FAILURE;
 
       /* If we're not going to fork below, we must already be in a child
@@ -6291,7 +6296,7 @@ int
 shell_execve (char *command, char **args, char **env)
 {
   int i, fd, sample_len;
-  char sample[HASH_BANG_BUFSIZ];
+  char sample[HASH_BANG_BUFSIZ], *newfn;
   size_t larray;
 
   SETOSTYPE (0);		/* Some systems use for USG/POSIX semantics */
@@ -6306,22 +6311,24 @@ shell_execve (char *command, char **args, char **env)
     {
       /* make sure this is set correctly for file_error/report_error */
       last_command_exit_value = (i == ENOENT) ?  EX_NOTFOUND : EX_NOEXEC; /* XXX Posix.2 says that exit status is 126 */
+      newfn = printable_filename (command, 0);
+
       if (file_isdir (command))
 #if defined (EISDIR)
-	internal_error ("%s: %s", command, strerror (EISDIR));
+	internal_error ("%s: %s", newfn, strerror (EISDIR));
 #else
-	internal_error (_("%s: is a directory"), command);
+	internal_error (_("%s: is a directory"), newfn);
 #endif
       else if (executable_file (command) == 0)
 	{
 	  errno = i;
-	  file_error (command);
+	  file_error (newfn);
 	}
       /* errors not involving the path argument to execve. */
       else if (i == E2BIG || i == ENOMEM)
 	{
 	  errno = i;
-	  file_error (command);
+	  file_error (newfn);
 	}
       else
 	{
@@ -6346,23 +6353,27 @@ shell_execve (char *command, char **args, char **env)
 		  interp[ilen] = 'M';
 		  interp[ilen + 1] = '\0';
 		}
-	      sys_error ("%s: %s: %s", command, interp, _("bad interpreter"));
+	      sys_error ("%s: %s: %s", newfn, interp, _("bad interpreter"));
 	      FREE (interp);
-	      return (EX_NOEXEC);
+	      last_command_exit_value = EX_NOEXEC;
 	    }
 	  else
 #endif
 	  if (i == ENOENT)
 	    {
 	      errno = i;
-	      internal_error (_("%s: cannot execute: required file not found"), command);
+	      internal_error (_("%s: cannot execute: required file not found"), newfn);
 	    }
 	  else
 	    {
 	      errno = i;
-	      file_error (command);
+	      file_error (newfn);
 	    }
 	}
+
+      if (newfn != command)
+	free (newfn);
+
       return (last_command_exit_value);
     }
 
@@ -6392,7 +6403,10 @@ shell_execve (char *command, char **args, char **env)
 #endif
       if (check_binary_file (sample, sample_len))
 	{
-	  internal_error ("%s: %s: %s", command, _("cannot execute binary file"), strerror (i));
+	  newfn = printable_filename (command, 0);
+	  internal_error ("%s: %s: %s", newfn, _("cannot execute binary file"), strerror (i));
+	  if (newfn != command)
+	    free (newfn);
 	  errno = i;
 	  return (EX_BINARY_FILE);
 	}

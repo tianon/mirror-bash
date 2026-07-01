@@ -1,6 +1,6 @@
 /* evalfile.c - read and evaluate commands from a file or file descriptor */
 
-/* Copyright (C) 1996-2017,2022-2024 Free Software Foundation, Inc.
+/* Copyright (C) 1996-2026 Free Software Foundation, Inc.
 
    This file is part of GNU Bash, the Bourne Again SHell.
 
@@ -118,7 +118,12 @@ evalfile_internal (const char *filename, int flags)
 
 file_error_and_exit:
       if (((flags & FEVAL_ENOENTOK) == 0) || errno != ENOENT)
-	file_error (filename);
+	{
+	  t = printable_filename ((char *)filename, 0);
+	  file_error (t);
+	  if (t != filename)
+	    free (t);
+	}
 
       if (flags & FEVAL_LONGJMP)
 	{
@@ -134,13 +139,19 @@ file_error_and_exit:
 
   if (S_ISDIR (finfo.st_mode))
     {
-      (*errfunc) (_("%s: is a directory"), filename);
+      t = printable_filename ((char *)filename, 0);
+      (*errfunc) (_("%s: is a directory"), t);
+      if (t != filename)
+	free (t);
       close (fd);
       return ((flags & FEVAL_BUILTIN) ? EXECUTION_FAILURE : -1);
     }
   else if ((flags & FEVAL_REGFILE) && S_ISREG (finfo.st_mode) == 0)
     {
-      (*errfunc) (_("%s: not a regular file"), filename);
+      t = printable_filename ((char *)filename, 0);
+      (*errfunc) (_("%s: not a regular file"), t);
+      if (t != filename)
+	free (t);
       close (fd);
       return ((flags & FEVAL_BUILTIN) ? EXECUTION_FAILURE : -1);
     }

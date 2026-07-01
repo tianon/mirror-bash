@@ -134,10 +134,11 @@ do { \
 void
 redirection_error (REDIRECT *temp, int error, char *fn)
 {
-  char *filename, *allocname;
+  char *filename, *allocname, *newfn;
   int oflags;
 
-  allocname = 0;
+  allocname = newfn = 0;
+
   if ((temp->rflags & REDIR_VARASSIGN) && error < 0)
     filename = allocname = savestring (temp->redirector.filename->word);
   else if ((temp->rflags & REDIR_VARASSIGN) == 0 && temp->redirector.dest < 0)
@@ -195,19 +196,21 @@ redirection_error (REDIRECT *temp, int error, char *fn)
   else
     filename = allocname = itos (temp->redirectee.dest);
 
+  newfn = printable_filename (filename, 0);
+
   switch (error)
     {
     case AMBIGUOUS_REDIRECT:
-      internal_error ("%s: %s", filename, _("ambiguous redirect"));
+      internal_error ("%s: %s", newfn, _("ambiguous redirect"));
       break;
 
     case NOCLOBBER_REDIRECT:
-      internal_error ("%s: %s", filename, _("cannot overwrite existing file"));
+      internal_error ("%s: %s", newfn, _("cannot overwrite existing file"));
       break;
 
 #if defined (RESTRICTED_SHELL)
     case RESTRICTED_REDIRECT:
-      internal_error ("%s: %s", filename, _("restricted: cannot redirect output"));
+      internal_error ("%s: %s", newfn, _("restricted: cannot redirect output"));
       break;
 #endif /* RESTRICTED_SHELL */
 
@@ -216,13 +219,16 @@ redirection_error (REDIRECT *temp, int error, char *fn)
       break;
 
     case BADVAR_REDIRECT:
-      internal_error ("%s: %s", filename, _("cannot assign fd to variable"));
+      internal_error ("%s: %s", newfn, _("cannot assign fd to variable"));
       break;
 
     default:
-      internal_error ("%s: %s", filename, strerror (error));
+      internal_error ("%s: %s", newfn, strerror (error));
       break;
     }
+
+  if (newfn != filename)
+    FREE (newfn);
 
   FREE (allocname);
 }

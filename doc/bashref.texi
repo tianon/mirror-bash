@@ -9158,7 +9158,9 @@ Begin a sequence of non-printing characters.
 This could be used to
 embed a terminal control sequence into the prompt.
 This escape is only useful when the prompt will be supplied to
-Readline, so it shouldn't be used in @env{PS0} or @env{PS4},
+Readline,
+and is ignored and removed otherwise,
+so it shouldn't be used in @env{PS0} or @env{PS4},
 or when line editing is not enabled.
 
 @item \]
@@ -9612,6 +9614,10 @@ length of the pathname
 constructed from @code{$PWD} and the directory name supplied as an argument
 exceeds @code{PATH_MAX} when canonicalized, @code{cd} will
 attempt to use the supplied directory name.
+
+@item
+The @code{command} builtin prints command name arguments containing a
+slash as full pathnames when the @option{-v} option is supplied.
 
 @item
 When the @code{xpg_echo} option is enabled, Bash does not attempt to

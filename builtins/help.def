@@ -1,7 +1,7 @@
 This file is help.def, from which is created help.c.
 It implements the builtin "help" in Bash.
 
-Copyright (C) 1987-2025 Free Software Foundation, Inc.
+Copyright (C) 1987-2026 Free Software Foundation, Inc.
 
 This file is part of GNU Bash, the Bourne Again SHell.
 
@@ -207,11 +207,15 @@ static int
 open_helpfile (const char *name)
 {
   int fd;
+  char *newfn;
 
   fd = open (name, O_RDONLY);
   if (fd == -1)
     {
-      builtin_error ("%s: %s: %s", name, _("cannot open"), strerror (errno));
+      newfn = printable_filename (name, 0);
+      builtin_error ("%s: %s: %s", newfn, _("cannot open"), strerror (errno));
+      if (newfn != name)
+	free (newfn);
       return -1;
     }
   return fd;

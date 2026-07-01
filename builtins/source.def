@@ -150,7 +150,10 @@ source_builtin (WORD_LIST *list)
 #if defined (RESTRICTED_SHELL)
   if (restricted && (pathstring || absolute_program (list->word->word)))
     {
-      sh_restricted (list->word->word);
+      filename = printable_filename (list->word->word, 0);
+      sh_restricted (filename);
+      if (filename != list->word->word)
+	free (filename);
       return (EXECUTION_FAILURE);
     }
 #endif

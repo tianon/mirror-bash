@@ -6632,7 +6632,9 @@ A backslash.
 Begin a sequence of non-printing characters, which could be used to
 embed a terminal control sequence into the prompt.
 This escape is only useful when the prompt will be supplied to
-\fBreadline\fP, so it shouldn't be used in \fBPS0\fP or \fBPS4\fP
+\fBreadline\fP,
+and is ignored and removed otherwise,
+so it shouldn't be used in \fBPS0\fP or \fBPS4\fP
 or when line editing is not enabled.
 .TP
 .B \e]

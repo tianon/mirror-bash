@@ -1605,7 +1605,7 @@ open_shell_script (char *script_name)
   if (fd < 0)
     {
       e = errno;
-      file_error (filename);
+      file_error (printable_filename (filename, 0));
 #if defined (JOB_CONTROL)
       end_job_control ();	/* just in case we were run as bash -i script */
 #endif
@@ -1627,7 +1627,7 @@ open_shell_script (char *script_name)
 #else
       errno = EINVAL;
 #endif
-      file_error (filename);
+      file_error (printable_filename (filename, 0));
 #if defined (JOB_CONTROL)
       end_job_control ();	/* just in case we were run as bash -i script */
 #endif
@@ -1665,19 +1665,20 @@ open_shell_script (char *script_name)
       if (sample_len < 0)
 	{
 	  e = errno;
+	  t = printable_filename (filename, 0);
 	  if ((fstat (fd, &sb) == 0) && S_ISDIR (sb.st_mode))
 	    {
 #if defined (EISDIR)
 	      errno = EISDIR;
-	      file_error (filename);
+	      file_error (t);
 #else	      
-	      internal_error (_("%s: Is a directory"), filename);
+	      internal_error (_("%s: Is a directory"), t);
 #endif
 	    }
 	  else
 	    {
 	      errno = e;
-	      file_error (filename);
+	      file_error (t);
 	    }
 #if defined (JOB_CONTROL)
 	  end_job_control ();	/* just in case we were run as bash -i script */
@@ -1686,7 +1687,8 @@ open_shell_script (char *script_name)
 	}
       else if (sample_len > 0 && (check_binary_file (sample, sample_len)))
 	{
-	  internal_error ("%s: %s", filename, _("cannot execute binary file"));
+	  t = printable_filename (filename, 0);
+	  internal_error ("%s: %s", t, _("cannot execute binary file"));
 #if defined (JOB_CONTROL)
 	  end_job_control ();	/* just in case we were run as bash -i script */
 #endif

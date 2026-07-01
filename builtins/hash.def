@@ -1,7 +1,7 @@
 This file is hash.def, from which is created hash.c.
 It implements the builtin "hash" in Bash.
 
-Copyright (C) 1987-2024 Free Software Foundation, Inc.
+Copyright (C) 1987-2026 Free Software Foundation, Inc.
 
 This file is part of GNU Bash, the Bourne Again SHell.
 
@@ -81,7 +81,7 @@ int
 hash_builtin (WORD_LIST *list)
 {
   int expunge_hash_table, list_targets, list_portably, delete, opt;
-  char *w, *pathname;
+  char *w, *pathname, *newfn;
 
   if (hashing_enabled == 0)
     {
@@ -158,15 +158,21 @@ hash_builtin (WORD_LIST *list)
     {
       if (absolute_program (pathname))
 	{
-          sh_restricted (pathname);
-          return (EXECUTION_FAILURE);
+	  newfn = printable_filename (pathname, 0);
+	  sh_restricted (newfn);
+	  if (newfn != pathname)
+	    free (newfn);
+	  return (EXECUTION_FAILURE);
 	}
       /* If we are changing the hash table in a restricted shell, make sure the
 	 target pathname can be found using a $PATH search. */
       w = find_user_command (pathname);
       if (w == 0 || *w == 0 || executable_file (w) == 0)
 	{
-	  sh_notfound (pathname);
+	  newfn = printable_filename (pathname, 0);
+	  sh_notfound (newfn);
+	  if (newfn != pathname)
+	    free (newfn);
 	  free (w);
 	  return (EXECUTION_FAILURE);
 	}
@@ -184,11 +190,14 @@ hash_builtin (WORD_LIST *list)
 	{
 	  if (file_isdir (pathname))
 	    {
+	      newfn = printable_filename (pathname, 0);
 #ifdef EISDIR
-	      builtin_error ("%s: %s", pathname, strerror (EISDIR));
+	      builtin_error ("%s: %s", newfn, strerror (EISDIR));
 #else
-	      builtin_error (_("%s: is a directory"), pathname);
+	      builtin_error (_("%s: is a directory"), newfn);
 #endif
+	      if (newfn != pathname)
+		free (newfn);
 	      opt = EXECUTION_FAILURE;
 	    }
 	  else
@@ -198,7 +207,10 @@ hash_builtin (WORD_LIST *list)
 	{
 	  if (phash_remove (w))
 	    {
-	      sh_notfound (w);
+	      newfn = printable_filename (w, 0);
+	      sh_notfound (newfn);
+	      if (newfn != w)
+		free (newfn);
 	      opt = EXECUTION_FAILURE;
 	    }
 	}
@@ -214,7 +226,7 @@ static int
 add_hashed_command (char *w, int quiet)
 {
   int rv;
-  char *full_path;
+  char *full_path, *newfn;
 
   rv = 0;
   if (find_function (w) == 0 && find_shell_builtin (w) == 0)
@@ -226,7 +238,12 @@ add_hashed_command (char *w, int quiet)
       else
 	{
 	  if (quiet == 0)
-	    sh_notfound (w);
+	    {
+	      newfn = printable_filename (w, 0);
+	      sh_notfound (newfn);
+	      if (newfn != w)
+		free (newfn);
+	    }
 	  rv++;
 	}
       FREE (full_path);
@@ -273,7 +290,7 @@ static int
 list_hashed_filename_targets (WORD_LIST *list, int fmt)
 {
   int all_found, multiple;
-  char *target;
+  char *target, *fp, *fn;
   WORD_LIST *l;
 
   all_found = 1;
@@ -281,21 +298,32 @@ list_hashed_filename_targets (WORD_LIST *list, int fmt)
 
   for (l = list; l; l = l->next)
     {
+      fn = printable_filename (l->word->word, 1);
       target = phash_search (l->word->word);
       if (target == 0)
 	{
 	  all_found = 0;
-	  sh_notfound (l->word->word);
+	  sh_notfound (fn);
+	  if (fn != l->word->word)
+	    free (fn);
 	  continue;
 	}
+      fp = printable_filename (target, 1);
+      if (fp != target)
+	{
+	  free (target);
+	  target = fp;
+	}
       if (fmt)
-	printf ("builtin hash -p %s %s\n", target, l->word->word);
+	printf ("builtin hash -p %s %s\n", target, fn);
       else
 	{
 	  if (multiple)
-	    printf ("%s\t", l->word->word);
+	    printf ("%s\t", fn);
 	  printf ("%s\n", target);
 	}
+      if (fn != l->word->word)
+	free (fn);
       free (target);
     }
 

@@ -1719,13 +1719,16 @@ static SHELL_VAR *
 assign_hashcmd (SHELL_VAR *self, char *value, arrayind_t ind, char *key)
 {
 #if defined (RESTRICTED_SHELL)
-  char *full_path;
+  char *full_path, *newfn;
 
   if (restricted)
     {
       if (absolute_program (value))
 	{
-	  sh_restricted (value);
+	  newfn = printable_filename (value, 0);
+	  sh_restricted (newfn);
+	  if (newfn != value)
+	    free (newfn);
 	  return (SHELL_VAR *)NULL;
 	}
       /* If we are changing the hash table in a restricted shell, make sure the
@@ -1733,7 +1736,10 @@ assign_hashcmd (SHELL_VAR *self, char *value, arrayind_t ind, char *key)
       full_path = find_user_command (value);
       if (full_path == 0 || *full_path == 0 || executable_file (full_path) == 0)
 	{
-	  sh_notfound (value);
+	  newfn = printable_filename (value, 0);
+	  sh_notfound (newfn);
+	  if (newfn != value)
+	    free (newfn);
 	  free (full_path);
 	  return ((SHELL_VAR *)NULL);
 	}

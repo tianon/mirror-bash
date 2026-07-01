@@ -132,7 +132,7 @@ int
 history_builtin (WORD_LIST *list)
 {
   int flags, opt, result, old_history_lines, obase, ind;
-  char *filename, *delete_arg, *range;
+  char *filename, *newfn, *delete_arg, *range;
   intmax_t delete_offset;
 
   flags = 0;
@@ -281,7 +281,10 @@ history_builtin (WORD_LIST *list)
 #if defined (RESTRICTED_SHELL)
   if (restricted && absolute_program (filename))
     {
-      sh_restricted (filename);
+      newfn = printable_filename (filename, 0);
+      sh_restricted (newfn);
+      if (newfn != filename)
+	free (newfn);
       return (EXECUTION_FAILURE);
     }
 #endif
@@ -351,6 +354,8 @@ history_builtin (WORD_LIST *list)
 static void
 history_error (const char *filename, int e, int r)
 {
+  char *newfn;
+
   switch (e)
     {
       case ENOENT:
@@ -361,10 +366,13 @@ history_error (const char *filename, int e, int r)
 #if defined (EACCES)
       case EACCES:
 #endif
+	newfn = printable_filename ((char *)filename, 0);
 	if (r)
-	  builtin_error ("%s: %s: %s", filename, _("read error"), strerror (e));
+	  builtin_error ("%s: %s: %s", newfn, _("read error"), strerror (e));
 	else
-	  builtin_error ("%s: %s: %s", filename, _("write error"), strerror (e));
+	  builtin_error ("%s: %s: %s", newfn, _("write error"), strerror (e));
+	if (newfn != filename)
+	  free (newfn);
 	break;
 
       default:

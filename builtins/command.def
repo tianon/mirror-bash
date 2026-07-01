@@ -83,7 +83,7 @@ command_builtin (WORD_LIST *list)
 	  verbose = CDESC_SHORTDESC|CDESC_ABSPATH;	/* look in common.h for constants */
 	  break;
 	case 'v':
-	  verbose = CDESC_REUSABLE;	/* ditto */
+	  verbose = CDESC_REUSABLE| (posixly_correct ? CDESC_ABSPATH : 0);	/* ditto */
 	  break;
 	CASE_HELPOPT;
 	default:
@@ -107,13 +107,19 @@ command_builtin (WORD_LIST *list)
   if (verbose)
     {
       int found, any_found;
+      char *newfn;
 
       for (any_found = 0; list; list = list->next)
 	{
 	  found = describe_command (list->word->word, verbose|use_standard_path);
 
 	  if (found == 0 && verbose != CDESC_REUSABLE)
-	    sh_notfound (list->word->word);
+	    {
+	      newfn = printable_filename (list->word->word, 0);
+	      sh_notfound (newfn);
+	      if (newfn != list->word->word)
+		free (newfn);
+	    }
 
 	  any_found += found;
 	}

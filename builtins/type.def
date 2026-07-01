@@ -1,7 +1,7 @@
 This file is type.def, from which is created type.c.
 It implements the builtin "type" in Bash.
 
-Copyright (C) 1987-2023 Free Software Foundation, Inc.
+Copyright (C) 1987-2026 Free Software Foundation, Inc.
 
 This file is part of GNU Bash, the Bourne Again SHell.
 
@@ -176,11 +176,17 @@ type_builtin (WORD_LIST *list)
   while (list)
     {
       int found;
+      char *newfn;
 
       found = describe_command (list->word->word, dflags);
 
       if (!found && (dflags & (CDESC_PATH_ONLY|CDESC_TYPE)) == 0)
-	sh_notfound (list->word->word);
+	{
+	  newfn = printable_filename (list->word->word, 0);
+	  sh_notfound (newfn);
+	  if (newfn != list->word->word)
+	    free (newfn);
+	}
 
       any_failed += found == 0;
       list = list->next;
@@ -335,12 +341,21 @@ describe_command (char *command, int dflags)
       f = file_status (command);
       if (f & FS_EXECABLE)
 	{
+	  /* convert to absolute pathname? */
+	  if ((dflags & CDESC_ABSPATH) && ABSPATH (command) == 0)
+	    full_path = sh_makepath ((char *)NULL, command, MP_DOCWD|MP_RMDOT);
+	  else
+	    full_path = command;
+	      
 	  if (dflags & CDESC_TYPE)
 	    puts ("file");
 	  else if (dflags & CDESC_SHORTDESC)
-	    printf (_("%s is %s\n"), command, command);
+	    printf (_("%s is %s\n"), command, full_path);
 	  else if (dflags & (CDESC_REUSABLE|CDESC_PATH_ONLY))
-	    printf ("%s\n", command);
+	    printf ("%s\n", full_path);
+
+	  if (full_path != command)
+	    free (full_path);
 
 	  /* There's no use looking in the hash table or in $PATH,
 	     because they're not consulted when an absolute program

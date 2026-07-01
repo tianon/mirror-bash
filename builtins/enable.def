@@ -1,7 +1,7 @@
 This file is enable.def, from which is created enable.c.
 It implements the builtin "enable" in Bash.
 
-Copyright (C) 1987-2024 Free Software Foundation, Inc. 
+Copyright (C) 1987-2026 Free Software Foundation, Inc. 
 
 This file is part of GNU Bash, the Bourne Again SHell.
 
@@ -224,7 +224,7 @@ enable_builtin (WORD_LIST *list)
     {
       while (list)
 	{
-	  char *command;
+	  char *command, *newname;
 
 	  command = list->word->word;
 	  opt = enable_shell_command (command, flags & NFLAG);
@@ -258,7 +258,10 @@ enable_builtin (WORD_LIST *list)
 
 	  if (opt == EX_NOTFOUND)
 	    {
-	      sh_notbuiltin (command);
+	      newname = printable_filename (command, 0);
+	      sh_notbuiltin (newname);
+	      if (newname != command)
+		free (newname);
 	      result = EXECUTION_FAILURE;
 	    }
 	  else if (opt != EXECUTION_SUCCESS)
@@ -405,7 +408,10 @@ dyn_load_builtin (WORD_LIST *list, int flags, char *filename)
       name = list->word->word;
       if (absolute_program (name))
 	{
+	  name = printable_filename (list->word->word, 0);
 	  builtin_error (_("%s: builtin names may not contain slashes"), name);
+	  if (name != list->word->word)
+	    free (name);
 	  continue;
 	}
 
@@ -549,7 +555,7 @@ dyn_unload_builtin (char *name)
 {
   struct builtin *b;
   void *handle;
-  char *funcname;
+  char *funcname, *newname;
   sh_unload_func_t *unloadfunc;
   int ref, i;
   size_t size;
@@ -557,12 +563,18 @@ dyn_unload_builtin (char *name)
   b = builtin_address_internal (name, 1);
   if (b == 0)
     {
-      sh_notbuiltin (name);
+      newname = printable_filename (name, 0);
+      sh_notbuiltin (newname);
+      if (newname != name)
+	free (newname);
       return (EXECUTION_FAILURE);
     }
   if (b->flags & STATIC_BUILTIN)
     {
-      builtin_error (_("%s: not dynamically loaded"), name);
+      newname = printable_filename (name, 0);
+      builtin_error (_("%s: not dynamically loaded"), newname);
+      if (newname != name)
+	free (newname);
       return (EXECUTION_FAILURE);
     }
 
@@ -588,7 +600,10 @@ dyn_unload_builtin (char *name)
      using it drops to zero. */
   if (ref == 1 && local_dlclose (handle) != 0)
     {
-      builtin_error (_("%s: cannot delete: %s"), name, dlerror ());
+      newname = printable_filename (name, 0);
+      builtin_error (_("%s: cannot delete: %s"), newname, dlerror ());
+      if (newname != name)
+	free (newname);
       return (EXECUTION_FAILURE);
     }
 

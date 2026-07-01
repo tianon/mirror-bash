@@ -13027,3 +13027,29 @@ arrayfunc.c
 	- convert_var_to_{array,assoc}: only save the old value if the variable
 	  isn't an array; dispose old value appropriately
   	  Report and patch from Grisha Levit <grishalevit@gmail.com>
+
+				   6/15
+				   ----
+builtins/type.def
+	- describe_command: even if the command name contains a slash, if the
+	  flags include CDESC_ABSPATH, convert to an absolute pathname if it
+	  doesn't begin with a slash
+
+builtins/command.def
+	- command_builtin: in posix mode, `command -v' adds CDESC_ABSPATH
+	  to the flags passed to describe_command() so it prints as an
+	  absolute pathname
+	  From a discussion on the dash mailing list about POSIX requirements
+
+redir.c
+	- redirection_error: make sure to sanitize command names using
+	  printable_filename before printing error messages
+	  Report from Vincent Lefevre <vincent@vinc17.net>
+
+execute_cmd.c,shell.c,variables.c
+builtins/evalfile.c,builtins/evalstring.c
+builtins/builtin.def,builtins/command.def,builtins/enable.def
+builtins/exec.def,builtins/hash.def,builtins/help.def,builtins/history.def
+builtins/source.def,builtins/type.def
+	- sanitize command and file names used in error messages by calling
+	  printable_filename
