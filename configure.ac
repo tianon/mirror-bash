@@ -21,7 +21,7 @@ dnl Process this file with autoconf to produce a configure script.
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_REVISION([for Bash 5.3, version 5.082])dnl
+AC_REVISION([for Bash 5.3, version 5.083])dnl
 
 define(bashvers, 5.3)
 define(relstatus, maint)
@@ -1211,7 +1211,7 @@ hpux*)		LOCAL_CFLAGS="-DHPUX -DTGETENT_BROKEN -DTGETFLAG_BROKEN" ;;
 dgux*)		LOCAL_CFLAGS=-D_DGUX_SOURCE; LOCAL_LIBS=-ldgc ;;
 isc*)		LOCAL_CFLAGS=-Disc386 ;;
 rhapsody*)	LOCAL_CFLAGS=-DRHAPSODY ;;
-darwin*)	LOCAL_CFLAGS=-DMACOSX ;;
+darwin*)	LOCAL_CFLAGS="-DMACOSX -DPIPESIZE_DYNAMIC" ;;
 sco3.2v5*)	LOCAL_CFLAGS="-b elf -DWAITPID_BROKEN -DPATH_MAX=1024" ;;
 sco3.2v4*)	LOCAL_CFLAGS="-DMUST_UNBLOCK_CHLD -DPATH_MAX=1024" ;;
 sco3.2*)	LOCAL_CFLAGS=-DMUST_UNBLOCK_CHLD ;;

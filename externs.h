@@ -1,7 +1,7 @@
 /* externs.h -- extern function declarations which do not appear in their
    own header file. */
 
-/* Copyright (C) 1993-2025 Free Software Foundation, Inc.
+/* Copyright (C) 1993-2026 Free Software Foundation, Inc.
 
    This file is part of GNU Bash, the Bourne Again SHell.
 
@@ -86,6 +86,8 @@ extern void subshell_exit (int) __attribute__((__noreturn__));
 extern void set_exit_status (int);
 extern void disable_priv_mode (void);
 extern void unbind_args (void);
+
+extern void bash_logout (void);
 
 #if defined (RESTRICTED_SHELL)
 extern int shell_is_restricted (char *);

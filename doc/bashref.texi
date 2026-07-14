@@ -6175,13 +6175,16 @@ Same as @code{-x}.
 
 @item -p
 Turn on privileged mode.
-In this mode, the @env{$BASH_ENV} and @env{$ENV} files are not
-processed, shell functions are not inherited from the environment,
-and the @env{SHELLOPTS}, @env{BASHOPTS}, @env{CDPATH} and @env{GLOBIGNORE}
-variables, if they appear in the environment, are ignored.
+In this mode, Bash does not process the @env{$BASH_ENV} and @env{$ENV} files,
+does not inherit shell functions from the environment,
+and ignores the
+@env{SHELLOPTS}, @env{BASHOPTS}, @env{CDPATH} and @env{GLOBIGNORE}
+variables, if they appear in the environment.
 If the shell is started with the effective user (group) id not equal to the
-real user (group) id, and the @option{-p} option is not supplied, these actions
-are taken and the effective user id is set to the real user id.
+real user (group) id,
+and the @option{-p} option is not supplied,
+these actions are taken and the effective user id is set to the real user id
+(@pxref{Bash Startup Files} for details).
 If the @option{-p} option is supplied at startup, the effective user id is
 not reset.
 Turning this option off causes the effective user
@@ -8182,11 +8185,16 @@ options or allow them to be specified.
 @subsubheading Invoked with unequal effective and real @sc{uid/gid}s
 
 If Bash is started with the effective user (group) id not equal to the
-real user (group) id, and the @option{-p} option is not supplied, no startup
-files are read, shell functions are not inherited from the environment,
-the @env{SHELLOPTS}, @env{BASHOPTS}, @env{CDPATH}, and @env{GLOBIGNORE}
-variables, if they appear in the environment, are ignored, and the effective
-user id is set to the real user id.
+real user (group) id,
+and the @option{-p} option is not supplied,
+Bash does not attempt to read any startup files or
+@file{~/.bash_logout},
+does not inherit shell functions from the environment,
+ignores the
+@env{SHELLOPTS}, @env{BASHOPTS}, @env{CDPATH}, and @env{GLOBIGNORE}
+variables,
+if they appear in the environment,
+and sets the effective user id to the real user id.
 If the @option{-p} option is supplied at invocation, the startup behavior is
 the same, but Bash does not reset the effective user id.
 

@@ -211,6 +211,9 @@ static int act_like_sh;
 /* Non-zero if we have already expanded and sourced $ENV. */
 static int sourced_env;
 
+/* Non-zero if we have already sourced ~/.bash_logout. */
+static int sourced_logout;
+
 /* Is this shell running setuid? */
 static int running_setuid;
 
@@ -1248,6 +1251,19 @@ run_startup_files (void)
 #if defined (JOB_CONTROL)
   set_job_control (old_job_control);
 #endif
+}
+
+void
+bash_logout (void)
+{
+  /* Run our `~/.bash_logout' file if it exists, and this is a login shell. */
+  if (login_shell && sourced_logout++ == 0 && subshell_environment == 0 && running_setuid == 0)
+    {
+      maybe_execute_file ("~/.bash_logout", 1);
+#ifdef SYS_BASH_LOGOUT
+      maybe_execute_file (SYS_BASH_LOGOUT, 1);
+#endif
+    }
 }
 
 #if defined (RESTRICTED_SHELL)

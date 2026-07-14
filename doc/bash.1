@@ -5,7 +5,7 @@
 .\"	Case Western Reserve University
 .\"	chet.ramey@case.edu
 .\"
-.\"	Last Change: Mon May 18 11:35:35 EDT 2026
+.\"	Last Change: Thu Jul  9 09:19:19 EDT 2026
 .\"
 .\" For bash_builtins, strip all but "SHELL BUILTIN COMMANDS" section
 .\" For rbash, strip all but "RESTRICTED SHELL" section
@@ -22,7 +22,7 @@
 .ds zX \" empty
 .if \n(zZ=1 .ig zZ
 .if \n(zY=1 .ig zY
-.TH BASH 1 "2026 May 18" "GNU Bash 5.3"
+.TH BASH 1 "2026 July 1" "GNU Bash 5.3"
 .\"
 .ie \n(.g \{\
 .ds ' \(aq
@@ -539,8 +539,12 @@ but neither
 or allow them to be specified.
 .PP
 If the shell is started with the effective user (group) id not equal to the
-real user (group) id, and the \fB\-p\fP option is not supplied, no startup
-files are read, shell functions are not inherited from the environment, the
+real user (group) id,
+and the \fB\-p\fP option is not supplied,
+bash does not attempt to read any startup files or
+.FN \*~/.bash_logout ,
+does not inherit shell functions from the environment,
+ignores the
 .SM
 .BR SHELLOPTS ,
 .SM
@@ -550,8 +554,8 @@ files are read, shell functions are not inherited from the environment, the
 and
 .SM
 .B GLOBIGNORE
-variables, if they appear in the environment, are ignored,
-and the effective user id is set to the real user id.
+variables, if they appear in the environment,
+and sets the effective user id to the real user id.
 If the \fB\-p\fP option is supplied at invocation, the startup behavior is
 the same, but \fBbash\fP does not reset the effective user id.
 .SH DEFINITIONS
@@ -7787,7 +7791,7 @@ the previous command.
 Once the argument \fIn\fP is computed,
 this uses the history expansion facilities to extract the
 \fIn\fPth word, as if the
-.Q !\fIn\fP
+.Q !!:\fIn\fP
 history expansion had been specified.
 .TP
 .B
@@ -11853,14 +11857,16 @@ on the standard output.
 .B \-p
 Turn on
 .I privileged
-mode.  In this mode, the shell does not read the
+mode.
+In this mode, the shell does not read the
 .SM
 .B $ENV
 and
 .SM
 .B $BASH_ENV
-files, shell functions are not inherited from the
-environment, and the
+files,
+does not inherit shell functions from the environment,
+and ignores the
 .SM
 .BR SHELLOPTS ,
 .SM
@@ -11870,10 +11876,12 @@ environment, and the
 and
 .SM
 .B GLOBIGNORE
-variables, if they appear in the environment, are ignored.
+variables, if they appear in the environment.
 If the shell is started with the effective user (group) id not equal to the
-real user (group) id, and the \fB\-p\fP option is not supplied, these actions
-are taken and the effective user id is set to the real user id.
+real user (group) id,
+and the \fB\-p\fP option is not supplied,
+these actions are taken and the effective user id is set to the real user id
+(see \fBINVOCATION\fP above for more details).
 If the \fB\-p\fP option is supplied at startup, the effective user id is
 not reset.
 Turning this option off causes the effective user

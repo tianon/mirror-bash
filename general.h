@@ -320,6 +320,7 @@ extern int line_isblank (const char *);
 extern int assignment (const char *, int);
 
 extern int sh_unset_nodelay_mode (int);
+extern int sh_setnodelay (int);
 extern int sh_setclexec (int);
 extern int sh_validfd (int);
 extern int fd_ispipe (int);
@@ -346,7 +347,7 @@ extern char *base_pathname (char *);
 extern char *full_pathname (char *);
 extern char *polite_directory_format (char *);
 extern char *trim_pathname (char *, int);
-extern char *printable_filename (char *, int);
+extern char *printable_filename (const char *, int);
 
 extern char *extract_colon_unit (char *, int *);
 

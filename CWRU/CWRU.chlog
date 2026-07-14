@@ -13072,3 +13072,55 @@ lib/readline/display.c
 	  local_prompt_newlines into the inv_lbreaks array in case the
 	  prompt consumes more lines than the initial 256 inv_lbreaks size
 	  Report from Ben Kallus <benjamin.p.kallus.gr@dartmouth.edu>
+
+				   6/29
+				   ----
+lib/intl/setlocale.c
+	- new version from gettext-1.0, fixes obscure macOS problem with the
+	  Apple locale set to something setlocale() doesn't like
+	  From https://savannah.gnu.org/bugs/?68453
+
+lib/intl/localename.h,lib/intl/setlocale-fixes.h
+	- new files from gettext-1.0, to support new setlocale.c
+
+				    7/1
+				    ---
+general.c,general.h
+	- printable_filename: now takes a const char * as the first argument
+
+builtins/help.def,builtins/history.def
+	- remove casts of first argument to printable_filename to char * now
+	  that it takes a const char *
+
+builtins/exit.def,shell.c
+	- bash_logout: move from exit.def to shell.c to localize startup and
+	  logout file sourcing
+	- bash_logout: don't source ~/.bash_logout if the shell is running
+	  setuid in the same way that we don't source startup files
+
+externs.h
+	- bash_logout: extern declaration
+
+doc/bash.1,doc/bashref.texi
+	- rewrote the section on startup behavior with euid != uid to avoid
+	  the passive voice and add note that ~/.bash_logout isn't sourced
+
+				    7/7
+				    ---
+general.c,general.h
+	- sh_setnodelay: inverse of sh_unset_nodelay_mode, sets the file
+	  descriptor argument to O_NONBLOCK/O_NDELAY mode
+
+redir.c
+	- here_document_to_fd: if PIPESIZE_DYNAMIC is defined, we can't count
+	  on the pipe capacity determined at compile time to be consistent
+	  across systems, so we set the pipe's write end to O_NONBLOCK and
+	  fall back to a temp file if the write fails
+	  Report and patch from Ethan Pini <ethan@pini.dev>
+
+configure.ac
+	- darwin: add PIPESIZE_DYNAMIC to LOCAL_CFLAGS, since macOS throttles
+	  the pipe capacity down to 512 if the system as a whole is using too
+	  much pipe capacity (16 MB by default)
+
+

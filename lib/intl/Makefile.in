@@ -86,6 +86,7 @@ HEADERS = gmo.h gettextP.h hash-string.h loadinfo.h plural-exp.h \
         thread-optim.h tsearch.h verify.h xsize.h \
         printf-args.h printf-parse.h wprintf-parse.h \
 	export.h os2compat.h plural-exp.h vasnprintf.h vasnwprintf.h \
+	localename.h \
 	libgnuintl.in.h
 
 SOURCES = bindtextdom.c dcgettext.c dgettext.c gettext.c \

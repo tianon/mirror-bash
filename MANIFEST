@@ -277,6 +277,7 @@ lib/intl/localcharset.c	f
 lib/intl/localealias.c	f
 lib/intl/localename-table.c	f
 lib/intl/localename.c	f
+lib/intl/localename.h	f
 lib/intl/lock.c		f
 lib/intl/log.c		f
 lib/intl/ngettext.c	f
@@ -292,6 +293,7 @@ lib/intl/relocatable.c	f
 lib/intl/setlocale-lock.c	f
 lib/intl/setlocale.c	f
 lib/intl/setlocale_null.c	f
+lib/intl/setlocale-fixes.h	f
 lib/intl/textdomain.c	f
 lib/intl/threadlib.c	f
 lib/intl/tsearch.c	f

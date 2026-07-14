@@ -478,7 +478,30 @@ here_document_to_fd (WORD_DESC *redirectee, enum r_instruction ri)
 	}
 #endif
 
+#if defined (PIPESIZE_DYNAMIC)
+      /* If we can't count on the pipe size determined at compile time to be
+	 constant across systems, define PIPESIZE_DYNAMIC in configure.ac.
+	 We set the pipe's write end to be non-blocking, try to write, and
+	 fall back to a temp file on error. */
+      if (sh_setnodelay (herepipe[1]) < 0)
+	{
+	  close (herepipe[0]);
+	  close (herepipe[1]);
+	  goto use_tempfile;
+	}
+#endif
+      
       r = heredoc_write (herepipe[1], document, document_len);
+
+#if defined (PIPESIZE_DYNAMIC)
+      if (r == ENOSPC || r == EAGAIN)
+	{
+	  close (herepipe[0]);
+	  close (herepipe[1]);
+	  goto use_tempfile;
+	}
+#endif
+	  
       if (document != redirectee->word)
 	free (document);
       close (herepipe[1]);

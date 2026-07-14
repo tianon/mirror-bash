@@ -1501,7 +1501,7 @@ the previous command.
 Once the argument @var{n} is computed,
 this uses the history expansion facilities to extract the
 @var{n}th word, as if the
-@samp{!@var{n}} history expansion had been specified.
+@samp{!!:@var{n}} history expansion had been specified.
 
 @item yank-last-arg (M-. or M-_)
 Insert last argument to the previous command (the last word of the

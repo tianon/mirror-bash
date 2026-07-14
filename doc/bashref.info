@@ -2,9 +2,9 @@ This is bashref.info, produced by makeinfo version 7.3 from
 bashref.texi.
 
 This text is a brief description of the features that are present in the
-Bash shell (version 5.3, 18 May 2026).
+Bash shell (version 5.3, 1 July 2026).
 
-   This is Edition 5.3, last updated 18 May 2026, of ‘The GNU Bash
+   This is Edition 5.3, last updated 1 July 2026, of ‘The GNU Bash
 Reference Manual’, for ‘Bash’, Version 5.3.
 
    Copyright © 1988-2026 Free Software Foundation, Inc.
@@ -27,10 +27,10 @@ Bash Features
 *************
 
 This text is a brief description of the features that are present in the
-Bash shell (version 5.3, 18 May 2026).  The Bash home page is
+Bash shell (version 5.3, 1 July 2026).  The Bash home page is
 <http://www.gnu.org/software/bash/>.
 
-   This is Edition 5.3, last updated 18 May 2026, of ‘The GNU Bash
+   This is Edition 5.3, last updated 1 July 2026, of ‘The GNU Bash
 Reference Manual’, for ‘Bash’, Version 5.3.
 
    Bash contains features that appear in other popular shells, and some
@@ -5084,18 +5084,18 @@ parameters, or to display the names and values of shell variables.
                Same as ‘-x’.
 
      ‘-p’
-          Turn on privileged mode.  In this mode, the ‘$BASH_ENV’ and
-          ‘$ENV’ files are not processed, shell functions are not
-          inherited from the environment, and the ‘SHELLOPTS’,
+          Turn on privileged mode.  In this mode, Bash does not process
+          the ‘$BASH_ENV’ and ‘$ENV’ files, does not inherit shell
+          functions from the environment, and ignores the ‘SHELLOPTS’,
           ‘BASHOPTS’, ‘CDPATH’ and ‘GLOBIGNORE’ variables, if they
-          appear in the environment, are ignored.  If the shell is
-          started with the effective user (group) id not equal to the
-          real user (group) id, and the ‘-p’ option is not supplied,
-          these actions are taken and the effective user id is set to
-          the real user id.  If the ‘-p’ option is supplied at startup,
-          the effective user id is not reset.  Turning this option off
-          causes the effective user and group ids to be set to the real
-          user and group ids.
+          appear in the environment.  If the shell is started with the
+          effective user (group) id not equal to the real user (group)
+          id, and the ‘-p’ option is not supplied, these actions are
+          taken and the effective user id is set to the real user id
+          (*note Bash Startup Files:: for details).  If the ‘-p’ option
+          is supplied at startup, the effective user id is not reset.
+          Turning this option off causes the effective user and group
+          ids to be set to the real user and group ids.
 
      ‘-r’
           Enable restricted shell mode (*note The Restricted Shell::).
@@ -6809,13 +6809,13 @@ Invoked with unequal effective and real UID/GIDs
 ................................................
 
 If Bash is started with the effective user (group) id not equal to the
-real user (group) id, and the ‘-p’ option is not supplied, no startup
-files are read, shell functions are not inherited from the environment,
-the ‘SHELLOPTS’, ‘BASHOPTS’, ‘CDPATH’, and ‘GLOBIGNORE’ variables, if
-they appear in the environment, are ignored, and the effective user id
-is set to the real user id.  If the ‘-p’ option is supplied at
-invocation, the startup behavior is the same, but Bash does not reset
-the effective user id.
+real user (group) id, and the ‘-p’ option is not supplied, Bash does not
+attempt to read any startup files or ‘~/.bash_logout’, does not inherit
+shell functions from the environment, ignores the ‘SHELLOPTS’,
+‘BASHOPTS’, ‘CDPATH’, and ‘GLOBIGNORE’ variables, if they appear in the
+environment, and sets the effective user id to the real user id.  If the
+‘-p’ option is supplied at invocation, the startup behavior is the same,
+but Bash does not reset the effective user id.
 
 
 File: bashref.info,  Node: Interactive Shells,  Next: Bash Conditional Expressions,  Prev: Bash Startup Files,  Up: Bash Features
@@ -7624,9 +7624,9 @@ can appear in the prompt variables ‘PS0’, ‘PS1’, ‘PS2’, and ‘PS4�
 ‘\[’
      Begin a sequence of non-printing characters.  This could be used to
      embed a terminal control sequence into the prompt.  This escape is
-     only useful when the prompt will be supplied to Readline, so it
-     shouldn't be used in ‘PS0’ or ‘PS4’, or when line editing is not
-     enabled.
+     only useful when the prompt will be supplied to Readline, and is
+     ignored and removed otherwise, so it shouldn't be used in ‘PS0’ or
+     ‘PS4’, or when line editing is not enabled.
 
 ‘\]’
      End a sequence of non-printing characters begun with ‘\[’
@@ -7985,100 +7985,103 @@ startup files.
      supplied as an argument exceeds ‘PATH_MAX’ when canonicalized, ‘cd’
      will attempt to use the supplied directory name.
 
-  52. When the ‘xpg_echo’ option is enabled, Bash does not attempt to
+  52. The ‘command’ builtin prints command name arguments containing a
+     slash as full pathnames when the ‘-v’ option is supplied.
+
+  53. When the ‘xpg_echo’ option is enabled, Bash does not attempt to
      interpret any arguments to ‘echo’ as options.  ‘echo’ displays each
      argument after converting escape sequences.
 
-  53. The ‘export’ and ‘readonly’ builtin commands display their output
+  54. The ‘export’ and ‘readonly’ builtin commands display their output
      in the format required by POSIX.
 
-  54. When listing the history, the ‘fc’ builtin does not include an
+  55. When listing the history, the ‘fc’ builtin does not include an
      indication of whether or not a history entry has been modified.
 
-  55. The default editor used by ‘fc’ is ‘ed’.
+  56. The default editor used by ‘fc’ is ‘ed’.
 
-  56. ‘fc’ treats extra arguments as an error instead of ignoring them.
+  57. ‘fc’ treats extra arguments as an error instead of ignoring them.
 
-  57. If there are too many arguments supplied to ‘fc -s’, ‘fc’ prints
+  58. If there are too many arguments supplied to ‘fc -s’, ‘fc’ prints
      an error message and returns failure.
 
-  58. The output of ‘kill -l’ prints all the signal names on a single
+  59. The output of ‘kill -l’ prints all the signal names on a single
      line, separated by spaces, without the ‘SIG’ prefix.
 
-  59. The ‘kill’ builtin does not accept signal names with a ‘SIG’
+  60. The ‘kill’ builtin does not accept signal names with a ‘SIG’
      prefix.
 
-  60. The ‘kill’ builtin returns a failure status if any of the pid or
+  61. The ‘kill’ builtin returns a failure status if any of the pid or
      job arguments are invalid or if sending the specified signal to any
      of them fails.  In default mode, ‘kill’ returns success if the
      signal was successfully sent to any of the specified processes.
 
-  61. The ‘printf’ builtin uses ‘double’ (via ‘strtod’) to convert
+  62. The ‘printf’ builtin uses ‘double’ (via ‘strtod’) to convert
      arguments corresponding to floating point conversion specifiers,
      instead of ‘long double’ if it's available.  The ‘L’ length
      modifier forces ‘printf’ to use ‘long double’ if it's available.
 
-  62. The ‘pwd’ builtin verifies that the value it prints is the same as
+  63. The ‘pwd’ builtin verifies that the value it prints is the same as
      the current directory, even if it is not asked to check the file
      system with the ‘-P’ option.
 
-  63. The ‘read’ builtin may be interrupted by a signal for which a trap
+  64. The ‘read’ builtin may be interrupted by a signal for which a trap
      has been set.  If Bash receives a trapped signal while executing
      ‘read’, the trap handler executes and ‘read’ returns an exit status
      greater than 128.
 
-  64. When the ‘set’ builtin is invoked without options, it does not
+  65. When the ‘set’ builtin is invoked without options, it does not
      display shell function names and definitions.
 
-  65. When the ‘set’ builtin is invoked without options, it displays
+  66. When the ‘set’ builtin is invoked without options, it displays
      variable values without quotes, unless they contain shell
      metacharacters, even if the result contains nonprinting characters.
 
-  66. The ‘test’ builtin compares strings using the current locale when
+  67. The ‘test’ builtin compares strings using the current locale when
      evaluating the ‘<’ and ‘>’ binary operators.
 
-  67. The ‘test’ builtin's ‘-t’ unary primary requires an argument.
+  68. The ‘test’ builtin's ‘-t’ unary primary requires an argument.
      Historical versions of ‘test’ made the argument optional in certain
      cases, and Bash attempts to accommodate those for backwards
      compatibility.
 
-  68. The ‘trap’ builtin displays signal names without the leading
+  69. The ‘trap’ builtin displays signal names without the leading
      ‘SIG’.
 
-  69. The ‘trap’ builtin doesn't check the first argument for a possible
+  70. The ‘trap’ builtin doesn't check the first argument for a possible
      signal specification and revert the signal handling to the original
      disposition if it is, unless that argument consists solely of
      digits and is a valid signal number.  If users want to reset the
      handler for a given signal to the original disposition, they should
      use ‘-’ as the first argument.
 
-  70. ‘trap -p’ without arguments displays signals whose dispositions
+  71. ‘trap -p’ without arguments displays signals whose dispositions
      are set to SIG_DFL and those that were ignored when the shell
      started, not just trapped signals.
 
-  71. The ‘type’ and ‘command’ builtins will not report a non-executable
+  72. The ‘type’ and ‘command’ builtins will not report a non-executable
      file as having been found, though the shell will attempt to execute
      such a file if it is the only so-named file found in ‘$PATH’.
 
-  72. The ‘ulimit’ builtin uses a block size of 512 bytes for the ‘-c’
+  73. The ‘ulimit’ builtin uses a block size of 512 bytes for the ‘-c’
      and ‘-f’ options.
 
-  73. The ‘unset’ builtin with the ‘-v’ option specified returns a fatal
+  74. The ‘unset’ builtin with the ‘-v’ option specified returns a fatal
      error if it attempts to unset a ‘readonly’ or ‘non-unsettable’
      variable, which causes a non-interactive shell to exit.
 
-  74. When asked to unset a variable that appears in an assignment
+  75. When asked to unset a variable that appears in an assignment
      statement preceding the command, the ‘unset’ builtin attempts to
      unset a variable of the same name in the current or previous scope
      as well.  This implements the required "if an assigned variable is
      further modified by the utility, the modifications made by the
      utility shall persist" behavior.
 
-  75. The arrival of ‘SIGCHLD’ when a trap is set on ‘SIGCHLD’ does not
+  76. The arrival of ‘SIGCHLD’ when a trap is set on ‘SIGCHLD’ does not
      interrupt the ‘wait’ builtin and cause it to return immediately.
      The trap command is run once for each child that exits.
 
-  76. Bash removes an exited background process's status from the list
+  77. Bash removes an exited background process's status from the list
      of such statuses after the ‘wait’ builtin returns it.
 
    There is additional POSIX behavior that Bash does not implement by
@@ -13825,82 +13828,82 @@ Node: Bourne Shell Builtins155772
 Node: Bash Builtins182494
 Node: Modifying Shell Behavior220232
 Node: The Set Builtin220577
-Node: The Shopt Builtin232574
-Node: Special Builtins249630
-Node: Shell Variables250622
-Node: Bourne Shell Variables251059
-Node: Bash Variables253570
-Node: Bash Features292857
-Node: Invoking Bash293874
-Node: Bash Startup Files301107
-Node: Interactive Shells306432
-Node: What is an Interactive Shell?306843
-Node: Is this Shell Interactive?307508
-Node: Interactive Shell Behavior308335
-Node: Bash Conditional Expressions312099
-Node: Shell Arithmetic317519
-Node: Aliases320849
-Node: Arrays323986
-Node: The Directory Stack331691
-Node: Directory Stack Builtins332491
-Node: Controlling the Prompt336939
-Node: The Restricted Shell340023
-Node: Bash POSIX Mode343119
-Node: Shell Compatibility Mode362938
-Node: Job Control371948
-Node: Job Control Basics372408
-Node: Job Control Builtins378779
-Node: Job Control Variables385570
-Node: Command Line Editing386804
-Node: Introduction and Notation388510
-Node: Readline Interaction390865
-Node: Readline Bare Essentials392056
-Node: Readline Movement Commands393867
-Node: Readline Killing Commands394866
-Node: Readline Arguments396892
-Node: Searching397985
-Node: Readline Init File400231
-Node: Readline Init File Syntax401537
-Node: Conditional Init Constructs428491
-Node: Sample Init File432879
-Node: Bindable Readline Commands436002
-Node: Commands For Moving437543
-Node: Commands For History440010
-Node: Commands For Text445404
-Node: Commands For Killing449532
-Node: Numeric Arguments452323
-Node: Commands For Completion453478
-Node: Keyboard Macros459177
-Node: Miscellaneous Commands459881
-Node: Readline vi Mode467427
-Node: Programmable Completion468407
-Node: Programmable Completion Builtins478146
-Node: A Programmable Completion Example489886
-Node: Using History Interactively495234
-Node: Bash History Facilities495918
-Node: Bash History Builtins499656
-Node: History Interaction507254
-Node: Event Designators512207
-Node: Word Designators513788
-Node: Modifiers516183
-Node: Installing Bash518123
-Node: Basic Installation519242
-Node: Compilers and Options523121
-Node: Compiling For Multiple Architectures523874
-Node: Installation Names525630
-Node: Specifying the System Type527867
-Node: Sharing Defaults528616
-Node: Operation Controls529333
-Node: Optional Features530355
-Node: Reporting Bugs543081
-Node: Major Differences From The Bourne Shell544441
-Node: GNU Free Documentation License565871
-Node: Indexes591051
-Node: Builtin Index591505
-Node: Reserved Word Index598606
-Node: Variable Index601054
-Node: Function Index618470
-Node: Concept Index632606
+Node: The Shopt Builtin232612
+Node: Special Builtins249668
+Node: Shell Variables250660
+Node: Bourne Shell Variables251097
+Node: Bash Variables253608
+Node: Bash Features292895
+Node: Invoking Bash293912
+Node: Bash Startup Files301145
+Node: Interactive Shells306508
+Node: What is an Interactive Shell?306919
+Node: Is this Shell Interactive?307584
+Node: Interactive Shell Behavior308411
+Node: Bash Conditional Expressions312175
+Node: Shell Arithmetic317595
+Node: Aliases320925
+Node: Arrays324062
+Node: The Directory Stack331767
+Node: Directory Stack Builtins332567
+Node: Controlling the Prompt337015
+Node: The Restricted Shell340137
+Node: Bash POSIX Mode343233
+Node: Shell Compatibility Mode363195
+Node: Job Control372205
+Node: Job Control Basics372665
+Node: Job Control Builtins379036
+Node: Job Control Variables385827
+Node: Command Line Editing387061
+Node: Introduction and Notation388767
+Node: Readline Interaction391122
+Node: Readline Bare Essentials392313
+Node: Readline Movement Commands394124
+Node: Readline Killing Commands395123
+Node: Readline Arguments397149
+Node: Searching398242
+Node: Readline Init File400488
+Node: Readline Init File Syntax401794
+Node: Conditional Init Constructs428748
+Node: Sample Init File433136
+Node: Bindable Readline Commands436259
+Node: Commands For Moving437800
+Node: Commands For History440267
+Node: Commands For Text445661
+Node: Commands For Killing449789
+Node: Numeric Arguments452580
+Node: Commands For Completion453735
+Node: Keyboard Macros459434
+Node: Miscellaneous Commands460138
+Node: Readline vi Mode467684
+Node: Programmable Completion468664
+Node: Programmable Completion Builtins478403
+Node: A Programmable Completion Example490143
+Node: Using History Interactively495491
+Node: Bash History Facilities496175
+Node: Bash History Builtins499913
+Node: History Interaction507511
+Node: Event Designators512464
+Node: Word Designators514045
+Node: Modifiers516440
+Node: Installing Bash518380
+Node: Basic Installation519499
+Node: Compilers and Options523378
+Node: Compiling For Multiple Architectures524131
+Node: Installation Names525887
+Node: Specifying the System Type528124
+Node: Sharing Defaults528873
+Node: Operation Controls529590
+Node: Optional Features530612
+Node: Reporting Bugs543338
+Node: Major Differences From The Bourne Shell544698
+Node: GNU Free Documentation License566128
+Node: Indexes591308
+Node: Builtin Index591762
+Node: Reserved Word Index598863
+Node: Variable Index601311
+Node: Function Index618727
+Node: Concept Index632863
 
 End Tag Table
 

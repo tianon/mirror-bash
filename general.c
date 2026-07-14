@@ -615,6 +615,27 @@ sh_unset_nodelay_mode (int fd)
   return 0;
 }
 
+int
+sh_setnodelay (int fd)
+{
+  int flags;
+
+  if ((flags = fcntl (fd, F_GETFL, 0)) < 0)
+    return -1;
+
+  /* This is defined to O_NDELAY in filecntl.h if O_NONBLOCK is not present
+     and O_NDELAY is defined. */
+#ifdef O_NONBLOCK
+  flags |= O_NONBLOCK;
+#endif
+
+#ifdef O_NDELAY
+  flags |= O_NDELAY;
+#endif
+
+  return (fcntl (fd, F_SETFL, flags));
+}
+
 /* Just a wrapper for the define in include/filecntl.h */
 int
 sh_setclexec (int fd)
@@ -1036,7 +1057,7 @@ trim_pathname (char *name, int maxlen)
    than its argument.  If FLAGS is non-zero, we are printing for portable
    re-input and should single-quote filenames appropriately. */
 char *
-printable_filename (char *fn, int flags)
+printable_filename (const char *fn, int flags)
 {
   char *newf;
 
@@ -1045,7 +1066,7 @@ printable_filename (char *fn, int flags)
   else if (flags && sh_contains_shell_metas (fn))
     newf = sh_single_quote (fn);
   else
-    newf = fn;
+    newf = (char *)fn;
 
   return newf;
 }

@@ -366,7 +366,7 @@ history_error (const char *filename, int e, int r)
 #if defined (EACCES)
       case EACCES:
 #endif
-	newfn = printable_filename ((char *)filename, 0);
+	newfn = printable_filename (filename, 0);
 	if (r)
 	  builtin_error ("%s: %s: %s", newfn, _("read error"), strerror (e));
 	else
