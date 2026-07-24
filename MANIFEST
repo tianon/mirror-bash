@@ -925,6 +925,7 @@ examples/startup-files/Bash_aliases	f
 examples/startup-files/Bash_profile	f
 examples/startup-files/bash-profile	f
 examples/startup-files/bashrc	f
+examples/startup-files/fix-output	f
 #examples/startup-files/apple/README	f
 #examples/startup-files/apple/aliases	f
 #examples/startup-files/apple/bash.defaults	f

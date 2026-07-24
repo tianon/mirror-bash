@@ -1,6 +1,6 @@
 /* shmbutil.h -- utility functions for multibyte characters. */
 
-/* Copyright (C) 2002-2022 Free Software Foundation, Inc.
+/* Copyright (C) 2002-2026 Free Software Foundation, Inc.
 
    This file is part of GNU Bash, the Bourne Again SHell.
 
@@ -87,6 +87,8 @@ extern int locale_utf8locale;	/* XXX */
 #define UTF8_MBFIRSTCHAR(c)	(0)
 
 #define VALID_SINGLEBYTE_CHAR(c)  (1)
+
+extern int locale_utf8locale;	/* XXX */
 
 #endif /* !HANDLE_MULTIBYTE */
 

@@ -2268,6 +2268,7 @@ AC_DEFUN([BASH_FUNC_STRCHRNUL],
 )])
 
 if test "$bash_cv_func_strchrnul_works" = "no"; then
+AC_DEFINE(REPLACE_STRCHRNUL)
 AC_LIBOBJ([strchrnul])
 fi
 ])

@@ -10,3 +10,9 @@ bash-profile	Sample startup file for bash login shells (Ramey).
 bashrc		Sample Bourne Again SHell init file (Ramey).
 Bashrc.bfox	Sample Bourne Again SHell init file (Fox).
 README		README
+
+These files are quite old.
+
+fix-output contains a pair of functions and an example assignment to
+PROMPT_COMMAND that will force a newline if a command does not leave the
+cursor at column 0.

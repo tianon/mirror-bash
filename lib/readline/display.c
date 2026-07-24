@@ -1065,7 +1065,9 @@ rl_redisplay (void)
   for (in = 0; in < rl_end; in++)
 #endif
     {
-      if (in == hl_begin)
+      if (hl_begin == hl_end)
+	cur_face = FACE_NORMAL;			/* zero-length region/paste */
+      else if (in == hl_begin)
 	cur_face = FACE_STANDOUT;
       else if (in == hl_end)
 	cur_face = FACE_NORMAL;

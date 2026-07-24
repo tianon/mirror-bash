@@ -99,5 +99,5 @@ Path	Description	X-Ref
 ./startup-files/bash-profile	Sample startup file for bash login shells (Ramey).	
 ./startup-files/bashrc	Sample Bourne Again SHell init file (Ramey).	
 ./startup-files/Bashrc.bfox	Sample Bourne Again SHell init file (Fox).	
+./startup-files/fix-output	A pair of functions that will add a newline if the previous command doesn't end with one.
 ./startup-files/README	README	
-

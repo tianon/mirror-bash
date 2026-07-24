@@ -392,7 +392,7 @@ extern char *strcasestr (const char *, const char *);
 #endif
 
 /* declarations for functions defined in lib/sh/strchrnul.c */
-#if ! HAVE_STRCHRNUL
+#if REPLACE_STRCHRNUL
 extern char *strchrnul (const char *, int);
 #endif
 

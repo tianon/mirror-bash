@@ -120,10 +120,14 @@ static char **glob_dir_to_array (char *, char **, int);
 
 /* Make sure these names continue to agree with what's in smatch.c */
 extern char *glob_patscan (char *, char *, int, int);
+#if defined (HANDLE_MULTIBYTE)
 extern wchar_t *glob_patscan_wc (wchar_t *, wchar_t *, wint_t, int);
+#endif
 
 /* And this from gmisc.c/gm_loop.c */
+#if defined (HANDLE_MULTIBYTE)
 extern int wextglob_pattern_p (wchar_t *);
+#endif
 
 extern char *glob_dirscan (char *, int);
 

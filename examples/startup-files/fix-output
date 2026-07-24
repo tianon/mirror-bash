@@ -1,0 +1,26 @@
+# This is an example set of functions to call from PROMPT_COMMAND. If you
+# run commands that don't terminate their output with a newline, this can
+# detect it and add a newline before printing the readline prompt.
+
+# Readline assumes that it begins with the cursor in column 0 and makes
+# redisplay decisions based on that. If it does not start at column 0, for
+# example if the previous command does not end with a newline, it will lead
+# to display problems when the cursor is not where readline assumes.
+
+_fetch_cursor_position()
+{
+    local -a pos
+    IFS='[;' read -t 0.5 -p $'\e[6n' -d R -a pos -rs || {
+        echo "${FUNCNAME}: failed: $? ; ${pos[*]}" >&2
+        return 1
+    }
+    _cursor_row="${pos[1]}"
+    _cursor_col="${pos[2]}"
+}
+
+_prompt_command()
+{
+    _fetch_cursor_position && (( $_cursor_col > 1 )) && printf '\n'
+}
+
+PROMPT_COMMAND=_prompt_command

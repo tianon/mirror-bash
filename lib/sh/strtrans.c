@@ -50,11 +50,11 @@
 char *
 ansicstr (const char *string, size_t len, int flags, int *sawc, size_t *rlen)
 {
-  int c, temp;
+  int c;
   char *ret, *r;
   const char *s;
   unsigned long v;
-  size_t clen;
+  size_t temp, clen;
   size_t mb_cur_max;
 #if defined (HANDLE_MULTIBYTE)
   wchar_t wc;

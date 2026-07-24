@@ -13123,4 +13123,38 @@ configure.ac
 	  the pipe capacity down to 512 if the system as a whole is using too
 	  much pipe capacity (16 MB by default)
 
+				   7/13
+				   ----
+redir.c
+	- here_document_to_fd: use anon files (via redir_anonopen()) if
+	  memfd_create() or shm_mkstemp() is available. Faster and we don't
+	  touch the filesystem
 
+builtins/printf.def,lib/glob/glob.c,include/shmbutil.h
+	- HANDLE_MULTIBYTE: some fixes so build will work with this undefined
+	  Report and fix from Shubham Chakraborty <chakrabortyshubham66@gmail.com>
+
+				   7/17
+				   ----
+builtins/printf.def,lib/sh/strtrans.c
+	- make sure to use a size_t to compute the allocated buffer size, in
+	  case the length argument exceeds INT_MAX
+	  Report from Denis Rastyogin <gerben@altlinux.org> via
+	  https://savannah.gnu.org/bugs/?68534
+
+				   7/23
+				   ----
+aclocal.m4,config.h.in
+	- REPLACE_STRCHRNUL: define if we are using the strchrnul replacement
+	  in lib/sh
+
+externs.h
+	- make the definition of strchrnul conditional on REPLACE_STRCHRNUL
+	  From Rong Bao <rong.bao@csmantle.top> via https://savannah.gnu.org/patch/?10588
+
+				   7/24
+				   ----
+lib/readline/display.c
+	- rl_redisplay: make sure not to display any standout mode if the
+	  region is zero-length (rl_point == rl_mark)
+	  Report and fix from kurku <sandovin@mail.ru>

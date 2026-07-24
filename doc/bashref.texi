@@ -1379,8 +1379,8 @@ special pattern characters where that's necessary.
 
 The array variable @code{BASH_REMATCH} records which parts of the string
 matched the pattern.
-Bash unsets @code{BASH_REMATCH}
-before attempting the match, so if there is no match, it remains unset.
+Bash unsets each element of @code{BASH_REMATCH}
+before attempting the match, so if there is no match, it remains empty.
 The element of @code{BASH_REMATCH} with index 0 contains the portion of
 the string matching the entire regular expression.
 Substrings matched by parenthesized subexpressions within the regular

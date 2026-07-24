@@ -101,6 +101,7 @@ static int stdin_redirection (REDIRECT *);
 static int undoablefd (int);
 static int do_redirection_internal (REDIRECT *, int, char **);
 
+static int redir_anonopen (void);
 static char *heredoc_expand (WORD_DESC *, enum r_instruction, size_t *);
 static int heredoc_write (int, const char *, size_t);
 static int here_document_to_fd (WORD_DESC *, enum r_instruction);
@@ -422,6 +423,20 @@ heredoc_write (int fd, const char *heredoc, size_t herelen)
   return 0;
 }
 
+/* Open a file in memory for a here document. */
+static int
+redir_anonopen (void)
+{
+#if defined (HAVE_MEMFD_CREATE) || defined (HAVE_SHM_MKSTEMP)
+  int fd;
+
+  fd = anonopen ("sh-ahd", 0, (char **)NULL);
+  return fd;
+#else
+  return -1;
+#endif
+}
+
 /* Create a temporary file or pipe holding the text of the here document
    pointed to by REDIRECTEE, and return a file descriptor open for reading
    to it. Return -1 on any error, and make sure errno is set appropriately. */
@@ -430,6 +445,7 @@ here_document_to_fd (WORD_DESC *redirectee, enum r_instruction ri)
 {
   char *filename;
   int r, fd, fd2, herepipe[2];
+  int useanon;
   char *document;
   size_t document_len;
 #if HEREDOC_PARANOID
@@ -517,8 +533,14 @@ here_document_to_fd (WORD_DESC *redirectee, enum r_instruction ri)
 
 use_tempfile:
 
-  /* TAG: use anonfiles here in a future version. */
-  fd = sh_mktmpfd ("sh-thd", MT_USERANDOM|MT_USETMPDIR, &filename);
+  /* Use anonfiles here if we can do it in memory. If anonfiles falls back
+     to temporary files, don't use them because this code path does a little
+     more to ensure security. */
+  useanon = 0;
+  if ((fd = redir_anonopen ()) >= 0)
+    useanon = 1;
+  else
+    fd = sh_mktmpfd ("sh-thd", MT_USERANDOM|MT_USETMPDIR, &filename);
 
   /* If we failed for some reason other than the file existing, abort */
   if (fd < 0)
@@ -546,6 +568,13 @@ use_tempfile:
       free (filename);
       errno = r;
       return (-1);
+    }
+
+  if (useanon)
+    {
+      /* rewind file back to the beginning for reading */
+      r = lseek (fd, 0, SEEK_SET);
+      return (r < 0) ? r : fd;
     }
 
   /* In an attempt to avoid races, we close the first fd only after opening
