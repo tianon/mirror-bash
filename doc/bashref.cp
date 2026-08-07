@@ -64,8 +64,8 @@
 \entry{expansion, pathname}{39}{expansion, pathname}
 \entry{filename expansion}{39}{filename expansion}
 \entry{pathname expansion}{39}{pathname expansion}
-\entry{pattern matching}{39}{pattern matching}
-\entry{matching, pattern}{39}{matching, pattern}
+\entry{pattern matching}{40}{pattern matching}
+\entry{matching, pattern}{40}{matching, pattern}
 \entry{redirection}{41}{redirection}
 \entry{command expansion}{45}{command expansion}
 \entry{command execution}{46}{command execution}

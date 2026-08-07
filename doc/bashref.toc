@@ -36,7 +36,7 @@
 @numsubsecentry{Process Substitution}{3.5.6}{Process Substitution}{38}
 @numsubsecentry{Word Splitting}{3.5.7}{Word Splitting}{38}
 @numsubsecentry{Filename Expansion}{3.5.8}{Filename Expansion}{39}
-@numsubsubsecentry{Pattern Matching}{3.5.8.1}{Pattern Matching}{39}
+@numsubsubsecentry{Pattern Matching}{3.5.8.1}{Pattern Matching}{40}
 @numsubsecentry{Quote Removal}{3.5.9}{Quote Removal}{41}
 @numsecentry{Redirections}{3.6}{Redirections}{41}
 @numsubsecentry{Redirecting Input}{3.6.1}{}{43}

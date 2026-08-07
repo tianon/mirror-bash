@@ -87,7 +87,7 @@
 \entry{localization}{7}
 \entry{login shell}{102}
 \initial {M}
-\entry{matching, pattern}{39}
+\entry{matching, pattern}{40}
 \entry{metacharacter}{3}
 \initial {N}
 \entry{name}{3}
@@ -101,7 +101,7 @@
 \entry{parameters, positional}{23}
 \entry{parameters, special}{24}
 \entry{pathname expansion}{39}
-\entry{pattern matching}{39}
+\entry{pattern matching}{40}
 \entry{pipeline}{10}
 \entry{POSIX}{3}
 \entry{POSIX description}{116}

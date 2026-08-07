@@ -78,7 +78,8 @@
 
 #define DIGIT(c)	((c) >= '0' && (c) <= '9')
 
-#define ISWORD(c)	(ISLETTER(c) || DIGIT(c) || ((c) == '_'))
+#define ISNAME(c)	(IN_CTYPE_DOMAIN(c) && (sh_syntaxtab[(unsigned char)c] & CNAME))
+#define ISNAMESTART(c)	(IN_CTYPE_DOMAIN(c) && (sh_syntaxtab[(unsigned char)c] & CNAMESTART))
 
 #define HEXVALUE(c) \
   (((c) >= 'a' && (c) <= 'f') \

@@ -264,7 +264,7 @@ MACHTYPE	A string describing the current system Bash is running on.
 MAILCHECK	How often, in seconds, Bash checks for new mail.
 MAILPATH	A colon-separated list of filenames which Bash checks
 		for new mail.
-OSTYPE	The version of Unix this version of Bash is running on.
+OSTYPE	The version of the operating system this version of Bash is running on.
 PATH	A colon-separated list of directories to search when
 		looking for commands.
 PROMPT_COMMAND	A command to be executed before the printing of each

@@ -63,6 +63,8 @@
 #define CSPECVAR	0x0800	/* single-character shell variable name */
 #define CSUBSTOP	0x1000	/* values of OP for ${word[:]OPstuff} */
 #define CBLANK		0x2000	/* whitespace (blank) character */
+#define CNAME		0x4000	/* POSIX name character ([_0-9a-zA-Z]) */
+#define CNAMESTART	0x8000	/* POSIX name start character ([_a-zA-Z]) */
 
 /* Defines for use by the rest of the shell. */
 extern int sh_syntaxtab[];

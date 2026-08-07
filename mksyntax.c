@@ -2,7 +2,7 @@
  * mksyntax.c - construct shell syntax table for fast char attribute lookup.
  */
 
-/* Copyright (C) 2000-2009,2012,2022-2024 Free Software Foundation, Inc.
+/* Copyright (C) 2000-2009,2012,2022-2024,2026 Free Software Foundation, Inc.
 
    This file is part of GNU Bash, the Bourne Again SHell.
 
@@ -60,6 +60,8 @@ struct wordflag {
 	{ CSPECVAR,	"CSPECVAR" },
 	{ CSUBSTOP,	"CSUBSTOP" },
 	{ CBLANK,	"CBLANK" },
+	{ CNAME,	"CNAME" },
+	{ CNAMESTART,	"CNAMESTART" }
 };
 	
 #define N_WFLAGS	(sizeof (wordflags) / sizeof (wordflags[0]))
@@ -198,6 +200,45 @@ addblanks (void)
     }
 }
 
+static void
+setnamechars(void)
+{
+  lsyntax['_'] |= CNAME|CNAMESTART;
+
+  lsyntax['0'] |= CNAME; lsyntax['1'] |= CNAME; lsyntax['2'] |= CNAME;
+  lsyntax['3'] |= CNAME; lsyntax['4'] |= CNAME; lsyntax['5'] |= CNAME;
+  lsyntax['6'] |= CNAME; lsyntax['7'] |= CNAME; lsyntax['8'] |= CNAME;
+  lsyntax['9'] |= CNAME;
+
+  lsyntax['a'] |= CNAME|CNAMESTART; lsyntax['b'] |= CNAME|CNAMESTART;
+  lsyntax['c'] |= CNAME|CNAMESTART; lsyntax['d'] |= CNAME|CNAMESTART;
+  lsyntax['e'] |= CNAME|CNAMESTART; lsyntax['f'] |= CNAME|CNAMESTART;
+  lsyntax['g'] |= CNAME|CNAMESTART; lsyntax['h'] |= CNAME|CNAMESTART;
+  lsyntax['i'] |= CNAME|CNAMESTART; lsyntax['j'] |= CNAME|CNAMESTART;
+  lsyntax['k'] |= CNAME|CNAMESTART; lsyntax['l'] |= CNAME|CNAMESTART;
+  lsyntax['m'] |= CNAME|CNAMESTART; lsyntax['n'] |= CNAME|CNAMESTART;
+  lsyntax['o'] |= CNAME|CNAMESTART; lsyntax['p'] |= CNAME|CNAMESTART;
+  lsyntax['q'] |= CNAME|CNAMESTART; lsyntax['r'] |= CNAME|CNAMESTART;
+  lsyntax['s'] |= CNAME|CNAMESTART; lsyntax['t'] |= CNAME|CNAMESTART;
+  lsyntax['u'] |= CNAME|CNAMESTART; lsyntax['v'] |= CNAME|CNAMESTART;
+  lsyntax['w'] |= CNAME|CNAMESTART; lsyntax['x'] |= CNAME|CNAMESTART;
+  lsyntax['y'] |= CNAME|CNAMESTART; lsyntax['z'] |= CNAME|CNAMESTART;
+
+  lsyntax['A'] |= CNAME|CNAMESTART; lsyntax['B'] |= CNAME|CNAMESTART;
+  lsyntax['C'] |= CNAME|CNAMESTART; lsyntax['D'] |= CNAME|CNAMESTART;
+  lsyntax['E'] |= CNAME|CNAMESTART; lsyntax['F'] |= CNAME|CNAMESTART;
+  lsyntax['G'] |= CNAME|CNAMESTART; lsyntax['H'] |= CNAME|CNAMESTART;
+  lsyntax['I'] |= CNAME|CNAMESTART; lsyntax['J'] |= CNAME|CNAMESTART;
+  lsyntax['K'] |= CNAME|CNAMESTART; lsyntax['L'] |= CNAME|CNAMESTART;
+  lsyntax['M'] |= CNAME|CNAMESTART; lsyntax['N'] |= CNAME|CNAMESTART;
+  lsyntax['O'] |= CNAME|CNAMESTART; lsyntax['P'] |= CNAME|CNAMESTART;
+  lsyntax['Q'] |= CNAME|CNAMESTART; lsyntax['R'] |= CNAME|CNAMESTART;
+  lsyntax['S'] |= CNAME|CNAMESTART; lsyntax['T'] |= CNAME|CNAMESTART;
+  lsyntax['U'] |= CNAME|CNAMESTART; lsyntax['V'] |= CNAME|CNAMESTART;
+  lsyntax['W'] |= CNAME|CNAMESTART; lsyntax['X'] |= CNAME|CNAMESTART;
+  lsyntax['Y'] |= CNAME|CNAMESTART; lsyntax['Z'] |= CNAME|CNAMESTART;
+}
+
 /* load up the correct flag values in lsyntax */
 static void
 load_lsyntax (void)
@@ -234,6 +275,8 @@ load_lsyntax (void)
   addcstr ("-=?+", CSUBSTOP);		/* OP in ${paramOPword} */
 
   addblanks ();
+
+  setnamechars ();
 }
 
 static void

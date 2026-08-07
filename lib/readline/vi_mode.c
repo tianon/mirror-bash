@@ -2365,6 +2365,14 @@ rl_vi_possible_completions (void)
 }
 #endif
 
+static inline int
+_rl_vi_check_arrows (void)
+{
+  return ((RL_ISSTATE (RL_STATE_INPUTPENDING|RL_STATE_MACROINPUT) == 0) &&
+	  _rl_pushed_input_available () == 0 &&
+          _rl_input_queued (0));
+}
+
 /* Functions to save and restore marks. */
 static int
 _rl_vi_set_mark (void)
@@ -2378,6 +2386,8 @@ _rl_vi_set_mark (void)
   if (ch < 0 || ch < 'a' || ch > 'z')	/* make test against 0 explicit */
     {
       rl_ding ();
+      if (ch == ESC && _rl_vi_check_arrows ())
+	_rl_unget_char (ch);	/* assume arrow key or other CSI sequence */
       return 1;
     }
   ch -= 'a';
@@ -2429,6 +2439,8 @@ _rl_vi_goto_mark (void)
   else if (ch < 0 || ch < 'a' || ch > 'z')	/* make test against 0 explicit */
     {
       rl_ding ();
+      if (ch == ESC && _rl_vi_check_arrows ())
+	_rl_unget_char (ch);	/* assume arrow key or other CSI sequence */
       return 1;
     }
 

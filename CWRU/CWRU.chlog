@@ -13158,3 +13158,29 @@ lib/readline/display.c
 	- rl_redisplay: make sure not to display any standout mode if the
 	  region is zero-length (rl_point == rl_mark)
 	  Report and fix from kurku <sandovin@mail.ru>
+
+				    8/5
+				    ---
+syntax.h
+	- CNAMESTART, CNAME: add flags for characters that are valid shell
+	  variable name starters and characters, respectively
+
+mksyntax.c
+	- set CNAMESTART and CNAME for the appropriate characters from the
+	  portable character set in sh_syntaxtab[]
+
+				    8/6
+				    ---
+lib/readline/vi_mode.c
+	- _rl_vi_set_mark,_rl_vi_goto_mark: if we read ESC for the mark
+	  identifier, and we're reading from the terminal, check for queued
+	  input and assume we have something like an arrow key sequence if
+	  there is input available to be read. In this case, we push the
+	  ESC back so we can read the entire arrow key or CSI sequence.
+	  Report from kurku <sandovin@mail.ru>
+
+general.h
+	- legal_variable_starter,legal_variable_char: change to use the
+	  appropriate CNAME and CNAMESTART flags from sh_syntaxtab[]
+	  Report from zheng <charname@qq.com>
+ 

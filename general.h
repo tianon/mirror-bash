@@ -110,8 +110,13 @@ extern char *strcpy (char *, const char *);
 #define INT_BUFSIZE_BOUND(t) (INT_STRLEN_BOUND (t) + 1)
 
 /* Define exactly what a legal shell identifier consists of. */
-#define legal_variable_starter(c) (ISALPHA(c) || (c == '_'))
-#define legal_variable_char(c)	(ISALNUM(c) || c == '_')
+#if 0
+#define legal_variable_starter(c) (c < 128 && (ISALPHA(c) || c == '_'))
+#define legal_variable_char(c)	(c < 128 && (ISALNUM(c) || c == '_'))
+#else
+#define legal_variable_starter(c) (sh_syntaxtab[c] & CNAMESTART)
+#define legal_variable_char(c)	(sh_syntaxtab[c] & CNAME)
+#endif
 
 /* Definitions used in subst.c and by the `read' builtin for field
    splitting. */
