@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: bash 5.3-rc2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-22 09:37-0400\n"
-"PO-Revision-Date: 2026-07-31 20:06+0700\n"
+"PO-Revision-Date: 2026-08-14 17:00+0700\n"
 "Last-Translator: Arif E. Nugroho <arif_endro@yahoo.com>\n"
 "Language-Team: Indonesian <translation-team-id@lists.sourceforge.net>\n"
 "Language: id\n"
@@ -44,10 +44,8 @@ msgid "%s: %s: must use subscript when assigning associative array"
 msgstr "%s: %s: harus menggunakan subscript ketika memberikan assosiasi array"
 
 #: bashhist.c:464
-#, fuzzy
-#| msgid "%s: cannot create: %s"
 msgid "cannot create"
-msgstr "%s: tidak dapat membuat: %s"
+msgstr "tidak dapat membuat"
 
 #: bashline.c:4642
 msgid "bash_execute_unix_command: cannot find keymap for command"
@@ -64,10 +62,9 @@ msgid "no closing `%c' in %s"
 msgstr "tidak menutup '%c' dalam %s"
 
 #: bashline.c:4873
-#, fuzzy, c-format
-#| msgid "%s: missing colon separator"
+#, c-format
 msgid "%s: missing separator"
-msgstr "%s: hilang pemisah colon"
+msgstr "%s: hilang pemisah"
 
 #: bashline.c:4920
 #, c-format
@@ -80,10 +77,9 @@ msgid "brace expansion: cannot allocate memory for %s"
 msgstr "brace expansion: cannot allocate memory for %s"
 
 #: braces.c:403
-#, fuzzy, c-format
-#| msgid "brace expansion: failed to allocate memory for %u elements"
+#, c-format
 msgid "brace expansion: failed to allocate memory for %s elements"
-msgstr "brace expansion: failed to allocate memory for %u elements"
+msgstr "brace expansion: gagal untuk mengalokasikan memori untuk %s elemen"
 
 #: braces.c:462
 #, c-format
@@ -105,10 +101,8 @@ msgid "`%s': invalid keymap name"
 msgstr "'%s': nama keymap tidak valid"
 
 #: builtins/bind.def:277
-#, fuzzy
-#| msgid "%s: cannot read: %s"
 msgid "cannot read"
-msgstr "%s: tidak dapat membaca: %s"
+msgstr "tidak dapat membaca"
 
 #: builtins/bind.def:353 builtins/bind.def:382
 #, c-format
@@ -139,20 +133,6 @@ msgid "only meaningful in a `for', `while', or `until' loop"
 msgstr "hanya berarti dalam sebuah `for', `while', atau `until'loop"
 
 #: builtins/caller.def:135
-#, fuzzy
-#| msgid ""
-#| "Return the context of the current subroutine call.\n"
-#| "    \n"
-#| "    Without EXPR, returns \"$line $filename\".  With EXPR, returns\n"
-#| "    \"$line $subroutine $filename\"; this extra information can be used to\n"
-#| "    provide a stack trace.\n"
-#| "    \n"
-#| "    The value of EXPR indicates how many call frames to go back before the\n"
-#| "    current one; the top frame is frame 0.\n"
-#| "    \n"
-#| "    Exit Status:\n"
-#| "    Returns 0 unless the shell is not executing a shell function or EXPR\n"
-#| "    is invalid."
 msgid ""
 "Returns the context of the current subroutine call.\n"
 "    \n"
@@ -268,10 +248,9 @@ msgid "%s: readonly variable"
 msgstr "%s: variabel baca-saja"
 
 #: builtins/common.c:248
-#, fuzzy, c-format
-#| msgid "%s: cannot unset"
+#, c-format
 msgid "%s: cannot assign"
-msgstr "%s: tidak dapat unset"
+msgstr "%s: tidak dapat assign"
 
 #: builtins/common.c:255
 #, c-format
@@ -302,10 +281,9 @@ msgid "no job control"
 msgstr "tidak ada pengontrol kerja"
 
 #: builtins/common.c:279
-#, fuzzy, c-format
-#| msgid "%s: invalid timeout specification"
+#, c-format
 msgid "%s: invalid job specification"
-msgstr "%s: spesifikasi timeout tidak valid"
+msgstr "%s: spesifikasi pekerjaan tidak valid"
 
 #: builtins/common.c:289
 #, c-format
@@ -322,28 +300,20 @@ msgid "%s: not a shell builtin"
 msgstr "%s: bukan sebuah builtin shell"
 
 #: builtins/common.c:307
-#, fuzzy
-#| msgid "write error: %s"
 msgid "write error"
-msgstr "gagal menulis: %s"
+msgstr "gagal menulis"
 
 #: builtins/common.c:314
-#, fuzzy
-#| msgid "error setting terminal attributes: %s"
 msgid "error setting terminal attributes"
-msgstr "error menentukan atribut terminal: %s"
+msgstr "error menentukan atribut terminal"
 
 #: builtins/common.c:316
-#, fuzzy
-#| msgid "error getting terminal attributes: %s"
 msgid "error getting terminal attributes"
-msgstr "error mendapatkan atribut terminal: %s"
+msgstr "error mendapatkan atribut terminal"
 
 #: builtins/common.c:611
-#, fuzzy
-#| msgid "%s: error retrieving current directory: %s: %s\n"
 msgid "error retrieving current directory"
-msgstr "%s: error mengambil direktori saat ini: %s: %s\n"
+msgstr "error mengambil direktori saat ini"
 
 #: builtins/common.c:675 builtins/common.c:677
 #, c-format
@@ -351,10 +321,9 @@ msgid "%s: ambiguous job spec"
 msgstr "%s: spesifikasi pekerjaan ambigu"
 
 #: builtins/common.c:709
-#, fuzzy, c-format
-#| msgid "%s: option requires an argument"
+#, c-format
 msgid "%s: job specification requires leading `%%'"
-msgstr "%s: pilihan membutuhkan sebuah argumen"
+msgstr "%s: spesifikasi pekerjaan membutuhkan awalan '%%'"
 
 #: builtins/common.c:937
 msgid "help not available in this version"
@@ -502,22 +471,17 @@ msgstr "%s: file terlalu besar"
 
 #: builtins/evalfile.c:189 builtins/evalfile.c:207 execute_cmd.c:6222
 #: shell.c:1687
-#, fuzzy
-#| msgid "%s: cannot execute binary file"
 msgid "cannot execute binary file"
-msgstr "%s: tidak dapat menjalankan berkas binary"
+msgstr "tidak dapat menjalankan berkas binary"
 
 #: builtins/evalstring.c:478
-#, fuzzy, c-format
-#| msgid "error importing function definition for `%s'"
+#, c-format
 msgid "%s: ignoring function definition attempt"
-msgstr "error mengimpor definisi fungsi untuk `%s'"
+msgstr "%s: mengabaikan untuk mencoba definisi fungsi"
 
 #: builtins/exec.def:158 builtins/exec.def:160 builtins/exec.def:249
-#, fuzzy
-#| msgid "%s: cannot execute: %s"
 msgid "cannot execute"
-msgstr "%s: tidak dapat menjalankan: %s"
+msgstr "tidak dapat menjalankan"
 
 #: builtins/exit.def:61
 #, c-format
@@ -548,10 +512,8 @@ msgid "history specification"
 msgstr "spesifikasi sejarah"
 
 #: builtins/fc.def:462
-#, fuzzy
-#| msgid "%s: cannot open temp file: %s"
 msgid "cannot open temp file"
-msgstr "%s: tidak dapat membuka file sementara: %s"
+msgstr "tidak dapat membuka file sementara"
 
 #: builtins/fg_bg.def:150 builtins/jobs.def:293
 msgid "current"
@@ -606,17 +568,13 @@ msgid "no help topics match `%s'.  Try `help help' or `man -k %s' or `info %s'."
 msgstr "tidak ada topik bantuan yang cocok dengan `%s'. Coba `help help' atau 'man -k %s' atau `info %s'."
 
 #: builtins/help.def:214
-#, fuzzy
-#| msgid "cannot suspend"
 msgid "cannot open"
-msgstr "tidak dapat suspend"
+msgstr "tidak dapat membuka"
 
 #: builtins/help.def:264 builtins/help.def:306 builtins/history.def:306
 #: builtins/history.def:325 builtins/read.def:909
-#, fuzzy
-#| msgid "read error: %d: %s"
 msgid "read error"
-msgstr "error baca: %d: %s"
+msgstr "error baca"
 
 #: builtins/help.def:517
 #, c-format
@@ -647,10 +605,8 @@ msgid "history position"
 msgstr "posisi sejarah"
 
 #: builtins/history.def:280
-#, fuzzy
-#| msgid "empty array variable name"
 msgid "empty filename"
-msgstr "nama variabel array kosong"
+msgstr "nama berkas kosong"
 
 #: builtins/history.def:282 subst.c:8226
 #, c-format
@@ -690,10 +646,8 @@ msgid "%s: invalid file descriptor specification"
 msgstr "%s: spesifikasi file deskripsi tidak valid"
 
 #: builtins/mapfile.def:257 builtins/read.def:380
-#, fuzzy
-#| msgid "%d: invalid file descriptor: %s"
 msgid "invalid file descriptor"
-msgstr "%d: file deskriptor %s tidak valid"
+msgstr "berkas deskriptor tidak valid"
 
 #: builtins/mapfile.def:266 builtins/mapfile.def:304
 #, c-format
@@ -1001,20 +955,16 @@ msgid "`%c': bad command"
 msgstr "`%c': perintah buruk"
 
 #: builtins/ulimit.def:465 builtins/ulimit.def:748
-#, fuzzy
-#| msgid "%s: cannot get limit: %s"
 msgid "cannot get limit"
-msgstr "%s: tidak dapat get limit: %s"
+msgstr "tidak dapat memperoleh batas"
 
 #: builtins/ulimit.def:498
 msgid "limit"
 msgstr "batas"
 
 #: builtins/ulimit.def:511 builtins/ulimit.def:812
-#, fuzzy
-#| msgid "%s: cannot modify limit: %s"
 msgid "cannot modify limit"
-msgstr "%s: tidak dapat memodifikasi batas: %s"
+msgstr "tidak dapat memodifikasi batas"
 
 #: builtins/umask.def:114
 msgid "octal number"
@@ -1051,10 +1001,9 @@ msgid "INFORM: "
 msgstr "BERI TAHU: "
 
 #: error.c:261
-#, fuzzy, c-format
-#| msgid "warning: "
+#, c-format
 msgid "DEBUG warning: "
-msgstr "peringatan: "
+msgstr "DEBUG peringatan: "
 
 #: error.c:413
 msgid "unknown command error"
@@ -1082,10 +1031,8 @@ msgid "\atimed out waiting for input: auto-logout\n"
 msgstr "kehabisan waktu menunggu masukan: otomatis-keluar\n"
 
 #: execute_cmd.c:606
-#, fuzzy
-#| msgid "cannot redirect standard input from /dev/null: %s"
 msgid "cannot redirect standard input from /dev/null"
-msgstr "tidak dapat menyalurkan masukan standar dari /dev/null: %s"
+msgstr "tidak dapat menyalurkan masukan standar dari /dev/null"
 
 #: execute_cmd.c:1412
 #, c-format
@@ -1127,10 +1074,8 @@ msgid "%s: maximum function nesting level exceeded (%d)"
 msgstr "%s: maximum function nesting level exceeded (%d)"
 
 #: execute_cmd.c:5754
-#, fuzzy
-#| msgid "%s: command not found"
 msgid "command not found"
-msgstr "%s: perintah tidak ditemukan"
+msgstr "perintah tidak ditemukan"
 
 #: execute_cmd.c:5783
 #, c-format
@@ -1138,16 +1083,13 @@ msgid "%s: restricted: cannot specify `/' in command names"
 msgstr "%s: dibatasi: tidak dapat menspesifikasikan '/' dalam nama nama perintah"
 
 #: execute_cmd.c:6176
-#, fuzzy
-#| msgid "%s: %s: bad interpreter"
 msgid "bad interpreter"
-msgstr "%s: %s: interpreter buruk"
+msgstr "interpreter buruk"
 
 #: execute_cmd.c:6185
-#, fuzzy, c-format
-#| msgid "%s: cannot execute binary file"
+#, c-format
 msgid "%s: cannot execute: required file not found"
-msgstr "%s: tidak dapat menjalankan berkas binary"
+msgstr "%s: tidak dapat menjalankan: berkas yang diperlukan tidak ada"
 
 #: execute_cmd.c:6361
 #, c-format
@@ -1163,20 +1105,16 @@ msgid "recursion stack underflow"
 msgstr "rekursi stack underflow"
 
 #: expr.c:485
-#, fuzzy
-#| msgid "syntax error in expression"
 msgid "arithmetic syntax error in expression"
-msgstr "syntax error dalam expresi"
+msgstr "kesalahan syntax arithmetic dalam expresi"
 
 #: expr.c:529
 msgid "attempted assignment to non-variable"
 msgstr "mencoba menempatkan ke bukan sebuah variabel"
 
 #: expr.c:538
-#, fuzzy
-#| msgid "syntax error in variable assignment"
 msgid "arithmetic syntax error in variable assignment"
-msgstr "syntax error dalam menempatkan variabel"
+msgstr "kesalahan syntax arithmetic dalam menempatkan variabel"
 
 #: expr.c:552 expr.c:917
 msgid "division by 0"
@@ -1203,10 +1141,8 @@ msgid "missing `)'"
 msgstr "hilang `)'"
 
 #: expr.c:1120 expr.c:1507
-#, fuzzy
-#| msgid "syntax error: operand expected"
 msgid "arithmetic syntax error: operand expected"
-msgstr "syntax error: operand diharapkan"
+msgstr "kesalahan syntax arithmetic: operand diharapkan"
 
 #: expr.c:1468 expr.c:1489
 msgid "--: assignment requires lvalue"
@@ -1217,10 +1153,8 @@ msgid "++: assignment requires lvalue"
 msgstr "++: assignment memerlukan lvalue"
 
 #: expr.c:1509
-#, fuzzy
-#| msgid "syntax error: invalid arithmetic operator"
 msgid "arithmetic syntax error: invalid arithmetic operator"
-msgstr "syntax error: operator arithmetic tidak valid"
+msgstr "kesalahan syntax arithmetic: operator arithmetic tidak valid"
 
 #: expr.c:1532
 #, c-format
@@ -1524,10 +1458,8 @@ msgid "network operations not supported"
 msgstr "operasi jaringan tidak dilayani"
 
 #: locale.c:226 locale.c:228 locale.c:301 locale.c:303
-#, fuzzy
-#| msgid "setlocale: %s: cannot change locale (%s)"
 msgid "cannot change locale"
-msgstr "setlocale: %s: tidak dapat mengubah lokal (%s)"
+msgstr "tidak dapat mengubah lokal"
 
 #: mailcheck.c:435
 msgid "You have mail in $_"
@@ -1653,10 +1585,9 @@ msgid "unexpected token %d in conditional command"
 msgstr "tanda %d tidak terduga dalam perintah kondisional"
 
 #: parse.y:6827
-#, fuzzy, c-format
-#| msgid "unexpected EOF while looking for matching `%c'"
+#, c-format
 msgid "syntax error near unexpected token `%s' while looking for matching `%c'"
-msgstr "EOF tidak terduga ketika mencari untuk pencocokan `%c'"
+msgstr "kesalahan syntax dekat token `%s' tidak terduga ketika mencari untuk pencocokan `%c'"
 
 #: parse.y:6829
 #, c-format
@@ -1669,16 +1600,14 @@ msgid "syntax error near `%s'"
 msgstr "syntax error didekat `%s'"
 
 #: parse.y:6867
-#, fuzzy, c-format
-#| msgid "syntax error: unexpected end of file"
+#, c-format
 msgid "syntax error: unexpected end of file from `%s' command on line %d"
-msgstr "syntax error: tidak terduga diakhir dari berkas"
+msgstr "syntax error: tidak terduga diakhir dari berkas dari `%s' perintah di baris %d"
 
 #: parse.y:6869
-#, fuzzy, c-format
-#| msgid "syntax error: unexpected end of file"
+#, c-format
 msgid "syntax error: unexpected end of file from command on line %d"
-msgstr "syntax error: tidak terduga diakhir dari berkas"
+msgstr "syntax error: tidak terduga diakhir dari berkas dari perintah di baris %d"
 
 #: parse.y:6873
 msgid "syntax error: unexpected end of file"
@@ -1698,10 +1627,8 @@ msgid "unexpected EOF while looking for matching `)'"
 msgstr "EOF tidak terduga ketika mencari untuk pencocokan ')'"
 
 #: pathexp.c:897
-#, fuzzy
-#| msgid "invalid base"
 msgid "invalid glob sort type"
-msgstr "basis tidak valid"
+msgstr "tipe urutan glob tidak valid"
 
 #: pcomplete.c:1070
 #, c-format
@@ -1747,34 +1674,24 @@ msgid "file descriptor out of range"
 msgstr "berkas deskripsi diluar dari jangkauan"
 
 #: redir.c:201
-#, fuzzy
-#| msgid "%s: ambiguous redirect"
 msgid "ambiguous redirect"
-msgstr "%s: redirect ambigu"
+msgstr "redirect ambigu"
 
 #: redir.c:205
-#, fuzzy
-#| msgid "%s: cannot overwrite existing file"
 msgid "cannot overwrite existing file"
-msgstr "%s: tidak dapat menulis berkas yang sudah ada"
+msgstr "tidak dapat menulis berkas yang sudah ada"
 
 #: redir.c:210
-#, fuzzy
-#| msgid "%s: restricted: cannot redirect output"
 msgid "restricted: cannot redirect output"
-msgstr "%s: restricted: tidak dapat meredirect keluaran"
+msgstr "restricted: tidak dapat meredirect keluaran"
 
 #: redir.c:215
-#, fuzzy
-#| msgid "cannot create temp file for here-document: %s"
 msgid "cannot create temp file for here-document"
-msgstr "tidak dapat membuat berkas sementara untuk dokumen disini: %s"
+msgstr "tidak dapat membuat berkas sementara untuk dokumen disini"
 
 #: redir.c:219
-#, fuzzy
-#| msgid "%s: cannot assign fd to variable"
 msgid "cannot assign fd to variable"
-msgstr "%s: tidak dapat meng-'assign' fd ke variabel"
+msgstr "tidak dapat meng-'assign' fd ke variabel"
 
 #: redir.c:639
 msgid "/dev/(tcp|udp)/host/port not supported without networking"
@@ -2096,10 +2013,8 @@ msgid "function_substitute: cannot open anonymous file for output"
 msgstr "function_substitute: tidak dapat membuka berkas anonim untuk keluaran"
 
 #: subst.c:7036
-#, fuzzy
-#| msgid "command_substitute: cannot duplicate pipe as fd 1"
 msgid "function_substitute: cannot duplicate anonymous file as standard output"
-msgstr "command_substitute: tidak dapat menduplikasikan pipe sebagi fd 1"
+msgstr "function_substitute: tidak dapat menduplikasikan berkas anonim sebagai standar keluaran"
 
 #: subst.c:7210 subst.c:7231
 msgid "cannot make pipe for command substitution"
@@ -2167,10 +2082,9 @@ msgid "argument expected"
 msgstr "argumen diharapkan"
 
 #: test.c:164
-#, fuzzy, c-format
-#| msgid "%s: integer expression expected"
+#, c-format
 msgid "%s: integer expected"
-msgstr "%s: expresi integer diduga"
+msgstr "%s: integer diduga"
 
 #: test.c:292
 msgid "`)' expected"
@@ -2221,10 +2135,8 @@ msgid "trap_handler: bad signal %d"
 msgstr "trap_handler: sinyal buruk %d"
 
 #: unwind_prot.c:246 unwind_prot.c:292
-#, fuzzy
-#| msgid "%s: file not found"
 msgid "frame not found"
-msgstr "%s: berkas tidak ditemukan"
+msgstr "frame tidak ditemukan"
 
 #: variables.c:441
 #, c-format
@@ -2240,10 +2152,9 @@ msgstr "level shell (%d) terlalu tinggi, mereset ke 1"
 #: variables.c:2315 variables.c:2350 variables.c:2378 variables.c:2405
 #: variables.c:2431 variables.c:3274 variables.c:3282 variables.c:3797
 #: variables.c:3841
-#, fuzzy, c-format
-#| msgid "maximum here-document count exceeded"
+#, c-format
 msgid "%s: maximum nameref depth (%d) exceeded"
-msgstr "jumlah maksimal dokumen disini tercapai"
+msgstr "%s: maksimal nameref depth (%d) tercapai"
 
 #: variables.c:2641
 msgid "make_local_variable: no function context at current scope"
@@ -2311,10 +2222,8 @@ msgid "%s: %s: compatibility value out of range"
 msgstr "%s: %s: diluar jangkauan"
 
 #: version.c:50
-#, fuzzy
-#| msgid "Copyright (C) 2020 Free Software Foundation, Inc."
 msgid "Copyright (C) 2025 Free Software Foundation, Inc."
-msgstr "Hak Cipta (C) 2020 Free Software Foundation, Inc."
+msgstr "Hak Cipta (C) 2025 Free Software Foundation, Inc."
 
 #: version.c:51
 msgid "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n"
@@ -2363,7 +2272,7 @@ msgstr "unalias [-a] name [nama ...]"
 
 #: builtins.c:53
 msgid "bind [-lpsvPSVX] [-m keymap] [-f filename] [-q name] [-u name] [-r keyseq] [-x keyseq:shell-command] [keyseq:readline-function or readline-command]"
-msgstr "bind [-lpvsPVSX] [-m keymap] [-f nama_berkas] [-q nama] [-u nama] [-r keyseq] [-x keyseq:perintah-shell] [keyseq:readline-function atau readline-command]"
+msgstr "bind [-lpvsPVSX] [-m keymap] [-f nama berkas] [-q nama] [-u nama] [-r keyseq] [-x keyseq:perintah-shell] [keyseq:readline-function atau readline-command]"
 
 #: builtins.c:56
 msgid "break [n]"
@@ -2379,13 +2288,11 @@ msgstr "builtin [shell-builtin [arg ...]]"
 
 #: builtins.c:63
 msgid "caller [expr]"
-msgstr "caller [expr]"
+msgstr "pemanggil [expr]"
 
 #: builtins.c:66
-#, fuzzy
-#| msgid "cd [-L|[-P [-e]] [-@]] [dir]"
 msgid "cd [-L|[-P [-e]]] [-@] [dir]"
-msgstr "cd [-L|[-P [-e]] [-@]] [direktori]"
+msgstr "cd [-L|[-P [-e]]] [-@] [direktori]"
 
 #: builtins.c:68
 msgid "pwd [-LP]"
@@ -2393,19 +2300,15 @@ msgstr "pwd [-LP]"
 
 #: builtins.c:76
 msgid "command [-pVv] command [arg ...]"
-msgstr "command [-pVv] perintah [argumen ...]"
+msgstr "perintah [-pVv] perintah [argumen ...]"
 
 #: builtins.c:78
-#, fuzzy
-#| msgid "declare [-aAfFgiIlnrtux] [-p] [name[=value] ...]"
 msgid "declare [-aAfFgiIlnrtux] [name[=value] ...] or declare -p [-aAfFilnrtux] [name ...]"
-msgstr "declare [-aAfFgiIlnrtux] [-p] [name[=nilai] ...]"
+msgstr "declare [-aAfFgiIlnrtux] [name[=nilai] ...] or declare -p [-aAfFilnrtux] [name ...]"
 
 #: builtins.c:80
-#, fuzzy
-#| msgid "typeset [-aAfFgiIlnrtux] [-p] name[=value] ..."
 msgid "typeset [-aAfFgiIlnrtux] name[=value] ... or typeset -p [-aAfFilnrtux] [name ...]"
-msgstr "typeset [-aAfFgiIlnrtux] [-p] name[=nilai] ..."
+msgstr "typeset [-aAfFgiIlnrtux] name[=nilai] ... or typeset -p [-aAfFilnrtux] [name ...]"
 
 #: builtins.c:82
 msgid "local [option] name[=value] ..."
@@ -2421,7 +2324,7 @@ msgstr "echo [-n] [arg ...]"
 
 #: builtins.c:92
 msgid "enable [-a] [-dnps] [-f filename] [name ...]"
-msgstr "enable [-a] [-dnps] [-f nama_berkas] [name ...]"
+msgstr "enable [-a] [-dnps] [-f nama berkas] [name ...]"
 
 #: builtins.c:94
 msgid "eval [arg ...]"
@@ -2461,11 +2364,11 @@ msgstr "hash [-lr] [-p nama jalur] [-dt] [nama ...]"
 
 #: builtins.c:119
 msgid "help [-dms] [pattern ...]"
-msgstr "help [-dms] [pola ...]"
+msgstr "bantuan [-dms] [pola ...]"
 
 #: builtins.c:123
 msgid "history [-c] [-d offset] [n] or history -anrw [filename] or history -ps arg [arg...]"
-msgstr "history [-c] [-d ofset] [n] atau history -anrw [nama_berkas] atau history -ps arg [arg...]"
+msgstr "sejarah [-c] [-d ofset] [n] atau history -anrw [nama berkas] atau history -ps arg [arg...]"
 
 #: builtins.c:127
 msgid "jobs [-lnprs] [jobspec ...] or jobs -x command [args]"
@@ -2481,33 +2384,27 @@ msgstr "kill [-s spesifikasi sinyal | -n nomor sinyal | -sigspec] pid | jobsepc 
 
 #: builtins.c:136
 msgid "let arg [arg ...]"
-msgstr "let arg [argumen ...]"
+msgstr "biarkan arg [argumen ...]"
 
 #: builtins.c:138
-#, fuzzy
-#| msgid "read [-ers] [-a array] [-d delim] [-i text] [-n nchars] [-N nchars] [-p prompt] [-t timeout] [-u fd] [name ...]"
 msgid "read [-Eers] [-a array] [-d delim] [-i text] [-n nchars] [-N nchars] [-p prompt] [-t timeout] [-u fd] [name ...]"
-msgstr "read [-ers] [-a array] [-d pembatas] [-i text] [-n nchars] [-N nchars] [-p prompt] [-t timeout] [-u fd] [name ...]"
+msgstr "read [-Eers] [-a array] [-d pembatas] [-i text] [-n nchars] [-N nchars] [-p prompt] [-t timeout] [-u fd] [name ...]"
 
 #: builtins.c:140
 msgid "return [n]"
 msgstr "return [n]"
 
 #: builtins.c:142
-#, fuzzy
-#| msgid "set [-abefhkmnptuvxBCHP] [-o option-name] [--] [arg ...]"
 msgid "set [-abefhkmnptuvxBCEHPT] [-o option-name] [--] [-] [arg ...]"
-msgstr "set [-abefhkmnptuvxBCHP] [-o nama-pilihan] [--] [argumen ...]"
+msgstr "set [-abefhkmnptuvxBCEHPT] [-o nama-pilihan] [--] [-] [argumen ...]"
 
 #: builtins.c:144
 msgid "unset [-f] [-v] [-n] [name ...]"
 msgstr "unset [-f] [-v] [-n] [name ...]"
 
 #: builtins.c:146
-#, fuzzy
-#| msgid "export [-fn] [name[=value] ...] or export -p"
 msgid "export [-fn] [name[=value] ...] or export -p [-f]"
-msgstr "export [-fn] [name[=nilai] ...] atau export -p"
+msgstr "export [-fn] [name[=nilai] ...] atau export -p [-f]"
 
 #: builtins.c:148
 msgid "readonly [-aAf] [name[=value] ...] or readonly -p"
@@ -2518,16 +2415,12 @@ msgid "shift [n]"
 msgstr "shift [n]"
 
 #: builtins.c:152
-#, fuzzy
-#| msgid "source filename [arguments]"
 msgid "source [-p path] filename [arguments]"
-msgstr "source nama_berkas [argumen]"
+msgstr "source [-p jalur] nama berkas [argumen]"
 
 #: builtins.c:154
-#, fuzzy
-#| msgid ". filename [arguments]"
 msgid ". [-p path] filename [arguments]"
-msgstr ". nama_berkas [argumen]"
+msgstr ". [-p jalur] nama berkas [argumen]"
 
 #: builtins.c:157
 msgid "suspend [-f]"
@@ -2542,20 +2435,16 @@ msgid "[ arg... ]"
 msgstr "[ arg... ]"
 
 #: builtins.c:166
-#, fuzzy
-#| msgid "trap [-lp] [[arg] signal_spec ...]"
 msgid "trap [-Plp] [[action] signal_spec ...]"
-msgstr "trap [-lp] [[arg] spesifikasi sinyal ...]"
+msgstr "trap [-Plp] [[aksi] spesifikasi sinyal ...]"
 
 #: builtins.c:168
 msgid "type [-afptP] name [name ...]"
 msgstr "type [-afptP] nama [name ...]"
 
 #: builtins.c:171
-#, fuzzy
-#| msgid "ulimit [-SHabcdefiklmnpqrstuvxPT] [limit]"
 msgid "ulimit [-SHabcdefiklmnpqrstuvxPRT] [limit]"
-msgstr "ulimit [-SHabcdefiklmnpqrstuvxPT] [batas]"
+msgstr "ulimit [-SHabcdefiklmnpqrstuvxPRT] [batas]"
 
 #: builtins.c:174
 msgid "umask [-p] [-S] [mode]"
@@ -2598,16 +2487,12 @@ msgid "if COMMANDS; then COMMANDS; [ elif COMMANDS; then COMMANDS; ]... [ else C
 msgstr "if PERINTAH; then PERINTAH; [ elif PERINTAH; then PERINTAH; ]... [ else PERINTAH; ] fi"
 
 #: builtins.c:198
-#, fuzzy
-#| msgid "while COMMANDS; do COMMANDS; done"
 msgid "while COMMANDS; do COMMANDS-2; done"
-msgstr "while PERINTAH; do PERINTAH; done"
+msgstr "while PERINTAH; do PERINTAH-2; done"
 
 #: builtins.c:200
-#, fuzzy
-#| msgid "until COMMANDS; do COMMANDS; done"
 msgid "until COMMANDS; do COMMANDS-2; done"
-msgstr "until PERINTAH; do PERINTAH; done"
+msgstr "until PERINTAH; do PERINTAH-2; done"
 
 #: builtins.c:202
 msgid "coproc [NAME] command [redirections]"
@@ -2662,10 +2547,8 @@ msgid "complete [-abcdefgjksuv] [-pr] [-DEI] [-o option] [-A action] [-G globpat
 msgstr "complete [-abcdefgjksuv] [-pr] [-DEI] [-o pilihan] [-A action] [-G globpat] [-W daftar kata] [-F fungsi] [-C perintah] [-X filterpat] [-P prefix] [-S suffix] [name ...]"
 
 #: builtins.c:237
-#, fuzzy
-#| msgid "compgen [-abcdefgjksuv] [-o option] [-A action] [-G globpat] [-W wordlist] [-F function] [-C command] [-X filterpat] [-P prefix] [-S suffix] [word]"
 msgid "compgen [-V varname] [-abcdefgjksuv] [-o option] [-A action] [-G globpat] [-W wordlist] [-F function] [-C command] [-X filterpat] [-P prefix] [-S suffix] [word]"
-msgstr "compgen [-abcdefgjksuv] [-o pilihan] [-A aksi] [-G globpat] [-W wordlist] [-F fungsi] [-C perintah] [-X filterpat] [-P prefix] [-S suffix] [word]"
+msgstr "compgen [-V namavar] [-abcdefgjksuv] [-o pilihan] [-A aksi] [-G globpat] [-W wordlist] [-F fungsi] [-C perintah] [-X filterpat] [-P prefix] [-S suffix] [word]"
 
 #: builtins.c:241
 msgid "compopt [-o|+o option] [-DEI] [name ...]"
@@ -2680,23 +2563,6 @@ msgid "readarray [-d delim] [-n count] [-O origin] [-s count] [-t] [-u fd] [-C c
 msgstr "readarray [-d pembatas] [-n jumlah] [-O asal] [-s jumlah] [-t] [-u fd] [-C callback] [-c quantum] [array]"
 
 #: builtins.c:258
-#, fuzzy
-#| msgid ""
-#| "Define or display aliases.\n"
-#| "    \n"
-#| "    Without arguments, `alias' prints the list of aliases in the reusable\n"
-#| "    form `alias NAME=VALUE' on standard output.\n"
-#| "    \n"
-#| "    Otherwise, an alias is defined for each NAME whose VALUE is given.\n"
-#| "    A trailing space in VALUE causes the next word to be checked for\n"
-#| "    alias substitution when the alias is expanded.\n"
-#| "    \n"
-#| "    Options:\n"
-#| "      -p\tPrint all defined aliases in a reusable format\n"
-#| "    \n"
-#| "    Exit Status:\n"
-#| "    alias returns true unless a NAME is supplied for which no alias has been\n"
-#| "    defined."
 msgid ""
 "Define or display aliases.\n"
 "    \n"
@@ -3099,22 +2965,6 @@ msgstr ""
 "    Selalu gagal."
 
 #: builtins.c:476
-#, fuzzy
-#| msgid ""
-#| "Execute a simple command or display information about commands.\n"
-#| "    \n"
-#| "    Runs COMMAND with ARGS suppressing  shell function lookup, or display\n"
-#| "    information about the specified COMMANDs.  Can be used to invoke commands\n"
-#| "    on disk when a function with the same name exists.\n"
-#| "    \n"
-#| "    Options:\n"
-#| "      -p    use a default value for PATH that is guaranteed to find all of\n"
-#| "            the standard utilities\n"
-#| "      -v    print a description of COMMAND similar to the `type' builtin\n"
-#| "      -V    print a more verbose description of each COMMAND\n"
-#| "    \n"
-#| "    Exit Status:\n"
-#| "    Returns exit status of COMMAND, or failure if COMMAND is not found."
 msgid ""
 "Execute a simple command or display information about commands.\n"
 "    \n"
@@ -3141,7 +2991,8 @@ msgstr ""
 "    Pilihan:\n"
 "      -p    gunakan sebuah nilai default untuk PATH yang menjamin untuk mencari seluruh\n"
 "            penggunaan stadar\n"
-"      -v    menampilkan deskripsi dari PERINTAH sama dengan `type' builtin\n"
+"      -v    menampilkan sebuah kata yang mengindikasikan perintah atau nama berkas yang\n"
+"            melibatkan COMMAND\n"
 "      -V    menampilkan lebih jelas deskripsi dari setiap PERINTAH\n"
 "    \n"
 "    Status Keluar:\n"
@@ -3267,19 +3118,6 @@ msgstr ""
 "    Sama dengan `declare'. Lihat `help declare'."
 
 #: builtins.c:547
-#, fuzzy
-#| msgid ""
-#| "Define local variables.\n"
-#| "    \n"
-#| "    Create a local variable called NAME, and give it VALUE.  OPTION can\n"
-#| "    be any option accepted by `declare'.\n"
-#| "    \n"
-#| "    Local variables can only be used within a function; they are visible\n"
-#| "    only to the function where they are defined and its children.\n"
-#| "    \n"
-#| "    Exit Status:\n"
-#| "    Returns success unless an invalid option is supplied, a variable\n"
-#| "    assignment error occurs, or the shell is not executing a function."
 msgid ""
 "Define local variables.\n"
 "    \n"
@@ -3300,6 +3138,9 @@ msgstr ""
 "    \n"
 "    Membuat sebuah variabel locak dipanggil NAMA, dan memberikan kepadanya NILAI. OPSI dapat\n"
 "    berupa semua pilihan yang diterima oleh `declare'.\n"
+"    \n"
+"    Jika NAME apapun adalah \"-\", simpanan lokal men-set opsi shell dan mengembalikan\n"
+"    mereka ketika fungsi kembali.\n"
 "    \n"
 "    Variabel lokal hanya dapat digunakan dalam sebuah fungsi; mereka hanya\n"
 "    dapat dilihat ke fungsi dimana mereka terdefinisi dan anaknya.\n"
@@ -3637,24 +3478,6 @@ msgstr ""
 "    ditemui atau sebuah error terjadi."
 
 #: builtins.c:709
-#, fuzzy
-#| msgid ""
-#| "Replace the shell with the given command.\n"
-#| "    \n"
-#| "    Execute COMMAND, replacing this shell with the specified program.\n"
-#| "    ARGUMENTS become the arguments to COMMAND.  If COMMAND is not specified,\n"
-#| "    any redirections take effect in the current shell.\n"
-#| "    \n"
-#| "    Options:\n"
-#| "      -a name\tpass NAME as the zeroth argument to COMMAND\n"
-#| "      -c\t\texecute COMMAND with an empty environment\n"
-#| "      -l\t\tplace a dash in the zeroth argument to COMMAND\n"
-#| "    \n"
-#| "    If the command cannot be executed, a non-interactive shell exits, unless\n"
-#| "    the shell option `execfail' is set.\n"
-#| "    \n"
-#| "    Exit Status:\n"
-#| "    Returns success unless COMMAND is not found or a redirection error occurs."
 msgid ""
 "Replace the shell with the given command.\n"
 "    \n"
@@ -3831,27 +3654,6 @@ msgstr ""
 "    Mengembalikan sukses kecuali pengontrol pekerjaan tidak aktif atau sebuah error terjadi."
 
 #: builtins.c:810
-#, fuzzy
-#| msgid ""
-#| "Remember or display program locations.\n"
-#| "    \n"
-#| "    Determine and remember the full pathname of each command NAME.  If\n"
-#| "    no arguments are given, information about remembered commands is displayed.\n"
-#| "    \n"
-#| "    Options:\n"
-#| "      -d\t\tforget the remembered location of each NAME\n"
-#| "      -l\t\tdisplay in a format that may be reused as input\n"
-#| "      -p pathname\tuse PATHNAME as the full pathname of NAME\n"
-#| "      -r\t\tforget all remembered locations\n"
-#| "      -t\t\tprint the remembered location of each NAME, preceding\n"
-#| "    \t\teach location with the corresponding NAME if multiple\n"
-#| "    \t\tNAMEs are given\n"
-#| "    Arguments:\n"
-#| "      NAME\t\tEach NAME is searched for in $PATH and added to the list\n"
-#| "    \t\tof remembered commands.\n"
-#| "    \n"
-#| "    Exit Status:\n"
-#| "    Returns success unless NAME is not found or an invalid option is given."
 msgid ""
 "Remember or display program locations.\n"
 "    \n"
@@ -3894,25 +3696,6 @@ msgstr ""
 "   Mengembalikan sukses kecuali NAMA tidak ditemukan atau sebuah pilihan tidak valid telah diberikan."
 
 #: builtins.c:835
-#, fuzzy
-#| msgid ""
-#| "Display information about builtin commands.\n"
-#| "    \n"
-#| "    Displays brief summaries of builtin commands.  If PATTERN is\n"
-#| "    specified, gives detailed help on all commands matching PATTERN,\n"
-#| "    otherwise the list of help topics is printed.\n"
-#| "    \n"
-#| "    Options:\n"
-#| "      -d\toutput short description for each topic\n"
-#| "      -m\tdisplay usage in pseudo-manpage format\n"
-#| "      -s\toutput only a short usage synopsis for each topic matching\n"
-#| "    \tPATTERN\n"
-#| "    \n"
-#| "    Arguments:\n"
-#| "      PATTERN\tPattern specifiying a help topic\n"
-#| "    \n"
-#| "    Exit Status:\n"
-#| "    Returns success unless PATTERN is not found or an invalid option is given."
 msgid ""
 "Display information about builtin commands.\n"
 "    \n"
@@ -4054,28 +3837,6 @@ msgstr ""
 "    Mengembalikan sukses kecuali sebuah pilihan tidak valid diberikan atau sebuah error terjadi."
 
 #: builtins.c:902
-#, fuzzy
-#| msgid ""
-#| "Display status of jobs.\n"
-#| "    \n"
-#| "    Lists the active jobs.  JOBSPEC restricts output to that job.\n"
-#| "    Without options, the status of all active jobs is displayed.\n"
-#| "    \n"
-#| "    Options:\n"
-#| "      -l\tlists process IDs in addition to the normal information\n"
-#| "      -n\tlist only processes that have changed status since the last\n"
-#| "    \tnotification\n"
-#| "      -p\tlists process IDs only\n"
-#| "      -r\trestrict output to running jobs\n"
-#| "      -s\trestrict output to stopped jobs\n"
-#| "    \n"
-#| "    If -x is supplied, COMMAND is run after all job specifications that\n"
-#| "    appear in ARGS have been replaced with the process ID of that job's\n"
-#| "    process group leader.\n"
-#| "    \n"
-#| "    Exit Status:\n"
-#| "    Returns success unless an invalid option is given or an error occurs.\n"
-#| "    If -x is used, returns the exit status of COMMAND."
 msgid ""
 "Display status of jobs.\n"
 "    \n"
@@ -4150,26 +3911,6 @@ msgstr ""
 "    Mengembalikan sukses kecuali ada sebuah pilihan tidak valid atau JOBSPEC diberikan."
 
 #: builtins.c:948
-#, fuzzy
-#| msgid ""
-#| "Send a signal to a job.\n"
-#| "    \n"
-#| "    Send the processes identified by PID or JOBSPEC the signal named by\n"
-#| "    SIGSPEC or SIGNUM.  If neither SIGSPEC nor SIGNUM is present, then\n"
-#| "    SIGTERM is assumed.\n"
-#| "    \n"
-#| "    Options:\n"
-#| "      -s sig\tSIG is a signal name\n"
-#| "      -n sig\tSIG is a signal number\n"
-#| "      -l\tlist the signal names; if arguments follow `-l' they are\n"
-#| "    \tassumed to be signal numbers for which names should be listed\n"
-#| "    \n"
-#| "    Kill is a shell builtin for two reasons: it allows job IDs to be used\n"
-#| "    instead of process IDs, and allows processes to be killed if the limit\n"
-#| "    on processes that you can create is reached.\n"
-#| "    \n"
-#| "    Exit Status:\n"
-#| "    Returns success unless an invalid option is given or an error occurs."
 msgid ""
 "Send a signal to a job.\n"
 "    \n"
@@ -4687,25 +4428,6 @@ msgstr ""
 "    Mengembalikan sukses kecuali sebuah pilihan tidak valid diberikan."
 
 #: builtins.c:1169
-#, fuzzy
-#| msgid ""
-#| "Unset values and attributes of shell variables and functions.\n"
-#| "    \n"
-#| "    For each NAME, remove the corresponding variable or function.\n"
-#| "    \n"
-#| "    Options:\n"
-#| "      -f\ttreat each NAME as a shell function\n"
-#| "      -v\ttreat each NAME as a shell variable\n"
-#| "      -n\ttreat each NAME as a name reference and unset the variable itself\n"
-#| "    \trather than the variable it references\n"
-#| "    \n"
-#| "    Without options, unset first tries to unset a variable, and if that fails,\n"
-#| "    tries to unset a function.\n"
-#| "    \n"
-#| "    Some variables cannot be unset; also see `readonly'.\n"
-#| "    \n"
-#| "    Exit Status:\n"
-#| "    Returns success unless an invalid option is given or a NAME is read-only."
 msgid ""
 "Unset values and attributes of shell variables and functions.\n"
 "    \n"
@@ -4742,22 +4464,6 @@ msgstr ""
 "    Mengembalikan sukses kecuali sebuah pilihan tidak valid diberikan atau sebuah NAMA adalah baca-saja."
 
 #: builtins.c:1191
-#, fuzzy
-#| msgid ""
-#| "Set export attribute for shell variables.\n"
-#| "    \n"
-#| "    Marks each NAME for automatic export to the environment of subsequently\n"
-#| "    executed commands.  If VALUE is supplied, assign VALUE before exporting.\n"
-#| "    \n"
-#| "    Options:\n"
-#| "      -f\trefer to shell functions\n"
-#| "      -n\tremove the export property from each NAME\n"
-#| "      -p\tdisplay a list of all exported variables and functions\n"
-#| "    \n"
-#| "    An argument of `--' disables further option processing.\n"
-#| "    \n"
-#| "    Exit Status:\n"
-#| "    Returns success unless an invalid option is given or NAME is invalid."
 msgid ""
 "Set export attribute for shell variables.\n"
 "    \n"
@@ -4790,25 +4496,6 @@ msgstr ""
 "    Mengembalikan sukses kecuali sebuah pilihan tidak valid diberikan atau NAMA tidak valid."
 
 #: builtins.c:1210
-#, fuzzy
-#| msgid ""
-#| "Mark shell variables as unchangeable.\n"
-#| "    \n"
-#| "    Mark each NAME as read-only; the values of these NAMEs may not be\n"
-#| "    changed by subsequent assignment.  If VALUE is supplied, assign VALUE\n"
-#| "    before marking as read-only.\n"
-#| "    \n"
-#| "    Options:\n"
-#| "      -a\trefer to indexed array variables\n"
-#| "      -A\trefer to associative array variables\n"
-#| "      -f\trefer to shell functions\n"
-#| "      -p\tdisplay a list of all readonly variables or functions, depending on\n"
-#| "            whether or not the -f option is given\n"
-#| "    \n"
-#| "    An argument of `--' disables further option processing.\n"
-#| "    \n"
-#| "    Exit Status:\n"
-#| "    Returns success unless an invalid option is given or NAME is invalid."
 msgid ""
 "Mark shell variables as unchangeable.\n"
 "    \n"
@@ -4838,7 +4525,8 @@ msgstr ""
 "      -a\tmerujuk ke aray index variabel\n"
 "      -A\tmerujuk ke variabel aray assosiasi\n"
 "      -f\tmerujuk ke fungsi shell\n"
-"      -p\tmenampilkan sebuah daftar dari seluruh variabel dan fungsi baca-saja\n"
+"      -p\tmenampilkan sebuah daftar dari seluruh variabel dan fungsi baca-saja,\n"
+"    \t\ttergantung pada ragu-ragu atau tidak opsi -f diberikan\n"
 "    \n"
 "    Sebuah argumen dari `--' menonaktifkan pemrosesan pilihan selanjutnya.\n"
 "    \n"
@@ -4901,18 +4589,6 @@ msgstr ""
 "    NAMA BERKAS tidak dapat dibaca."
 
 #: builtins.c:1277
-#, fuzzy
-#| msgid ""
-#| "Suspend shell execution.\n"
-#| "    \n"
-#| "    Suspend the execution of this shell until it receives a SIGCONT signal.\n"
-#| "    Unless forced, login shells cannot be suspended.\n"
-#| "    \n"
-#| "    Options:\n"
-#| "      -f\tforce the suspend, even if the shell is a login shell\n"
-#| "    \n"
-#| "    Exit Status:\n"
-#| "    Returns success unless job control is not enabled or an error occurs."
 msgid ""
 "Suspend shell execution.\n"
 "    \n"
@@ -4930,10 +4606,12 @@ msgstr ""
 "Suspend eksekusi shell.\n"
 "    \n"
 "    Suspend eksekusi dari shell ini sampai menerima sebuah sinyal SIGCONT.\n"
-"    Kecuali dipaksa, login shell tidak dapat disuspend.\n"
+"    Kecuali dipaksa, login shell dan shell tanpa kerja kontrol tidak dapat\n"
+"    disuspend.\n"
 "    \n"
 "    Pilihan:\n"
-"      -f\tpaksa untuk suspend, walaupun jika shell adalah sebuah login shell\n"
+"      -f\tpaksa untuk suspend, walaupun jika shell adalah sebuah login shell atau kerja\n"
+"    \t\tkontrol tidak diaktifkan.\n"
 "    \n"
 "    Status Keluar:\n"
 "    Mengembalikan sukses kecuali pengontrol pekerjaan tidak aktif atau sebuah error terjadi."
@@ -5797,15 +5475,6 @@ msgstr ""
 "    Mengembalikan status dari perintah terakhir yang dijalankan."
 
 #: builtins.c:1702
-#, fuzzy
-#| msgid ""
-#| "Execute commands as long as a test succeeds.\n"
-#| "    \n"
-#| "    Expand and execute COMMANDS as long as the final command in the\n"
-#| "    `while' COMMANDS has an exit status of zero.\n"
-#| "    \n"
-#| "    Exit Status:\n"
-#| "    Returns the status of the last command executed."
 msgid ""
 "Execute commands as long as a test succeeds.\n"
 "    \n"
@@ -5817,22 +5486,13 @@ msgid ""
 msgstr ""
 "Menjalankan perintah sepanjang pemeriksaan sukses.\n"
 "    \n"
-"    Expand dan jalankan PERINTAH sepanjang akhir perintah dari\n"
-"    PERINTAH `while' telah memberikan status keluaran nol.\n"
+"    Expand dan jalankan PERINTAH-2 sepanjang akhir perintah dari\n"
+"    PERINTAH telah memberikan status keluaran nol.\n"
 "    \n"
 "    Status Keluar:\n"
 "    Mengembalikan status dari perintah terakhir yang dijalankan."
 
 #: builtins.c:1714
-#, fuzzy
-#| msgid ""
-#| "Execute commands as long as a test does not succeed.\n"
-#| "    \n"
-#| "    Expand and execute COMMANDS as long as the final command in the\n"
-#| "    `until' COMMANDS has an exit status which is not zero.\n"
-#| "    \n"
-#| "    Exit Status:\n"
-#| "    Returns the status of the last command executed."
 msgid ""
 "Execute commands as long as a test does not succeed.\n"
 "    \n"
@@ -5844,8 +5504,9 @@ msgid ""
 msgstr ""
 "Menjalankan perintah sepanjang pemeriksaan tidak sukses.\n"
 "    \n"
-"    Expand dan jalankan PERINTAH sepanjang akhir perintah dari\n"
-"    PERINTAH `until' telah memberikan status keluaran bukan nol.    \n"
+"    Expand dan jalankan PERINTAH-2 sepanjang akhir perintah dari\n"
+"    PERINTAH telah memberikan status keluaran bukan nol.    \n"
+"    \n"
 "    Status Keluar:\n"
 "    Mengembalikan status dari perintah terakhir yang dijalankan."
 
@@ -6343,24 +6004,6 @@ msgstr ""
 "    Mengembalikan sukses kecuali ada sebuah pilihan tidak valid diberikan atau sebuah error terjadi."
 
 #: builtins.c:1971
-#, fuzzy
-#| msgid ""
-#| "Set and unset shell options.\n"
-#| "    \n"
-#| "    Change the setting of each shell option OPTNAME.  Without any option\n"
-#| "    arguments, list all shell options with an indication of whether or not each\n"
-#| "    is set.\n"
-#| "    \n"
-#| "    Options:\n"
-#| "      -o\trestrict OPTNAMEs to those defined for use with `set -o'\n"
-#| "      -p\tprint each shell option with an indication of its status\n"
-#| "      -q\tsuppress output\n"
-#| "      -s\tenable (set) each OPTNAME\n"
-#| "      -u\tdisable (unset) each OPTNAME\n"
-#| "    \n"
-#| "    Exit Status:\n"
-#| "    Returns success if OPTNAME is enabled; fails if an invalid option is\n"
-#| "    given or OPTNAME is disabled."
 msgid ""
 "Set and unset shell options.\n"
 "    \n"
@@ -6382,8 +6025,8 @@ msgstr ""
 "Set dan unset pilihan shell.\n"
 "    \n"
 "    Ubah setting untuk setiap pilihan shell OPTNAME. Tanpa pilihan\n"
-"    argumen apapun, tampilkan daftar shell pilihan dengan sebuah indikasi\n"
-"    ya atau tidak setiap pilihan di set.\n"
+"    argumen apapun, tampilkan setiap OPTNAME yang disuply, atau semua shell pilihan jika tidak ada\n"
+"    OPTNAME diberikan,dengan sebuah indikasi ya atau tidak setiap pilihan di set.\n"
 "    \n"
 "    Pilihan:\n"
 "      -o\tbatasi OPTNAME ke definisi untuk digunakan dengan `set -o'\n"

@@ -6591,6 +6591,15 @@ causes that word and all remaining characters on that
 line to be ignored, as in a non-interactive shell.
 This option is enabled by default.
 
+@item kvpair_split
+If set, a compound assignment to an associative array performs word
+expansions, including word splitting, on all words
+in the assignment before identifying keys and values.
+If it is unset, each word in the compound assignment list is identified as a
+key or value before performing the appropriate word expansions,
+and word splitting is not performed.
+This option is enabled by default.
+
 @item lastpipe
 If set, and job control is not active, the shell runs the last command of
 a pipeline not executed in the background in the current shell environment.
@@ -8833,12 +8842,22 @@ may be either assignment statements, for which the subscript is required,
 or a list of words that is interpreted as a sequence of alternating keys
 and values:
 @var{name}=(@var{key1} @var{value1} @var{key2} @var{value2} @dots{} ).
-These are treated identically to
-@var{name}=( [@var{key1}]=@var{value1} [@var{key2}]=@var{value2} @dots{} ).
 The first word in the list determines how the remaining words
 are interpreted; all assignments in a list must be of the same type.
 When using key/value pairs, the keys may not be missing or empty;
 a final missing value is treated like the empty string.
+
+The
+@code{kvpair_split}
+option to the @code{shopt} builtin (see @ref{The Shopt Builtin})
+determines how the words in a key/value pair assignment list are treated.
+If it is enabled, each word in the list undergoes word expansions,
+including word splitting, before the assignment identifies
+individual keys and values.
+If it is unset, the key/value pairs in the example above are
+treated identically to
+@var{name}=( [@var{key1}]=@var{value1} [@var{key2}]=@var{value2} @dots{} )
+and expanded appropriately.
 
 This syntax is also accepted by the @code{declare}
 builtin.

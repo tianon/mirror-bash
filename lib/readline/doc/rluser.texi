@@ -1449,7 +1449,6 @@ This command sets the region to the matched text and activates the region.
 
 @item non-incremental-reverse-search-history (M-p)
 Search backward starting at the current line and moving ``up''
-
 through the history as necessary using a non-incremental search
 for a string supplied by the user.
 The search string may match anywhere in a history line.
@@ -1458,6 +1457,20 @@ The search string may match anywhere in a history line.
 Search forward starting at the current line and moving ``down''
 through the history as necessary using a non-incremental search
 for a string supplied by the user.
+The search string may match anywhere in a history line.
+
+@item non-incremental-reverse-search-history-again ()
+Search backward starting at the current line and moving ``up''
+through the history as necessary using a non-incremental search
+for the last non-incremental search string used.
+If there is no previous search string, this command returns an error.
+The search string may match anywhere in a history line.
+
+@item non-incremental-forward-search-history-again ()
+Search forward starting at the current line and moving ``down''
+through the history as necessary using a non-incremental search
+for the last non-incremental search string used.
+If there is no previous search string, this command returns an error.
 The search string may match anywhere in a history line.
 
 @item history-search-backward ()

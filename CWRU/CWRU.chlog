@@ -13183,4 +13183,49 @@ general.h
 	- legal_variable_starter,legal_variable_char: change to use the
 	  appropriate CNAME and CNAMESTART flags from sh_syntaxtab[]
 	  Report from zheng <charname@qq.com>
- 
+
+				   8/12
+				   ----
+subst.c
+	- parameter_brace_expand: when expanding ${#name}, make sure to cast
+	  the variable passed to legal_variable_starter to unsigned char
+	  Report from otzelot2021@outlook.de <otzelot2021@outlook.de>
+
+				   8/13
+				   ----
+config.h.in
+	- _GL_ATTRIBUTE_CONST: add dummy define for libintl localename
+	  Report from Tianon Gravi <admwiggin@gmail.com>
+
+				   8/14
+				   ----
+examples/loadables/loadassoc.c
+	- loadassoc: new loadable builtin to populate keys and values in an
+	  associative array from a list of arguments, along the lines of the
+	  suggestion in https://lists.gnu.org/archive/html/bug-bash/2026-01/msg00008.html
+	  (though you'd need to use assoc[@]@k to copy an existing array, so
+	  you get the keys)
+
+arrayfunc.c
+	- split_kvpair_assignments: now initialized to 1 (KVPAIR_SPLIT_DEFAULT),
+	  meaning that the entire list is expanded and split before the keys
+	  and values are identified. This is closer to how indexed arrays are
+	  expanded. This means that you can copy an associative array with
+		copy=( "${assoc[@]@k}" )
+	  Based on an extensive bug-bash discussion from 12/2025 and 1/2026,
+	  mostly https://lists.gnu.org/archive/html/bug-bash/2025-12/msg00125.html
+
+config-top.h
+	- KVPAIR_SPLIT_DEFAULT: default value for kvpair_split_assignments,
+	  initialized to 1
+
+arrayfunc.h
+	- split_kvpair_assignments: new extern declaration
+
+builtins/shopt.def
+	- kvpair_split: new shell option to control the value of
+	  kvpair_split_assignments; default is as above
+
+doc/bash.1,doc/bashref.texi
+	- kvpair_split: added description to shopt builtin; added paragraph
+	  to Arrays section describing its effect

@@ -1,7 +1,7 @@
 #
 # Simple makefile for the sample loadable builtins
 #
-# Copyright (C) 1996-2025 Free Software Foundation, Inc.
+# Copyright (C) 1996-2026 Free Software Foundation, Inc.
 
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -103,7 +103,8 @@ INC = -I. -I.. -I$(topdir) -I$(topdir)/lib -I$(topdir)/builtins -I${srcdir} \
 ALLPROG = print truefalse sleep finfo logname basename dirname fdflags \
 	  tty pathchk tee head mkdir rmdir mkfifo mktemp printenv id whoami \
 	  uname sync push ln unlink realpath strftime mypid setpgid seq rm \
-	  accept csv dsv cut stat getconf kv strptime chmod fltexpr jobid rev
+	  accept csv dsv cut stat getconf kv strptime chmod fltexpr jobid rev \
+	  loadassoc
 OTHERPROG = necho hello cat pushd asort
 
 SUBDIRS = perl
@@ -229,6 +230,9 @@ dsv:	dsv.o
 kv:	kv.o
 	$(SHOBJ_LD) $(SHOBJ_LDFLAGS) $(SHOBJ_XLDFLAGS) -o $@ kv.o $(SHOBJ_LIBS)
 
+loadassoc:	loadassoc.o
+	$(SHOBJ_LD) $(SHOBJ_LDFLAGS) $(SHOBJ_XLDFLAGS) -o $@ loadassoc.o $(SHOBJ_LIBS)
+
 cut:	cut.o
 	$(SHOBJ_LD) $(SHOBJ_LDFLAGS) $(SHOBJ_XLDFLAGS) -o $@ cut.o $(SHOBJ_LIBS)
 
@@ -327,7 +331,8 @@ OBJS = print.o truefalse.o accept.o sleep.o finfo.o getconf.o logname.o \
        basename.o dirname.o tty.o pathchk.o tee.o head.o rmdir.o necho.o \
        hello.o cat.o csv.o dsv.o kv.o cut.o printenv.o id.o whoami.o uname.o \
        sync.o push.o mkdir.o mktemp.o realpath.o strftime.o setpgid.o stat.o \
-       fdflags.o seq.o asort.o strptime.o chmod.o fltexpr.o jobid.o rev.o
+       fdflags.o seq.o asort.o strptime.o chmod.o fltexpr.o jobid.o rev.o \
+       loadassoc.o
 
 ${OBJS}:	${BUILD_DIR}/config.h
 
@@ -352,6 +357,7 @@ chmod.o: chmod.c
 csv.o: csv.c
 dsv.o: dsv.c
 kv.o: kv.c
+loadassoc.o: loadassoc.c
 cut.o: cut.c
 printenv.o: printenv.c
 id.o: id.c

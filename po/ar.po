@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: bash 5.3-rc2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-22 09:37-0400\n"
-"PO-Revision-Date: 2026-02-01 10:59+0400\n"
+"PO-Revision-Date: 2026-08-09 13:44+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: Arabic <(nothing)>\n"
 "Language: ar\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Bugs: Report translation errors to the Language-Team address.\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100 >= 3 && n%100<=10 ? 3 : n%100 >= 11 && n%100<=99 ? 4 : 5;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #: arrayfunc.c:63
 msgid "bad array subscript"
@@ -2293,7 +2293,7 @@ msgstr "builtin [أمر_قشرة_داخلي [وسيط ...]]"
 
 #: builtins.c:63
 msgid "caller [expr]"
-msgstr "المستدعَي [expr]"
+msgstr "caller [تعبير]"
 
 #: builtins.c:66
 msgid "cd [-L|[-P [-e]]] [-@] [dir]"

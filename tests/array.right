@@ -515,7 +515,7 @@ declare -a e=([0]="Darwin")
 declare -A a=([0]="a b" )
 declare -A b=([0]="/scratch/bash" )
 declare -A c=([1]="2" )
-declare -A d=(["a b"]="" )
+declare -A d=([a]="b" )
 declare -A e=([Darwin]="" )
 	array20.sub
 a+b+c

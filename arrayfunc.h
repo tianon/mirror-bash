@@ -52,6 +52,11 @@ typedef struct element_state
    more than once, when performing variable expansion. */
 extern int array_expand_once;
 
+/* This means to split the words in a compound associative array assignment
+   before the keys and values are identified, so the expanded and split words
+   can be used as separate keys and values. */
+extern int split_kvpair_assignments;
+
 /* Flags for array_value_internal and callers array_value/get_array_value; also
    used by array_variable_name and array_variable_part. */
 #define AV_ALLOWALL	0x001	/* treat a[@] like $@ and a[*] like $* */

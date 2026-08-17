@@ -10121,7 +10121,7 @@ parameter_brace_expand (char *string, size_t *indexp, int quoted, int pflags, in
   sindex = *indexp;
   t_index = ++sindex;
   /* ${#var} doesn't have any of the other parameter expansions on it. */
-  if (string[t_index] == '#' && legal_variable_starter (string[t_index+1]))		/* {{ */
+  if (string[t_index] == '#' && legal_variable_starter ((unsigned char)string[t_index+1]))		/* {{ */
     name = string_extract (string, &t_index, "}", SX_VARNAME);
   else
 #if defined (CASEMOD_EXPANSIONS)

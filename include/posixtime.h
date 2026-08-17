@@ -79,7 +79,7 @@ getnow(void)
 #  define timerisunset(tvp)	((tvp)->tv_sec == 0 && (tvp)->tv_usec == 0)
 #endif
 #if !defined (timerset)
-#  define timerset(tvp, s, u)	do { tvp->tv_sec = s; tvp->tv_usec = u; } while (0)
+#  define timerset(tvp, s, u)	do { (tvp)->tv_sec = s; (tvp)->tv_usec = u; } while (0)
 #endif
 
 #ifndef TIMEVAL_TO_TIMESPEC

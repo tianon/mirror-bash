@@ -1,6 +1,6 @@
 /* arrayfunc.c -- High-level array functions used by other parts of the shell. */
 
-/* Copyright (C) 2001-2025 Free Software Foundation, Inc.
+/* Copyright (C) 2001-2026 Free Software Foundation, Inc.
 
    This file is part of GNU Bash, the Bourne Again SHell.
 
@@ -641,7 +641,7 @@ expand_compound_array_assignment (SHELL_VAR *var, char *value, int flags)
 #if ASSOC_KVPAIR_ASSIGNMENT
 /* If non-zero, we split the words in kv-pair compound array assignments in
    addition to performing the other expansions. */
-int split_kvpair_assignments = 0;
+int split_kvpair_assignments = KVPAIR_SPLIT_DEFAULT;
 
 /* We have a set of key-value pairs that should be expanded and split
    (because they are not assignment statements). They are not expanded
@@ -665,12 +665,14 @@ assign_assoc_from_kvlist (SHELL_VAR *var, WORD_LIST *nlist, HASH_TABLE *h, int f
       akey = split_kvpair_assignments ? savestring (k) : expand_subscript_string (k, 0);
       if (akey == 0 || *akey == 0)
 	{
-	  err_badarraysub (k);
+	  const char *kmsg = "\"\"";	/* make it look better */
+	 
+	  err_badarraysub (kmsg);
 	  FREE (akey);
 	  continue;
 	}	      
 
-      aval = split_kvpair_assignments ? savestring (v) : expand_assignment_string_to_string (v, 0);
+      aval = split_kvpair_assignments ? (v ? savestring (v) : 0) : expand_assignment_string_to_string (v, 0);
       if (aval == 0)
 	{
 	  aval = (char *)xmalloc (1);

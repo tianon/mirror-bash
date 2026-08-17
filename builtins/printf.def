@@ -45,8 +45,12 @@ in printf(3), printf interprets:
   %(fmt)T	output the date-time string resulting from using FMT as a format
 	        string for strftime(3)
 
+Like printf(3), printf can reference arguments in non-sequential order.
+A format specifier %N$, where N is a decimal integer greater than 0,
+refers to the Nth argument supplied to printf.
+
 The format is re-used as necessary to consume all of the arguments.  If
-there are fewer arguments than the format requires,  extra format
+there are fewer arguments than the format requires, extra format
 specifications behave as if a zero value or null string, as appropriate,
 had been supplied.
 

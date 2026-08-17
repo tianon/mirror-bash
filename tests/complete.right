@@ -211,6 +211,7 @@ hostcomplete
 huponexit
 inherit_errexit
 interactive_comments
+kvpair_split
 lastpipe
 lithist
 localvar_inherit

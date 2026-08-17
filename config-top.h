@@ -1,6 +1,6 @@
 /* config-top.h - various user-settable options not under the control of autoconf. */
 
-/* Copyright (C) 2002-2024 Free Software Foundation, Inc.
+/* Copyright (C) 2002-2026 Free Software Foundation, Inc.
 
    This file is part of GNU Bash, the Bourne Again SHell.
 
@@ -194,6 +194,10 @@
 /* Undefine or define to 0 if you don't want to allow associative array
    assignment using a compound list of key-value pairs. */
 #define ASSOC_KVPAIR_ASSIGNMENT 1
+
+/* Define to 1 to perform word splitting on the words in an associative array
+   compound assignment that has been identified as a kvpair assignment. */
+#define KVPAIR_SPLIT_DEFAULT	1
 
 /* Define if you want read errors in non-interactive shells to be fatal
    errors instead of the historical practice of treating them as EOF. The

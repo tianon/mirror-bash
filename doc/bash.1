@@ -5,7 +5,7 @@
 .\"	Case Western Reserve University
 .\"	chet.ramey@case.edu
 .\"
-.\"	Last Change: Thu Jul  9 09:19:19 EDT 2026
+.\"	Last Change: Fri Aug 14 15:49:37 EDT 2026
 .\"
 .\" For bash_builtins, strip all but "SHELL BUILTIN COMMANDS" section
 .\" For rbash, strip all but "RESTRICTED SHELL" section
@@ -22,7 +22,7 @@
 .ds zX \" empty
 .if \n(zZ=1 .ig zZ
 .if \n(zY=1 .ig zY
-.TH BASH 1 "2026 July 1" "GNU Bash 5.3"
+.TH BASH 1 "2026 August 14" "GNU Bash 5.3"
 .\"
 .ie \n(.g \{\
 .ds ' \(aq
@@ -3273,8 +3273,8 @@ is also accepted; the \fIsubscript\fP is ignored.
 Associative arrays are created using
 .RS
 .BI "declare \-A\ " name
-.RE
 \&.
+.RE
 .PP
 Attributes may be specified for an array variable using the
 .B \%declare
@@ -3307,13 +3307,26 @@ may be either assignment statements, for which the subscript is required,
 or a list of words that is interpreted as a sequence of alternating keys
 and values:
 \fIname\fP=\fB( \fP\fIkey1 value1 key2 value2\fP .\|.\|.\&\fB)\fP.
-These are treated identically to
-\fIname\fP=\fB(\fP [\fIkey1\fP]=\fIvalue1\fP [\fIkey2\fP]=\fIvalue2\fP
-\&.\|.\|.\&\fB)\fP.
 The first word in the list determines how the remaining words
 are interpreted; all assignments in a list must be of the same type.
 When using key/value pairs, the keys may not be missing or empty;
 a final missing value is treated like the empty string.
+.PP
+The
+.B kvpair_split
+option to the \fBshopt\fP builtin (see
+.SM
+.B "SHELL BUILTIN COMMANDS"
+below)
+determines how the words in a key/value pair assignment list are treated.
+If it is enabled, each word in the list undergoes word expansions,
+including word splitting, before the assignment identifies
+individual keys and values.
+If it is unset, the key/value pairs in the example above are
+treated identically to
+\fIname\fP=\fB(\fP [\fIkey1\fP]=\fIvalue1\fP [\fIkey2\fP]=\fIvalue2\fP
+\&.\|.\|.\&\fB)\fP
+and expanded appropriately.
 .PP
 This syntax is also accepted by the
 .B declare
@@ -7090,7 +7103,7 @@ common prefix of the set of possible completions using a different color.
 The color definitions are taken from the value of the \fBLS_COLORS\fP
 environment variable.
 If there is a color definition in \fB$LS_COLORS\fP for the custom suffix
-.Q .readline-colored-completion-prefix ,
+.Q readline-colored-completion-prefix ,
 \fBreadline\fP uses this color for
 the common prefix instead of its default.
 .TP
@@ -7745,12 +7758,28 @@ This command sets the region to the matched text and activates the region.
 .TP
 .B non\-incremental\-reverse\-search\-history (M\-p)
 Search backward through the history starting at the current line
-using a non-incremental search for a string supplied by the user.
+using a non-incremental search
+for a string supplied by the user.
 The search string may match anywhere in a history line.
 .TP
 .B non\-incremental\-forward\-search\-history (M\-n)
-Search forward through the history using a non-incremental search
+Search forward through the history starting at the current line
+using a non-incremental search
 for a string supplied by the user.
+The search string may match anywhere in a history line.
+.TP
+.B non\-incremental\-reverse\-search\-history\-again ()
+Search backward through the history starting at the current line
+using a non-incremental search
+for the last non-incremental search string used.
+If there is no previous search string, this command returns an error.
+The search string may match anywhere in a history line.
+.TP
+.B non\-incremental\-forward\-search\-history\-again ()
+Search forward through the history starting at the current line
+using a non-incremental search
+for the last non-incremental search string used.
+If there is no previous search string, this command returns an error.
 The search string may match anywhere in a history line.
 .TP
 .B history\-search\-backward
@@ -12417,6 +12446,15 @@ line to be ignored, as in a non-interactive shell
 .B COMMENTS
 .ie \n(zZ=1 in \fIbash\fP(1)).
 .el above).
+This option is enabled by default.
+.TP 8
+.B kvpair_split
+If set, a compound assignment to an associative array performs word
+expansions, including word splitting, on all words
+in the assignment before identifying keys and values.
+If it is unset, each word in the compound assignment list is identified as a
+key or value before performing the appropriate word expansions,
+and word splitting is not performed.
 This option is enabled by default.
 .TP 8
 .B lastpipe

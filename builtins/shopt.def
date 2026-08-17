@@ -123,6 +123,7 @@ extern int debugging_mode;
 #if defined (ARRAY_VARS)
 extern int array_expand_once;
 int expand_once_flag;
+extern int kvpair_split_assignments;
 #endif
 
 #if defined (SYSLOG_HISTORY)
@@ -235,6 +236,9 @@ static struct {
   { "huponexit", &hup_on_exit, (shopt_set_func_t *)NULL },
   { "inherit_errexit", &inherit_errexit, (shopt_set_func_t *)NULL },
   { "interactive_comments", &interactive_comments, set_shellopts_after_change },
+#if defined (ARRAY_VARS)
+  { "kvpair_split", &split_kvpair_assignments, (shopt_set_func_t *)NULL },
+#endif
   { "lastpipe", &lastpipe_opt, (shopt_set_func_t *)NULL },
 #if defined (HISTORY)
   { "lithist", &literal_history, (shopt_set_func_t *)NULL },

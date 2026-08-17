@@ -6,9 +6,9 @@
 .\"	Case Western Reserve University
 .\"	chet.ramey@case.edu
 .\"
-.\"	Last Change: Mon Oct  6 09:58:21 EDT 2025
+.\"	Last Change: Mon Aug 10 10:05:09 EDT 2026
 .\"
-.TH READLINE 3 "2025 October 6" "GNU Readline 8.3"
+.TH READLINE 3 "2026 August 10" "GNU Readline 8.3"
 .\" Ensure this string is initialized to avoid groff warnings.
 .ds zX \" empty
 .\"
@@ -1166,12 +1166,28 @@ This command sets the region to the matched text and activates the region.
 .TP
 .B non\-incremental\-reverse\-search\-history (M\-p)
 Search backward through the history starting at the current line
-using a non-incremental search for a string supplied by the user.
+using a non-incremental search
+for a string supplied by the user.
 The search string may match anywhere in a history line.
 .TP
 .B non\-incremental\-forward\-search\-history (M\-n)
-Search forward through the history using a non-incremental search
+Search forward through the history starting at the current line
+using a non-incremental search
 for a string supplied by the user.
+The search string may match anywhere in a history line.
+.TP
+.B non\-incremental\-reverse\-search\-history\-again ()
+Search backward through the history starting at the current line
+using a non-incremental search
+for the last non-incremental search string used.
+If there is no previous search string, this command returns an error.
+The search string may match anywhere in a history line.
+.TP
+.B non\-incremental\-forward\-search\-history\-again ()
+Search forward through the history starting at the current line
+using a non-incremental search
+for the last non-incremental search string used.
+If there is no previous search string, this command returns an error.
 The search string may match anywhere in a history line.
 .TP
 .B history\-search\-backward

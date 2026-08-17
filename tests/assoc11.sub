@@ -57,7 +57,7 @@ func
 loaddict()
 {
 	dict=( '"' dquote '`' bquote "'" squote '\' bslash)
-	dict+=( '$' dol @ at * star \{ lbrace \} rbrace ? quest)
+	dict+=( '$' dol @ at \* star \{ lbrace \} rbrace \? quest)
 
 	declare -p dict
 	echo dict=\( ${dict[@]@K} \)

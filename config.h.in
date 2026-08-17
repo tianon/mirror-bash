@@ -1,6 +1,6 @@
 /* config.h -- Configuration file for bash. */
 
-/* Copyright (C) 1987-2009,2011-2012,2013-2024 Free Software Foundation, Inc.
+/* Copyright (C) 1987-2009,2011-2012,2013-2026 Free Software Foundation, Inc.
 
    This file is part of GNU Bash, the Bourne Again SHell.
 
@@ -1243,10 +1243,12 @@
 
 #undef HAVE_WEAK_SYMBOLS
 
+#define _GL_ATTRIBUTE_CONST
 #define _GL_ATTRIBUTE_MALLOC
 #define _GL_ATTRIBUTE_DEALLOC_FREE
 #define _GL_ATTRIBUTE_FALLTHROUGH
 #define _GL_ATTRIBUTE_PURE
+
 #define _GL_UNUSED
 
 #define _GL_INLINE_HEADER_BEGIN

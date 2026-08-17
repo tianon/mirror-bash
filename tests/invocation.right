@@ -73,9 +73,9 @@ this-bash this-bash
 $- for -c includes c
 	invocation1.sub
 bash: line 0: badopt: invalid shell option name
-checkwinsize:cmdhist:complete_fullquote:extquote:force_fignore:globasciiranges:globskipdots:hostcomplete:interactive_comments:patsub_replacement:progcomp:promptvars:sourcepath
-checkhash:checkwinsize:cmdhist:complete_fullquote:extquote:force_fignore:globasciiranges:globskipdots:hostcomplete:interactive_comments:patsub_replacement:progcomp:promptvars:sourcepath
-cmdhist:complete_fullquote:extquote:force_fignore:globasciiranges:globskipdots:hostcomplete:interactive_comments:patsub_replacement:progcomp:promptvars:sourcepath
+checkwinsize:cmdhist:complete_fullquote:extquote:force_fignore:globasciiranges:globskipdots:hostcomplete:interactive_comments:kvpair_split:patsub_replacement:progcomp:promptvars:sourcepath
+checkhash:checkwinsize:cmdhist:complete_fullquote:extquote:force_fignore:globasciiranges:globskipdots:hostcomplete:interactive_comments:kvpair_split:patsub_replacement:progcomp:promptvars:sourcepath
+cmdhist:complete_fullquote:extquote:force_fignore:globasciiranges:globskipdots:hostcomplete:interactive_comments:kvpair_split:patsub_replacement:progcomp:promptvars:sourcepath
 ./invocation1.sub: line 40: BASHOPTS: readonly variable
 	invocation2.sub
 braceexpand:hashall:interactive-comments

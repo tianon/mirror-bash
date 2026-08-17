@@ -1,9 +1,9 @@
 This is bash.info, produced by makeinfo version 7.3 from bashref.texi.
 
 This text is a brief description of the features that are present in the
-Bash shell (version 5.3, 9 July 2026).
+Bash shell (version 5.3, 14 August 2026).
 
-   This is Edition 5.3, last updated 9 July 2026, of ‘The GNU Bash
+   This is Edition 5.3, last updated 14 August 2026, of ‘The GNU Bash
 Reference Manual’, for ‘Bash’, Version 5.3.
 
    Copyright © 1988-2026 Free Software Foundation, Inc.
@@ -26,10 +26,10 @@ Bash Features
 *************
 
 This text is a brief description of the features that are present in the
-Bash shell (version 5.3, 9 July 2026).  The Bash home page is
+Bash shell (version 5.3, 14 August 2026).  The Bash home page is
 <http://www.gnu.org/software/bash/>.
 
-   This is Edition 5.3, last updated 9 July 2026, of ‘The GNU Bash
+   This is Edition 5.3, last updated 14 August 2026, of ‘The GNU Bash
 Reference Manual’, for ‘Bash’, Version 5.3.
 
    Bash contains features that appear in other popular shells, and some
@@ -5463,6 +5463,15 @@ This builtin allows you to change additional optional shell behavior.
           as in a non-interactive shell.  This option is enabled by
           default.
 
+     ‘kvpair_split’
+          If set, a compound assignment to an associative array performs
+          word expansions, including word splitting, on all words in the
+          assignment before identifying keys and values.  If it is
+          unset, each word in the compound assignment list is identified
+          as a key or value before performing the appropriate word
+          expansions, and word splitting is not performed.  This option
+          is enabled by default.
+
      ‘lastpipe’
           If set, and job control is not active, the shell runs the last
           command of a pipeline not executed in the background in the
@@ -7340,12 +7349,19 @@ Indexing starts at zero.
    When assigning to an associative array, the words in a compound
 assignment may be either assignment statements, for which the subscript
 is required, or a list of words that is interpreted as a sequence of
-alternating keys and values: NAME=(KEY1 VALUE1 KEY2 VALUE2 ... ).  These
-are treated identically to NAME=( [KEY1]=VALUE1 [KEY2]=VALUE2 ... ).
-The first word in the list determines how the remaining words are
+alternating keys and values: NAME=(KEY1 VALUE1 KEY2 VALUE2 ... ).  The
+first word in the list determines how the remaining words are
 interpreted; all assignments in a list must be of the same type.  When
 using key/value pairs, the keys may not be missing or empty; a final
 missing value is treated like the empty string.
+
+   The ‘kvpair_split’ option to the ‘shopt’ builtin (see *note The Shopt
+Builtin::) determines how the words in a key/value pair assignment list
+are treated.  If it is enabled, each word in the list undergoes word
+expansions, including word splitting, before the assignment identifies
+individual keys and values.  If it is unset, the key/value pairs in the
+example above are treated identically to NAME=( [KEY1]=VALUE1
+[KEY2]=VALUE2 ... ) and expanded appropriately.
 
    This syntax is also accepted by the ‘declare’ builtin.  Individual
 array elements may be assigned to using the ‘NAME[SUBSCRIPT]=VALUE’
@@ -9780,7 +9796,6 @@ File: bash.info,  Node: Commands For History,  Next: Commands For Text,  Prev: C
 
 ‘non-incremental-reverse-search-history (M-p)’
      Search backward starting at the current line and moving "up"
-
      through the history as necessary using a non-incremental search for
      a string supplied by the user.  The search string may match
      anywhere in a history line.
@@ -9790,6 +9805,20 @@ File: bash.info,  Node: Commands For History,  Next: Commands For Text,  Prev: C
      through the history as necessary using a non-incremental search for
      a string supplied by the user.  The search string may match
      anywhere in a history line.
+
+‘non-incremental-reverse-search-history-again ()’
+     Search backward starting at the current line and moving "up"
+     through the history as necessary using a non-incremental search for
+     the last non-incremental search string used.  If there is no
+     previous search string, this command returns an error.  The search
+     string may match anywhere in a history line.
+
+‘non-incremental-forward-search-history-again ()’
+     Search forward starting at the current line and moving "down"
+     through the history as necessary using a non-incremental search for
+     the last non-incremental search string used.  If there is no
+     previous search string, this command returns an error.  The search
+     string may match anywhere in a history line.
 
 ‘history-search-backward ()’
      Search backward through the history for the string of characters
@@ -13472,7 +13501,7 @@ D.4 Function Index
 * export-completions ():                 Commands For Completion.
                                                               (line  44)
 * fetch-history ():                      Commands For History.
-                                                              (line 109)
+                                                              (line 122)
 * forward-backward-delete-char ():       Commands For Text.   (line  23)
 * forward-char (C-f):                    Commands For Moving. (line  14)
 * forward-search-history (C-s):          Commands For History.
@@ -13489,13 +13518,13 @@ D.4 Function Index
 * history-expand-line (M-^):             Miscellaneous Commands.
                                                               (line 142)
 * history-search-backward ():            Commands For History.
-                                                              (line  54)
+                                                              (line  67)
 * history-search-forward ():             Commands For History.
-                                                              (line  61)
-* history-substring-search-backward ():  Commands For History.
-                                                              (line  68)
-* history-substring-search-forward ():   Commands For History.
                                                               (line  74)
+* history-substring-search-backward ():  Commands For History.
+                                                              (line  81)
+* history-substring-search-forward ():   Commands For History.
+                                                              (line  87)
 * insert-comment (M-#):                  Miscellaneous Commands.
                                                               (line  59)
 * insert-completions (M-*):              Commands For Completion.
@@ -13520,11 +13549,15 @@ D.4 Function Index
                                                               (line  18)
 * next-screen-line ():                   Commands For Moving. (line  45)
 * non-incremental-forward-search-history (M-n): Commands For History.
-                                                              (line  48)
+                                                              (line  47)
+* non-incremental-forward-search-history-again (): Commands For History.
+                                                              (line  60)
 * non-incremental-reverse-search-history (M-p): Commands For History.
                                                               (line  41)
+* non-incremental-reverse-search-history-again (): Commands For History.
+                                                              (line  53)
 * operate-and-get-next (C-o):            Commands For History.
-                                                              (line 102)
+                                                              (line 115)
 * overwrite-mode ():                     Commands For Text.   (line  77)
 * possible-command-completions (C-x !):  Commands For Completion.
                                                               (line 111)
@@ -13588,9 +13621,9 @@ D.4 Function Index
 * yank (C-y):                            Commands For Killing.
                                                               (line  72)
 * yank-last-arg (M-. or M-_):            Commands For History.
-                                                              (line  90)
+                                                              (line 103)
 * yank-nth-arg (M-C-y):                  Commands For History.
-                                                              (line  80)
+                                                              (line  93)
 * yank-pop (M-y):                        Commands For Killing.
                                                               (line  75)
 
@@ -13771,138 +13804,138 @@ D.5 Concept Index
 
 
 Tag Table:
-Node: Top891
-Node: Introduction2822
-Node: What is Bash?3035
-Node: What is a shell?4168
-Node: Definitions6778
-Node: Basic Shell Features10105
-Node: Shell Syntax11329
-Node: Shell Operation12356
-Node: Quoting13647
-Node: Escape Character14985
-Node: Single Quotes15520
-Node: Double Quotes15869
-Node: ANSI-C Quoting17214
-Node: Locale Translation18608
-Node: Creating Internationalized Scripts20011
-Node: Comments24209
-Node: Shell Commands24976
-Node: Reserved Words25915
-Node: Simple Commands27058
-Node: Pipelines27720
-Node: Lists30976
-Node: Compound Commands32925
-Node: Looping Constructs33934
-Node: Conditional Constructs36483
-Node: Command Grouping51795
-Node: Coprocesses53287
-Node: GNU Parallel55973
-Node: Shell Functions56891
-Node: Shell Parameters65339
-Node: Positional Parameters70240
-Node: Special Parameters71330
-Node: Shell Expansions74791
-Node: Brace Expansion76980
-Node: Tilde Expansion80316
-Node: Shell Parameter Expansion83271
-Node: Command Substitution104119
-Node: Arithmetic Expansion107970
-Node: Process Substitution109154
-Node: Word Splitting110321
-Node: Filename Expansion112765
-Node: Pattern Matching115989
-Node: Quote Removal121755
-Node: Redirections122059
-Node: Executing Commands132328
-Node: Simple Command Expansion132995
-Node: Command Search and Execution135103
-Node: Command Execution Environment137547
-Node: Environment141073
-Node: Exit Status142976
-Node: Signals145035
-Node: Shell Scripts149983
-Node: Shell Builtin Commands153287
-Node: Bourne Shell Builtins155628
-Node: Bash Builtins182347
-Node: Modifying Shell Behavior220082
-Node: The Set Builtin220424
-Node: The Shopt Builtin232456
-Node: Special Builtins249509
-Node: Shell Variables250498
-Node: Bourne Shell Variables250932
-Node: Bash Variables253440
-Node: Bash Features292724
-Node: Invoking Bash293738
-Node: Bash Startup Files300968
-Node: Interactive Shells306328
-Node: What is an Interactive Shell?306736
-Node: Is this Shell Interactive?307398
-Node: Interactive Shell Behavior308222
-Node: Bash Conditional Expressions311983
-Node: Shell Arithmetic317400
-Node: Aliases320727
-Node: Arrays323861
-Node: The Directory Stack331563
-Node: Directory Stack Builtins332360
-Node: Controlling the Prompt336805
-Node: The Restricted Shell339924
-Node: Bash POSIX Mode343017
-Node: Shell Compatibility Mode362976
-Node: Job Control371983
-Node: Job Control Basics372440
-Node: Job Control Builtins378808
-Node: Job Control Variables385596
-Node: Command Line Editing386827
-Node: Introduction and Notation388530
-Node: Readline Interaction390882
-Node: Readline Bare Essentials392070
-Node: Readline Movement Commands393878
-Node: Readline Killing Commands394874
-Node: Readline Arguments396897
-Node: Searching397987
-Node: Readline Init File400230
-Node: Readline Init File Syntax401533
-Node: Conditional Init Constructs428484
-Node: Sample Init File432869
-Node: Bindable Readline Commands435989
-Node: Commands For Moving437527
-Node: Commands For History439991
-Node: Commands For Text445384
-Node: Commands For Killing449509
-Node: Numeric Arguments452297
-Node: Commands For Completion453449
-Node: Keyboard Macros459145
-Node: Miscellaneous Commands459846
-Node: Readline vi Mode467389
-Node: Programmable Completion468366
-Node: Programmable Completion Builtins478102
-Node: A Programmable Completion Example489839
-Node: Using History Interactively495184
-Node: Bash History Facilities495865
-Node: Bash History Builtins499600
-Node: History Interaction507195
-Node: Event Designators512145
-Node: Word Designators513723
-Node: Modifiers516115
-Node: Installing Bash518052
-Node: Basic Installation519168
-Node: Compilers and Options523044
-Node: Compiling For Multiple Architectures523794
-Node: Installation Names525547
-Node: Specifying the System Type527781
-Node: Sharing Defaults528527
-Node: Operation Controls529241
-Node: Optional Features530260
-Node: Reporting Bugs542983
-Node: Major Differences From The Bourne Shell544340
-Node: GNU Free Documentation License565767
-Node: Indexes590944
-Node: Builtin Index591395
-Node: Reserved Word Index598493
-Node: Variable Index600938
-Node: Function Index618351
-Node: Concept Index632484
+Node: Top897
+Node: Introduction2834
+Node: What is Bash?3047
+Node: What is a shell?4180
+Node: Definitions6790
+Node: Basic Shell Features10117
+Node: Shell Syntax11341
+Node: Shell Operation12368
+Node: Quoting13659
+Node: Escape Character14997
+Node: Single Quotes15532
+Node: Double Quotes15881
+Node: ANSI-C Quoting17226
+Node: Locale Translation18620
+Node: Creating Internationalized Scripts20023
+Node: Comments24221
+Node: Shell Commands24988
+Node: Reserved Words25927
+Node: Simple Commands27070
+Node: Pipelines27732
+Node: Lists30988
+Node: Compound Commands32937
+Node: Looping Constructs33946
+Node: Conditional Constructs36495
+Node: Command Grouping51807
+Node: Coprocesses53299
+Node: GNU Parallel55985
+Node: Shell Functions56903
+Node: Shell Parameters65351
+Node: Positional Parameters70252
+Node: Special Parameters71342
+Node: Shell Expansions74803
+Node: Brace Expansion76992
+Node: Tilde Expansion80328
+Node: Shell Parameter Expansion83283
+Node: Command Substitution104131
+Node: Arithmetic Expansion107982
+Node: Process Substitution109166
+Node: Word Splitting110333
+Node: Filename Expansion112777
+Node: Pattern Matching116001
+Node: Quote Removal121767
+Node: Redirections122071
+Node: Executing Commands132340
+Node: Simple Command Expansion133007
+Node: Command Search and Execution135115
+Node: Command Execution Environment137559
+Node: Environment141085
+Node: Exit Status142988
+Node: Signals145047
+Node: Shell Scripts149995
+Node: Shell Builtin Commands153299
+Node: Bourne Shell Builtins155640
+Node: Bash Builtins182359
+Node: Modifying Shell Behavior220094
+Node: The Set Builtin220436
+Node: The Shopt Builtin232468
+Node: Special Builtins250004
+Node: Shell Variables250993
+Node: Bourne Shell Variables251427
+Node: Bash Variables253935
+Node: Bash Features293219
+Node: Invoking Bash294233
+Node: Bash Startup Files301463
+Node: Interactive Shells306823
+Node: What is an Interactive Shell?307231
+Node: Is this Shell Interactive?307893
+Node: Interactive Shell Behavior308717
+Node: Bash Conditional Expressions312478
+Node: Shell Arithmetic317895
+Node: Aliases321222
+Node: Arrays324356
+Node: The Directory Stack332459
+Node: Directory Stack Builtins333256
+Node: Controlling the Prompt337701
+Node: The Restricted Shell340820
+Node: Bash POSIX Mode343913
+Node: Shell Compatibility Mode363872
+Node: Job Control372879
+Node: Job Control Basics373336
+Node: Job Control Builtins379704
+Node: Job Control Variables386492
+Node: Command Line Editing387723
+Node: Introduction and Notation389426
+Node: Readline Interaction391778
+Node: Readline Bare Essentials392966
+Node: Readline Movement Commands394774
+Node: Readline Killing Commands395770
+Node: Readline Arguments397793
+Node: Searching398883
+Node: Readline Init File401126
+Node: Readline Init File Syntax402429
+Node: Conditional Init Constructs429380
+Node: Sample Init File433765
+Node: Bindable Readline Commands436885
+Node: Commands For Moving438423
+Node: Commands For History440887
+Node: Commands For Text447044
+Node: Commands For Killing451169
+Node: Numeric Arguments453957
+Node: Commands For Completion455109
+Node: Keyboard Macros460805
+Node: Miscellaneous Commands461506
+Node: Readline vi Mode469049
+Node: Programmable Completion470026
+Node: Programmable Completion Builtins479762
+Node: A Programmable Completion Example491499
+Node: Using History Interactively496844
+Node: Bash History Facilities497525
+Node: Bash History Builtins501260
+Node: History Interaction508855
+Node: Event Designators513805
+Node: Word Designators515383
+Node: Modifiers517775
+Node: Installing Bash519712
+Node: Basic Installation520828
+Node: Compilers and Options524704
+Node: Compiling For Multiple Architectures525454
+Node: Installation Names527207
+Node: Specifying the System Type529441
+Node: Sharing Defaults530187
+Node: Operation Controls530901
+Node: Optional Features531920
+Node: Reporting Bugs544643
+Node: Major Differences From The Bourne Shell546000
+Node: GNU Free Documentation License567427
+Node: Indexes592604
+Node: Builtin Index593055
+Node: Reserved Word Index600153
+Node: Variable Index602598
+Node: Function Index620011
+Node: Concept Index634436
 
 End Tag Table
 

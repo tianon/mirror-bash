@@ -40,6 +40,7 @@ shopt -s hostcomplete
 shopt -u huponexit
 shopt -u inherit_errexit
 shopt -s interactive_comments
+shopt -s kvpair_split
 shopt -u lastpipe
 shopt -u lithist
 shopt -u localvar_inherit
@@ -75,6 +76,7 @@ shopt -s globasciiranges
 shopt -s globskipdots
 shopt -s hostcomplete
 shopt -s interactive_comments
+shopt -s kvpair_split
 shopt -s patsub_replacement
 shopt -s progcomp
 shopt -s promptvars
@@ -310,5 +312,9 @@ xtrace         	off
 --
 ./shopt.tests: line 106: shopt: xyz1: invalid shell option name
 ./shopt.tests: line 107: shopt: xyz1: invalid option name
+40c40
+< kvpair_split        	off
+---
+> kvpair_split        	on
 expand_aliases      	on
 expand_aliases      	on
