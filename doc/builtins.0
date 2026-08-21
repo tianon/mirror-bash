@@ -1291,7 +1291,7 @@ BBAASSHH BBUUIILLTTIINN CCOOMMMMAANNDDSS
 
             rreeaaddoonnllyy  allows  the value of a variable to be set at the same time
             the readonly attribute is changed by  following  the  variable  name
-            with  =_v_a_l_u_e.  This sets the value of the variable is to _v_a_l_u_e while
+            with  =_v_a_l_u_e.   This  sets  the value of the variable to _v_a_l_u_e while
             modifying the readonly attribute.
 
             The return status is 0 unless an invalid option is encountered,  one
@@ -1382,8 +1382,9 @@ BBAASSHH BBUUIILLTTIINN CCOOMMMMAANNDDSS
                     rate process group.  When a background  job  completes,  the
                     shell prints a line containing its exit status.
             --nn      Read  commands but do not execute them.  This may be used to
-                    check a shell script for syntax errors.  This is ignored  by
-                    interactive shells.
+                    check a shell script for syntax errors.  Interactive  shells
+                    ignore this option unless it is supplied at invocation along
+                    with the --ii option (see IINNVVOOCCAATTIIOONN in _b_a_s_h(1)).
             --oo _o_p_t_i_o_n_-_n_a_m_e
                     The _o_p_t_i_o_n_-_n_a_m_e can be one of the following:
                     aalllleexxppoorrtt
@@ -1734,6 +1735,14 @@ BBAASSHH BBUUIILLTTIINN CCOOMMMMAANNDDSS
                     word and all remaining characters on that  line  to  be  ig-
                     nored,  as  in  a  non-interactive  shell  (see  CCOOMMMMEENNTTSS in
                     _b_a_s_h(1)).  This option is enabled by default.
+            kkvvppaaiirr__sspplliitt
+                    If set, a compound assignment to an associative  array  per-
+                    forms  word  expansions,  including  word  splitting, on all
+                    words in the assignment before identifying keys and  values.
+                    If it is unset, each word in the compound assignment list is
+                    identified as a key or value before performing the appropri-
+                    ate  word  expansions,  and word splitting is not performed.
+                    This option is enabled by default.
             llaassttppiippee
                     If set, and job control is not active, the  shell  runs  the
                     last command of a pipeline not executed in the background in

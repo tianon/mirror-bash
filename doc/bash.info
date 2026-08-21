@@ -1,10 +1,10 @@
 This is bash.info, produced by makeinfo version 7.3 from bashref.texi.
 
 This text is a brief description of the features that are present in the
-Bash shell (version 5.3, 14 August 2026).
+Bash shell (version 5.4, 20 August 2026).
 
-   This is Edition 5.3, last updated 14 August 2026, of ‘The GNU Bash
-Reference Manual’, for ‘Bash’, Version 5.3.
+   This is Edition 5.4, last updated 20 August 2026, of ‘The GNU Bash
+Reference Manual’, for ‘Bash’, Version 5.4.
 
    Copyright © 1988-2026 Free Software Foundation, Inc.
 
@@ -26,11 +26,11 @@ Bash Features
 *************
 
 This text is a brief description of the features that are present in the
-Bash shell (version 5.3, 14 August 2026).  The Bash home page is
+Bash shell (version 5.4, 20 August 2026).  The Bash home page is
 <http://www.gnu.org/software/bash/>.
 
-   This is Edition 5.3, last updated 14 August 2026, of ‘The GNU Bash
-Reference Manual’, for ‘Bash’, Version 5.3.
+   This is Edition 5.4, last updated 20 August 2026, of ‘The GNU Bash
+Reference Manual’, for ‘Bash’, Version 5.4.
 
    Bash contains features that appear in other popular shells, and some
 features that only appear in Bash.  Some of the shells that Bash has
@@ -3638,7 +3638,7 @@ standard.
 
      ‘export’ allows the value of a variable to be set at the same time
      it is exported or unexported by following the variable name with
-     =VALUE.  This sets the value of the variable is to VALUE while
+     =VALUE.  This sets the value of the variable to VALUE while
      modifying the export attribute.
 
      The return status is zero unless an invalid option is supplied, one
@@ -3763,7 +3763,7 @@ standard.
 
      ‘readonly’ allows the value of a variable to be set at the same
      time the readonly attribute is changed by following the variable
-     name with =VALUE.  This sets the value of the variable is to VALUE
+     name with =VALUE.  This sets the value of the variable to VALUE
      while modifying the readonly attribute.
 
      The return status is zero unless an invalid option is supplied, one
@@ -4980,8 +4980,9 @@ parameters, or to display the names and values of shell variables.
 
      ‘-n’
           Read commands but do not execute them.  This may be used to
-          check a script for syntax errors.  This option is ignored by
-          interactive shells.
+          check a script for syntax errors.  Interactive shells ignore
+          this option unless it is supplied at invocation along with the
+          ‘-i’ option (*note Invoking Bash::).
 
      ‘-o OPTION-NAME’
 
@@ -13857,85 +13858,85 @@ Node: Signals145047
 Node: Shell Scripts149995
 Node: Shell Builtin Commands153299
 Node: Bourne Shell Builtins155640
-Node: Bash Builtins182359
-Node: Modifying Shell Behavior220094
-Node: The Set Builtin220436
-Node: The Shopt Builtin232468
-Node: Special Builtins250004
-Node: Shell Variables250993
-Node: Bourne Shell Variables251427
-Node: Bash Variables253935
-Node: Bash Features293219
-Node: Invoking Bash294233
-Node: Bash Startup Files301463
-Node: Interactive Shells306823
-Node: What is an Interactive Shell?307231
-Node: Is this Shell Interactive?307893
-Node: Interactive Shell Behavior308717
-Node: Bash Conditional Expressions312478
-Node: Shell Arithmetic317895
-Node: Aliases321222
-Node: Arrays324356
-Node: The Directory Stack332459
-Node: Directory Stack Builtins333256
-Node: Controlling the Prompt337701
-Node: The Restricted Shell340820
-Node: Bash POSIX Mode343913
-Node: Shell Compatibility Mode363872
-Node: Job Control372879
-Node: Job Control Basics373336
-Node: Job Control Builtins379704
-Node: Job Control Variables386492
-Node: Command Line Editing387723
-Node: Introduction and Notation389426
-Node: Readline Interaction391778
-Node: Readline Bare Essentials392966
-Node: Readline Movement Commands394774
-Node: Readline Killing Commands395770
-Node: Readline Arguments397793
-Node: Searching398883
-Node: Readline Init File401126
-Node: Readline Init File Syntax402429
-Node: Conditional Init Constructs429380
-Node: Sample Init File433765
-Node: Bindable Readline Commands436885
-Node: Commands For Moving438423
-Node: Commands For History440887
-Node: Commands For Text447044
-Node: Commands For Killing451169
-Node: Numeric Arguments453957
-Node: Commands For Completion455109
-Node: Keyboard Macros460805
-Node: Miscellaneous Commands461506
-Node: Readline vi Mode469049
-Node: Programmable Completion470026
-Node: Programmable Completion Builtins479762
-Node: A Programmable Completion Example491499
-Node: Using History Interactively496844
-Node: Bash History Facilities497525
-Node: Bash History Builtins501260
-Node: History Interaction508855
-Node: Event Designators513805
-Node: Word Designators515383
-Node: Modifiers517775
-Node: Installing Bash519712
-Node: Basic Installation520828
-Node: Compilers and Options524704
-Node: Compiling For Multiple Architectures525454
-Node: Installation Names527207
-Node: Specifying the System Type529441
-Node: Sharing Defaults530187
-Node: Operation Controls530901
-Node: Optional Features531920
-Node: Reporting Bugs544643
-Node: Major Differences From The Bourne Shell546000
-Node: GNU Free Documentation License567427
-Node: Indexes592604
-Node: Builtin Index593055
-Node: Reserved Word Index600153
-Node: Variable Index602598
-Node: Function Index620011
-Node: Concept Index634436
+Node: Bash Builtins182353
+Node: Modifying Shell Behavior220088
+Node: The Set Builtin220430
+Node: The Shopt Builtin232556
+Node: Special Builtins250092
+Node: Shell Variables251081
+Node: Bourne Shell Variables251515
+Node: Bash Variables254023
+Node: Bash Features293307
+Node: Invoking Bash294321
+Node: Bash Startup Files301551
+Node: Interactive Shells306911
+Node: What is an Interactive Shell?307319
+Node: Is this Shell Interactive?307981
+Node: Interactive Shell Behavior308805
+Node: Bash Conditional Expressions312566
+Node: Shell Arithmetic317983
+Node: Aliases321310
+Node: Arrays324444
+Node: The Directory Stack332547
+Node: Directory Stack Builtins333344
+Node: Controlling the Prompt337789
+Node: The Restricted Shell340908
+Node: Bash POSIX Mode344001
+Node: Shell Compatibility Mode363960
+Node: Job Control372967
+Node: Job Control Basics373424
+Node: Job Control Builtins379792
+Node: Job Control Variables386580
+Node: Command Line Editing387811
+Node: Introduction and Notation389514
+Node: Readline Interaction391866
+Node: Readline Bare Essentials393054
+Node: Readline Movement Commands394862
+Node: Readline Killing Commands395858
+Node: Readline Arguments397881
+Node: Searching398971
+Node: Readline Init File401214
+Node: Readline Init File Syntax402517
+Node: Conditional Init Constructs429468
+Node: Sample Init File433853
+Node: Bindable Readline Commands436973
+Node: Commands For Moving438511
+Node: Commands For History440975
+Node: Commands For Text447132
+Node: Commands For Killing451257
+Node: Numeric Arguments454045
+Node: Commands For Completion455197
+Node: Keyboard Macros460893
+Node: Miscellaneous Commands461594
+Node: Readline vi Mode469137
+Node: Programmable Completion470114
+Node: Programmable Completion Builtins479850
+Node: A Programmable Completion Example491587
+Node: Using History Interactively496932
+Node: Bash History Facilities497613
+Node: Bash History Builtins501348
+Node: History Interaction508943
+Node: Event Designators513893
+Node: Word Designators515471
+Node: Modifiers517863
+Node: Installing Bash519800
+Node: Basic Installation520916
+Node: Compilers and Options524792
+Node: Compiling For Multiple Architectures525542
+Node: Installation Names527295
+Node: Specifying the System Type529529
+Node: Sharing Defaults530275
+Node: Operation Controls530989
+Node: Optional Features532008
+Node: Reporting Bugs544731
+Node: Major Differences From The Bourne Shell546088
+Node: GNU Free Documentation License567515
+Node: Indexes592692
+Node: Builtin Index593143
+Node: Reserved Word Index600241
+Node: Variable Index602686
+Node: Function Index620099
+Node: Concept Index634524
 
 End Tag Table
 

@@ -213,3 +213,7 @@
 /* Define to 1 if you want posix mode to restrict shell function names to
    shell NAMEs. */
 /* #define POSIX_RESTRICT_FUNCNAME 0 */
+
+/* Define to 1 to enable a non-recursive list execution implementation. This
+   replaces recursion with an explicit stack of commands. */
+#define NON_RECURSIVE_LISTS	1

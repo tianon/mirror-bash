@@ -144,9 +144,9 @@ three
 (exit 42)
 42
 	history2.sub
-5.3
+5.4
 echo ${BASH_VERSION%\.*}
-5.3
+5.4
 	 echo ${BASH_VERSION%\.*}
 	history3.sub
 a

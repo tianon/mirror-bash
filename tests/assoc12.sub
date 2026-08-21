@@ -15,25 +15,25 @@ foo='1 2'
 bar='3 4 5'
 xtra='20 40 80'
 
-declare -A v1=( $foo 3 )
+declare -A v1=( $foo 3 )	# unquoted expansions are now split
 declare -p v1
 
-declare -A v2=( [$foo]=3 )
+declare -A v2=( [$foo]=3 )	# but subscripts are not
 declare -p v2
 
-declare -A  v3
-v3=( $foo 3 )
+declare -A v3
+v3=( $foo 3 )			# declaration commands and assignments are identical
 declare -p v3
 
 unset v1 v2 v3
 
-declare -A v1=( $foo $bar )
+declare -A v1=( $foo $bar )	# unquoted expansions are split
 declare -p v1
 
 declare -A v2=( [$foo]=$bar )
 declare -p v2
 
-declare -A  v3
+declare -A v3
 v3=( $foo $bar )
 declare -p v3
 
@@ -45,7 +45,7 @@ declare -p v1
 declare -A v2=( ["$foo"]=$bar )
 declare -p v2
 
-declare -A  v3
+declare -A v3
 v3=( "$foo" $bar )
 declare -p v3
 
@@ -57,7 +57,7 @@ declare -p v1
 declare -A v2=( ["$foo"]="$bar" )
 declare -p v2
 
-declare -A  v3
+declare -A v3
 v3=( "$foo" "$bar" )
 declare -p v3
 
@@ -72,3 +72,31 @@ v2+=( ["$xtra"]='new xtra' )
 v3+=( ['$xtra']='new xtra' )
 
 declare -p v1 v2 v3
+
+unset v1 v2 v3
+
+# we can now copy arrays from an array of key-value pairs or by generating
+# a list of key-value pairs
+declare -a kv=(zero 0 one 1 two 2 three 3 four 4)
+
+# assign associative array from an array of key-value pairs
+declare -A assoc
+assoc=( "${kv[@]}" )
+declare -p assoc
+unset assoc
+
+# do the same thing using a declaration command
+declare -A assoc=( "${kv[@]}" )
+declare -p assoc
+
+# copy an associative array using key-value pairs
+declare -A copy
+copy=( "${assoc[@]@k}" )
+declare -p copy
+unset copy
+
+# do the same thing using a declaration command
+declare -A copy=( "${assoc[@]@k}" )
+declare -p copy
+
+

@@ -672,10 +672,10 @@ main (int argc, char **argv, char **env)
     }
   else
     {
-      change_flag ('i', FLAG_ON);
-      interactive = 1;
       if (forced_interactive == 0)
 	read_but_dont_execute = 0;
+      change_flag ('i', FLAG_ON);
+      interactive = 1;
     }
 
 #if defined (RESTRICTED_SHELL)

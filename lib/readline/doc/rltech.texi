@@ -202,9 +202,9 @@ the installed Readline version.
 The value is a hexadecimal
 encoding of the major and minor version numbers of the library,
 of the form 0x@var{MMmm}.  @var{MM} is the two-digit major
-version number; @var{mm} is the two-digit minor version number. 
+version number; @var{mm} is the two-digit minor version number.
 For Readline 4.2, for example, the value of
-@code{RL_READLINE_VERSION} would be @code{0x0402}. 
+@code{RL_READLINE_VERSION} would be @code{0x0402}.
 
 @menu
 * Readline Typedefs::	C declarations to make code readable.
@@ -353,7 +353,7 @@ to @code{accept-line} and is about to return the line to the caller.
 @deftypevar int rl_eof_found
 Readline will set this variable when it has read an EOF character
 (e.g., the stty @samp{EOF} character) on an empty line
-or has encountered a read error or EOF and 
+or has encountered a read error or EOF and
 is about to return a NULL line to the caller.
 @end deftypevar
 
@@ -550,7 +550,7 @@ By default, this is set to @code{rl_deprep_terminal}
 (@pxref{Terminal Management}).
 @end deftypevar
 
-@deftypevar {void} rl_macro_display_hook 
+@deftypevar {void} rl_macro_display_hook
 If set, this points to a function that @code{rl_macro_dumper} will call to
 display a key sequence bound to a macro.
 It is called with the key sequence, the "untranslated" macro value (i.e.,
@@ -562,12 +562,12 @@ prefix to display before the key sequence.
 @deftypevar {Keymap} rl_executing_keymap
 This variable is set to the keymap (@pxref{Keymaps}) in which the
 currently executing Readline function was found.
-@end deftypevar 
+@end deftypevar
 
 @deftypevar {Keymap} rl_binding_keymap
 This variable is set to the keymap (@pxref{Keymaps}) in which the
 last key binding occurred.
-@end deftypevar 
+@end deftypevar
 
 @deftypevar {char *} rl_executing_macro
 This variable is set to the text of any currently-executing macro.
@@ -1011,7 +1011,7 @@ Print the names of all bindable Readline functions to @code{rl_outstream}.
 
 @deftypefun {const char **} rl_funmap_names (void)
 Return a NULL terminated array of known function names.
-The array is sorted. 
+The array is sorted.
 The array itself is allocated, but not the strings inside.
 You should free the array, but not the pointers, using @code{free}
 or @code{rl_free} when you are done.
@@ -1043,7 +1043,7 @@ This is done with @code{rl_begin_undo_group()} and
 The types of events Readline can undo are:
 
 @smallexample
-enum undo_code @{ UNDO_DELETE, UNDO_INSERT, UNDO_BEGIN, UNDO_END @}; 
+enum undo_code @{ UNDO_DELETE, UNDO_INSERT, UNDO_BEGIN, UNDO_END @};
 @end smallexample
 
 Notice that @code{UNDO_DELETE} means to insert some text, and
@@ -1232,7 +1232,7 @@ Replace the contents of @code{rl_line_buffer} with @var{text}.
 This preserves the point and mark, if possible.
 If @var{clear_undo} is non-zero, this clears the undo list associated
 with the current line.
-@end deftypefun 
+@end deftypefun
 
 @deftypefun int rl_push_macro_input (char *macro)
 Insert @var{macro} into the line, as if it had been invoked
@@ -1341,7 +1341,7 @@ The bindings are performed in @var{kmap}.
 Reset the bindings manipulated by @code{rl_tty_set_default_bindings} so
 that the terminal editing characters are bound to @code{rl_insert}.
 The bindings are performed in @var{kmap}.
-@end deftypefun 
+@end deftypefun
 
 @deftypefun int rl_tty_set_echoing (int value)
 Set Readline's idea of whether or not it is
@@ -1351,7 +1351,7 @@ Readline does not display output to @var{rl_outstream}; any other
 value enables output.
 The initial value is set when Readline initializes the terminal settings.
 This function returns the previous value.
-@end deftypefun 
+@end deftypefun
 
 @deftypefun int rl_reset_terminal (const char *terminal_name)
 Reinitialize Readline's idea of the terminal settings using
@@ -1361,31 +1361,31 @@ If @var{terminal_name} is @code{NULL}, Readline uses the value of the
 @end deftypefun
 
 @node Utility Functions
-@subsection Utility Functions 
+@subsection Utility Functions
 
 @deftypefun int rl_save_state (struct readline_state *sp)
 Save a snapshot of Readline's internal state to @var{sp}.
 The contents of the @var{readline_state} structure are
 documented in @file{readline.h}.
 The caller is responsible for allocating the structure.
-@end deftypefun 
+@end deftypefun
 
 @deftypefun int rl_restore_state (struct readline_state *sp)
 Restore Readline's internal state to that stored in @var{sp},
-which must have been saved by a call to @code{rl_save_state}. 
+which must have been saved by a call to @code{rl_save_state}.
 The contents of the @var{readline_state} structure are documented in
 @file{readline.h}.
-The caller is responsible for freeing the structure. 
-@end deftypefun 
+The caller is responsible for freeing the structure.
+@end deftypefun
 
 @deftypefun void rl_free (void *mem)
 Deallocate the memory pointed to by @var{mem}.
 @var{mem} must have been allocated by @code{malloc}.
-@end deftypefun 
+@end deftypefun
 
 @deftypefun void rl_extend_line_buffer (int len)
 Ensure that @code{rl_line_buffer} has enough space to hold @var{len}
-characters, reallocating it if necessary. 
+characters, reallocating it if necessary.
 @end deftypefun
 
 @deftypefun int rl_initialize (void)
@@ -1774,7 +1774,7 @@ main (int c, char **v)
 	  sigwinch_received = 0;
 	@}
       if (r < 0)
-	continue;     
+	continue;
 
       if (FD_ISSET (fileno (rl_instream), &fds))
         rl_callback_read_char ();
@@ -1798,11 +1798,11 @@ be sent to the process currently reading input from the keyboard.
 Since Readline changes the terminal attributes when it is called, it needs
 to perform special processing when such a signal is received in order to
 restore the terminal to a sane state, or provide applications using
-Readline with functions to do so manually. 
+Readline with functions to do so manually.
 
 Readline contains an internal signal handler that is installed for a
 number of signals (@code{SIGINT}, @code{SIGQUIT}, @code{SIGTERM},
-@code{SIGHUP}, 
+@code{SIGHUP},
 @code{SIGALRM}, @code{SIGTSTP}, @code{SIGTTIN}, and @code{SIGTTOU}).
 When Readline receives one of these signals, the signal handler
 will reset the terminal attributes to those that were in effect before
@@ -1820,7 +1820,7 @@ the kernel sends to a process whenever the terminal's size changes (for
 example, if a user resizes an @code{xterm}).
 The Readline @code{SIGWINCH} handler updates
 Readline's internal screen size information, and then calls any
-@code{SIGWINCH} signal handler the calling application has installed. 
+@code{SIGWINCH} signal handler the calling application has installed.
 Readline calls the application's @code{SIGWINCH} signal handler without
 resetting the terminal to its original state.
 If the application's signal
@@ -1896,7 +1896,7 @@ The default value of @code{rl_change_environment} is 1.
 
 If an application does not wish to have Readline catch any signals, or
 to handle signals other than those Readline catches (@code{SIGHUP},
-for example), 
+for example),
 Readline provides convenience functions to do the necessary terminal
 and internal state cleanup upon receipt of a signal.
 
@@ -1943,7 +1943,7 @@ to determine whether or not there are any pending signals.
 @end deftypefun
 
 If an application does not wish Readline to catch @code{SIGWINCH},
-it may call @code{rl_resize_terminal()} or @code{rl_set_screen_size()} 
+it may call @code{rl_resize_terminal()} or @code{rl_set_screen_size()}
 to force Readline to update its idea of the terminal size when it receives
 a @code{SIGWINCH}.
 
@@ -2223,7 +2223,7 @@ characters from a filename before attempting completion,
 so those characters do not interfere with matching the text against
 names in the filesystem.
 It is called with @var{text}, the text of the word
-to be dequoted, and @var{quote_char}, which is the quoting character 
+to be dequoted, and @var{quote_char}, which is the quoting character
 that delimits the filename (usually @samp{'} or @samp{"}).
 If @var{quote_char} is zero, the filename was not in a quoted string.
 @end deftypevar
@@ -2420,7 +2420,7 @@ that possible-completions will display unconditionally.
 If there are more possible completions than this,
 Readline asks the user for confirmation before displaying them.
 The default value is 100.
-A negative value 
+A negative value
 indicates that Readline should never ask for confirmation.
 @end deftypevar
 
@@ -2500,7 +2500,7 @@ characters in @code{rl_filename_quote_characters} and
 @end deftypevar
 
 @deftypevar int rl_filename_quoting_desired
-A non-zero value means that Readline should quote the results of the 
+A non-zero value means that Readline should quote the results of the
 matches using double quotes (or an application-specific quoting mechanism)
 if the completed filename contains any characters in
 @code{rl_filename_quote_chars}.
@@ -2769,7 +2769,7 @@ stripwhite (char *string)
 
   for (s = string; whitespace (*s); s++)
     ;
-    
+
   if (*s == 0)
     return (s);
 

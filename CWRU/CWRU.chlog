@@ -13229,3 +13229,35 @@ builtins/shopt.def
 doc/bash.1,doc/bashref.texi
 	- kvpair_split: added description to shopt builtin; added paragraph
 	  to Arrays section describing its effect
+
+				   8/15
+				   ----
+configure.ac,version.c
+	- changed the version to bash-5.4-devel and updated the copyright year
+
+
+execute_cmd.c
+	- execute_list: alternate implementation that uses an explicit stack
+	  instead of recursion to execute `;' and `\n' separated lists.
+	  Depends on NON_RECURSIVE_LISTS define
+
+config-top.h
+	- NON_RECURSIVE_LISTS: define to 1 (at least for now), enabling new
+	  non-recursive list execution implementation
+
+				   8/19
+				   ----
+subst.c
+	- expand_oneword: if we detect a key-value pair compound assignment
+	  as an argument to a declaration command, honor the setting of
+	  kvpair_split: expand all the words in the list, then single-quote
+	  the result and return that list
+
+				   8/20
+				   ----
+shell.c
+	- main: force read_but_dont_execute (-n option) to 0 unless -i
+	  (forced_interactive) is supplied at startup. This preserves the
+	  `bash -in <<<INPUT' idiom for testing input sequences but
+	  is closer to the documentation and the intent.
+	  Report from Tom Hale <tom@hale.ee>

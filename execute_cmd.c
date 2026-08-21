@@ -2850,12 +2850,110 @@ execute_pipeline (COMMAND *command, int asynchronous, int pipe_in, int pipe_out,
   return (exec_result);
 }
 
-/* This is a placeholder for future work */
+#if defined (NON_RECURSIVE_LISTS)
+
+#define COMMAND_LIST(t) \
+  ((t)->type == cm_connection && \
+  ((t)->value.Connection->connector == ';' || (t)->value.Connection->connector == '\n'))
+
+/* This takes advantage of how the parser builds command lists. */
+static inline int
+count_nodes (COMMAND *command)
+{
+  int n;
+  COMMAND *t, *prev;
+
+  t = command;
+  n = 0;
+
+  /* This needs to be the same test as when the stack gets created in
+      execute_list() below */
+  while (t && COMMAND_LIST (t))
+    {
+      n++;            /* command->second */
+      t = t->value.Connection->first;
+    }
+
+  n++;                        /* final terminal node (first command) */
+  return n;
+}
+
 static int
 execute_list (COMMAND *command, int asynchronous, int pipe_in, int pipe_out, struct fd_bitmap *fds_to_close)
 {
   int ignore_return, invert, exec_result, n;
   COMMAND *first, *second;
+  COMMAND **cstack;
+  size_t csind, cssize;
+
+  ignore_return = (command->flags & CMD_IGNORE_RETURN) != 0;
+  invert = (command->flags & CMD_INVERT_RETURN) != 0;
+    
+  interrupt_execution++; retain_fifos++;
+  QUIT;
+
+  n = count_nodes (command);
+/*itrace("execute_list: count_nodes returns %d", n);*/
+  csind = cssize = n + 1;
+  cstack = (COMMAND **) xreallocarray (NULL, cssize, sizeof (COMMAND *));
+
+  /* build the stack from the command list */
+  first = command;
+  while (first && COMMAND_LIST (first))
+    {
+      if (ignore_return || invert)
+	{
+	  if (first->value.Connection->first)
+	    first->value.Connection->first->flags |= CMD_IGNORE_RETURN;
+	  if (first->value.Connection->second)
+	    first->value.Connection->second->flags |= CMD_IGNORE_RETURN;
+	}
+
+      cstack[--csind] = first->value.Connection->second;
+      first = first->value.Connection->first;
+    }
+
+  /* Now we've hit the first command, and it's not a list connector. Execute it. */
+  exec_result = execute_command (first);
+
+  /* Execute all the list commands except the final one */
+  while (csind < n)
+    {
+      first = cstack[csind++];
+      exec_result = execute_command (first);
+#if defined (JOB_CONTROL)
+      if (job_control && interactive && first->value.Connection->connector == ';')
+	notify_and_cleanup (-1);
+#endif
+      QUIT;
+    }
+
+  /* Now execute the final one, whose exit status matters. */
+
+  second = cstack[csind];
+  if (second == command->value.Connection->second)
+    optimize_connection_fork (command);
+
+  exec_result = execute_command_internal (second, asynchronous, pipe_in, pipe_out,   fds_to_close);
+
+  free (cstack);
+
+  interrupt_execution--; retain_fifos--;
+  return exec_result;
+}
+
+#else /* !NON_RECURSIVE_LISTS */
+
+/* This is the historical recursive implementation */
+static int
+execute_list (COMMAND *command, int asynchronous, int pipe_in, int pipe_out, struct fd_bitmap *fds_to_close)
+{
+  int ignore_return, invert, exec_result, n;
+  COMMAND *first, *second;
+#if defined (NON_RECURSIVE_LIST)
+  COMMAND **cstack;
+  size_t csind, cssize;
+#endif
 
   ignore_return = (command->flags & CMD_IGNORE_RETURN) != 0;
   invert = (command->flags & CMD_INVERT_RETURN) != 0;
@@ -2888,6 +2986,7 @@ execute_list (COMMAND *command, int asynchronous, int pipe_in, int pipe_out, str
   interrupt_execution--; retain_fifos--;
   return exec_result;
 }
+#endif /* !NON_RECURSIVE_LISTS */
 
 static int
 execute_connection (COMMAND *command, int asynchronous, int pipe_in, int pipe_out, struct fd_bitmap *fds_to_close)

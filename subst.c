@@ -13236,6 +13236,17 @@ expand_oneword (char *value, int atype)
 #if ASSOC_KVPAIR_ASSIGNMENT
       kvpair = kvpair_assignment_p (l);
 #endif
+#if ASSOC_KVPAIR_ASSIGNMENT
+      /* If we want to split all the words in a kvpair assignment, expand
+	 every word, then single-quote the words in the resulting list, and
+	 return that. */
+      if (kvpair && split_kvpair_assignments)
+	{
+	  nl = l ? expand_words_no_vars (l) : l;	/* same as arrayfunc.c:assign_assoc_from_kvlist() */
+	  quote_compound_array_list (nl, atype);
+	  return (nl);
+	}
+#endif
 
       /* For associative arrays, with their arbitrary subscripts, we have to
 	 expand and quote in one step so we don't have to search for the
@@ -13244,7 +13255,8 @@ expand_oneword (char *value, int atype)
 	{
 #if ASSOC_KVPAIR_ASSIGNMENT
 	  if (kvpair)
-	    /* keys and values undergo the same set of expansions */
+	    /* keys and values undergo the same set of expansions if we are
+	       not splitting each word in NL. */
 	    t = expand_and_quote_kvpair_word (nl->word->word);
 	  else
 #endif
