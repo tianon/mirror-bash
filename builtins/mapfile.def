@@ -162,6 +162,10 @@ mapfile (int fd, long line_count_goal, long origin, long nskip, long callback_qu
   /* If the delimiter is a newline, turn on unbuffered reads for pipes
      (terminals are ok). If the delimiter is not a newline, unbuffered reads
      for every file descriptor that's not a regular file. */
+  /* We could check that the delimiter is a newline and the input is a
+     terminal and force buffered reads in that case, letting the kernel find
+     the newline for us, or set the VISABLE character like the read builtin
+     does and let the kernel detect it. */
   if (delim == '\n')
     unbuffered_read = (lseek (fd, 0L, SEEK_CUR) < 0) && (errno == ESPIPE);
   else

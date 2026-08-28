@@ -13261,3 +13261,58 @@ shell.c
 	  `bash -in <<<INPUT' idiom for testing input sequences but
 	  is closer to the documentation and the intent.
 	  Report from Tom Hale <tom@hale.ee>
+
+				   8/24
+				   ----
+doc/bash.1,doc/bashref.texi
+	- HISTFILESIZE: correct description to delete text saying the history
+	  builtin truncates the history file after writing; bash has never
+	  done that.
+	  From https://savannah.gnu.org/bugs/?68641
+
+				   8/27
+				   ----
+builtins/history.def
+	- history_builtin: if we are using $HISTFILE, history -w should
+	  reset history_lines_this_session to 0 to avoid appending duplicate
+	  entries to the history file on shell exit. This should not affect
+	  idioms people use to share a single history file between multiple
+	  shell sessions; most of those use `history -a', which already
+	  resets history_lines_this_session
+	- history_builtin: if we are using $HISTFILE, history -a should reset
+	  history_lines_this_session to 0
+	- history_builtin: history -r should increase history_lines_this_session
+	  by the number of lines read from the file, even if it's $HISTFILE
+	  From https://savannah.gnu.org/bugs/index.php?68646
+
+bashhist.c
+	- maybe_append_history: takes a second argument saying whether or not
+	  we are using $HISTFILE, changed callers
+	- maybe_append_history: reset history_lines_this_session and
+	  history_lines_in_file only if we are using $HISTFILE
+
+doc/bash.1,lib/readline/doc/hsuser.texi
+	- make the text describing how bash saves the shell history upon exit
+	  match the actual behavior, making it clear that bash tries to
+	  append the entries from the current session to $HISTFILE and only
+	  overwrites the file if the number of entries from the current
+	  session exceeds $HISTSIZE
+	  From https://savannah.gnu.org/bugs/index.php?68645
+
+lib/readline/histfile.c
+	- history_truncate_file: use the same heuristic as read_history_range
+	  to determine whether the history file has timestamps, and add 1
+	  to lines even if we're not going by history entries so we (maybe)
+	  get a timestamp before the first line, which we hope is the first
+	  line of a command
+
+doc/bash.1,doc/bashref.texi,lib/readline/doc/hsuser.texi
+	- update the description of HISTFILESIZE to note that it can refer
+	  to either lines or possibly multi-line history entries depending
+	  on whether HISTTIMEFORMAT is set
+	- update the history section to describe how HISTTIMEFORMAT affects
+	  how $HISTFILESIZE is interpreted (lines vs. entries) and note that
+	  if we are dealing with lines, there might be more lines than the
+	  maximum in the file to avoid partial history entries or history
+	  entries without a timestamp (if the file has them)
+	  From https://savannah.gnu.org/bugs/?68650

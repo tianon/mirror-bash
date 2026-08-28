@@ -75,7 +75,7 @@ extern int bash_delete_last_history (void);
 extern void load_history (void);
 extern void save_history (void);
 extern char *bash_default_histfile (void);
-extern int maybe_append_history (char *);
+extern int maybe_append_history (char *, int);
 extern int maybe_save_shell_history (void);
 extern char *pre_process_line (char *, int, int);
 extern void maybe_add_history (char *);

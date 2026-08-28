@@ -2,10 +2,10 @@
 Copyright (C) 1988-2026 Free Software Foundation, Inc.
 @end ignore
 
-@set LASTCHANGE Thu Aug 20 11:42:13 EDT 2026
+@set LASTCHANGE Thu Aug 27 13:00:35 EDT 2026
 
 @set EDITION 5.4
 @set VERSION 5.4
 
-@set UPDATED 20 August 2026
+@set UPDATED 27 August 2026
 @set UPDATED-MONTH August 2026

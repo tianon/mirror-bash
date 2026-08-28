@@ -6560,7 +6560,8 @@ message format.
 @item histappend
 If set, the history list is appended to the file named by the value
 of the @env{HISTFILE}
-variable when the shell exits, rather than overwriting the file.
+variable when the shell exits, rather than
+potentially overwriting the file.
 
 @item histreedit
 If set, and Readline is being used,
@@ -7407,17 +7408,22 @@ If @env{HISTFILE} is unset or null,
 the shell does not save the command history when it exits.
 
 @item HISTFILESIZE
-The maximum number of lines contained in the history file.
-When this variable is assigned a value, the history file is truncated,
-if necessary, to contain no more than
-the number of history entries
-that total no more than that number of lines
+The maximum number of lines or history entries contained in the history file.
+When this variable is assigned a value,
+the history file is truncated, if necessary,
+to contain no more than
+that number of history entries or lines,
+depending on the value of @env{HISTTIMEFORMAT},
 by removing the oldest entries.
-If the history list contains multi-line entries,
-the history file may contain more lines than this maximum
-to avoid leaving partial history entries.
+
+@xref{Bash History Facilities},
+for a description of how
+@env{HISTTIMEFORMAT}
+affects how the value is treated and
+whether it refers to lines or history entries.
+
 The history file is also truncated to this size after
-writing it when a shell exits or by the @code{history} builtin.
+writing it when a shell exits.
 If the value is 0, the history file is truncated to zero size.
 Non-numeric values and numeric values less than zero inhibit truncation.
 The shell sets the default value to the value of @env{HISTSIZE}

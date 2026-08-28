@@ -613,6 +613,7 @@ history_truncate_file (const char *fname, int lines)
 {
   char *buffer, *filename, *tempname, *bp, *bp1;		/* bp1 == bp+1 */
   int file, chars_read, rv, orig_lines, exists, r;
+  int has_timestamps;
   struct stat finfo, nfinfo;
   size_t file_size;
 
@@ -695,6 +696,11 @@ history_truncate_file (const char *fname, int lines)
     }
   buffer[chars_read] = '\0';	/* for the initial check of bp1[1] */
 
+  /* use a heuristic like in read_history_range() to determine whether the
+     file has timestamps, but don't change the comment character so
+     HIST_TIMESTAMP_START doesn't return true */
+  has_timestamps = history_comment_char == '\0' && buffer[0] == '#' && isdigit ((unsigned char)buffer[1]);
+
   /* Count backwards from the end of buffer until we have passed
      LINES lines.  bp1 is set funny initially.  But since bp[1] can't
      be a comment character (since it's off the end) and *bp can't be
@@ -703,6 +709,8 @@ history_truncate_file (const char *fname, int lines)
      because we decrement it one extra time the first time through the loop
      and we need the final timestamp line. */
   lines += history_write_timestamps;
+  if (history_write_timestamps == 0)
+    lines += has_timestamps;		/* do our best */
   for (bp1 = bp = buffer + chars_read - 1; lines > 0 && bp > buffer; bp--)
     {
       if (*bp == '\n' && HIST_TIMESTAMP_START(bp1) == 0)

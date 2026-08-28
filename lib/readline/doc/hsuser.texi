@@ -85,8 +85,26 @@ by reading history entries from the
 file named by the @env{HISTFILE} variable (default @file{~/.bash_history}).
 This is referred to as the @dfn{history file}.
 The history file is truncated, if necessary,
-to contain no more than the number of history entries
+to contain no more than the number of lines or history entries
 specified by the value of the @env{HISTFILESIZE} variable.
+
+The value of @env{HISTFILESIZE}
+is interpreted as lines or possibly multi-line history
+entries depending on whether the @env{HISTTIMEFORMAT}
+variable has a value,
+since that controls whether or not timestamps are written
+to the history file.
+If @env{HISTTIMEFORMAT}
+has a value,
+@env{HISTFILESIZE}
+is interpreted as a number of
+history entries, including timestamps.
+If it does not, @env{HISTFILESIZE}
+is interpreted as a number of lines,
+which may result in incomplete history entries in the history file,
+or the history file containing more lines than this maximum
+to avoid leaving partial history entries.
+
 If @env{HISTFILESIZE} is unset, or set to null, a non-numeric value,
 or a numeric value less than zero, the history file is not truncated.
 
@@ -98,17 +116,26 @@ These timestamps are optionally displayed depending on the value of the
 When present, history timestamps delimit history entries, making
 multi-line entries possible.
 
-When a shell with history enabled exits, Bash copies the last
-@env{$HISTSIZE} entries from the history list to the file
-named by @env{$HISTFILE}.
+When a shell with history enabled exits, Bash
+copies up to the last
+@env{$HISTSIZE}
+entries from the history list
+to the file named by
+@env{$HISTFILE}.
 If the @code{histappend} shell option is set (@pxref{Bash Builtins}),
-Bash appends the entries to the history file,
-otherwise it overwrites the history file.
+or if the number of history entries entered
+during the current shell session is less than
+@env{$HISTSIZE},
+Bash appends the history entries entered during the current session
+to @env{$HISTFILE}.
+If @code{histappend} is not set, and the number of entries from the current
+shell session exceeds @env{$HISTSIZE},
+it overwrites the history file with the entries from the current session.
 If @env{HISTFILE} is unset or null,
 or if the history file is unwritable, the history is not saved.
 After saving the history, Bash truncates the history file
 to contain no more than @env{$HISTFILESIZE}
-lines as described above.
+entries as described above.
 
 If the @env{HISTTIMEFORMAT}
 variable is set, the shell writes the timestamp information

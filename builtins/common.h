@@ -240,6 +240,8 @@ extern SHELL_VAR *builtin_bind_var_to_int (char *, intmax_t, int);
 extern int builtin_unbind_variable (const char *);
 
 extern SHELL_VAR *builtin_find_indexed_array (char *, int);
+extern SHELL_VAR *builtin_find_array (char *, int);
+
 extern int builtin_arrayref_flags (WORD_DESC *, int);
 
 /* variables from evalfile.c */

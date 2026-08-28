@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 2020,2022-2024 Free Software Foundation, Inc.
+   Copyright (C) 2020,2022-2026 Free Software Foundation, Inc.
 
    Bash is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -38,12 +38,14 @@ typedef struct sort_element {
 
 static int reverse_flag;
 static int numeric_flag;
+static int index_flag;
 
 static int
 compare(const void *p1, const void *p2)
 {
     const sort_element e1 = *(sort_element *) p1;
     const sort_element e2 = *(sort_element *) p2;
+    char *x1, *x2;
 
     if (numeric_flag) {
         if (reverse_flag)
@@ -52,10 +54,14 @@ compare(const void *p1, const void *p2)
             return (e1.num > e2.num) ? 1 : (e1.num < e2.num) ? -1 : 0;
     }
     else {
-        if (reverse_flag)
-            return strcoll(e2.value, e1.value);
-        else
-            return strcoll(e1.value, e2.value);
+    	if (index_flag == 2 && e1.key && e2.key) {		/* associative array with -I */
+    	    x1 = e1.key;
+    	    x2 = e2.key;
+    	} else {
+    	    x1 = e1.value;
+    	    x2 = e2.value;
+    	}
+        return (reverse_flag ? strcoll(x2, x1) strcoll(x1, x2));
     }
 }
 
@@ -99,6 +105,7 @@ sort_index(SHELL_VAR *dest, SHELL_VAR *source)
         i = 0;
 
         for (ae = element_forw(array->head); ae != array->head; ae = element_forw(ae)) {
+            sa[i].key = NULL;
             sa[i].v = ae;
             if (numeric_flag)
                 sa[i].num = strtod(element_value(ae), NULL);
@@ -188,15 +195,15 @@ asort_builtin(WORD_LIST *list)
     SHELL_VAR *var, *var2;
     char *word;
     int opt, ret;
-    int index_flag = 0;
 
-    numeric_flag = 0;
-    reverse_flag = 0;
+
+    numeric_flag = reverse_flag = index_flag = 0;
 
     reset_internal_getopt();
-    while ((opt = internal_getopt(list, "inr")) != -1) {
+    while ((opt = internal_getopt(list, "inrI")) != -1) {
         switch (opt) {
             case 'i': index_flag = 1; break;
+            case 'I': index_flag = 2; break;
             case 'n': numeric_flag = 1; break;
             case 'r': reverse_flag = 1; break;
             CASE_HELPOPT;
@@ -228,10 +235,10 @@ asort_builtin(WORD_LIST *list)
         }
         var2 = find_variable(list->next->word->word);
         if ( !var2 || ( !array_p(var2) && !assoc_p(var2) ) ) {
-            builtin_error("%s: Not an array", list->next->word->word);
+            builtin_error("%s: not an array", list->next->word->word);
             return EXECUTION_FAILURE;
         }
-        var = builtin_find_indexed_array(list->word->word, 1);
+        var = builtin_find_indexed_array(list->word->word, 0);
         if (var == 0)
             return EXECUTION_FAILURE;
         return sort_index(var, var2);
@@ -266,10 +273,15 @@ char *asort_doc[] = {
     "  -n  compare according to string numerical value",
     "  -r  reverse the result of comparisons",
     "  -i  sort using indices/keys",
+    "  -I  sort associative arrays using values",
     "",
     "If -i is supplied, SOURCE is not sorted in-place, but the indices (or keys",
     "if associative) of SOURCE, after sorting it by its values, are placed as",
-    "values in the indexed array DEST",
+    "values in the indexed array DEST.",
+    "",
+    "If -I is supplied instead, SOURCE is sorted by its keys and those keys",
+    "are placed, in order, as values in the indexed array DEST. This only",
+    "makes sense for associative arrays.",
     "",
     "Associative arrays may not be sorted in-place.",
     "",
@@ -284,6 +296,6 @@ struct builtin asort_struct = {
     asort_builtin,
     BUILTIN_ENABLED,
     asort_doc,
-    "asort [-nr] array ...  or  asort [-nr] -i dest source",
+    "asort [-nr] array ...  or  asort [-nr] -i|-I dest source",
     0
 };

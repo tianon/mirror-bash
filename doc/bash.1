@@ -5,7 +5,7 @@
 .\"	Case Western Reserve University
 .\"	chet.ramey@case.edu
 .\"
-.\"	Last Change: Thu Aug 20 11:41:54 EDT 2026
+.\"	Last Change: Thu Aug 27 12:59:58 EDT 2026
 .\"
 .\" For bash_builtins, strip all but "SHELL BUILTIN COMMANDS" section
 .\" For rbash, strip all but "RESTRICTED SHELL" section
@@ -22,7 +22,7 @@
 .ds zX \" empty
 .if \n(zZ=1 .ig zZ
 .if \n(zY=1 .ig zY
-.TH BASH 1 "2026 August 20" "GNU Bash 5.4"
+.TH BASH 1 "2026 August 27" "GNU Bash 5.4"
 .\"
 .ie \n(.g \{\
 .ds ' \(aq
@@ -2707,19 +2707,23 @@ is unset or null,
 the shell does not save the command history when it exits.
 .TP
 .B HISTFILESIZE
-The maximum number of lines contained in the history file.
+The maximum number of lines or history entries contained in the history file.
 When this variable is assigned a value, the history file is truncated,
 if necessary, to contain no more than
-the number of history entries
-that total no more than that number of lines
-by removing the oldest entries.
-If the history list contains multi-line entries,
-the history file may contain more lines than this maximum
-to avoid leaving partial history entries.
+the number of history entries or lines,
+depending on whether
+.B HISTTIMEFORMAT
+is set, by removing the oldest entries.
+See
+.SM
+.B HISTORY
+below 
+for a description of how    
+.B HISTTIMEFORMAT
+affects how the value is treated and
+whether it refers to lines or history entries.
 The history file is also truncated to this size after
-writing it when a shell exits or by the
-.B \%history
-builtin.
+writing it when a shell exits.
 If the value is 0, the history file is truncated to zero size.
 Non-numeric values and numeric values less than zero inhibit truncation.
 The shell sets the default value to the value of
@@ -8723,11 +8727,34 @@ variable (default
 .FN \*~/.bash_history ).
 That file is referred to as the \fIhistory file\fP.
 The history file is truncated, if necessary,
-to contain no more than the number of history entries
+to contain no more than the number of lines or
+history entries
 specified by the value of the
 .SM
 .B HISTFILESIZE
 variable.
+.PP
+The value of
+.B HISTFILESIZE
+is interpreted as lines or possibly multi-line history
+entries depending on whether the
+.B HISTTIMEFORMAT
+variable has a value,
+since that controls whether or not timestamps are written
+to the history file.
+If
+.B HISTTIMEFORMAT
+has a value,
+.B HISTFILESIZE
+is interpreted as a number of
+history entries, including timestamps.
+If it does not,
+.B HISTFILESIZE
+is interpreted as a number of lines,
+which may result in incomplete history entries in the history file,
+or the history file containing more lines than this maximum
+to avoid leaving partial history entries.
+.PP
 If
 .SM
 .B HISTFILESIZE
@@ -8744,10 +8771,12 @@ variable.
 When present, history timestamps delimit history entries, making
 multi-line entries possible.
 .PP
-When a shell with history enabled exits, \fBbash\fP copies the last
+When a shell with history enabled exits, \fBbash\fP
+copies up to the last
 .SM
 .B $HISTSIZE
 entries from the history list to
+the file named by
 .SM
 .BR $HISTFILE .
 If the
@@ -8758,8 +8787,18 @@ shell option is enabled
 under
 .SM
 .B "SHELL BUILTIN COMMANDS"
-below), \fBbash\fP appends the entries to the history file,
-otherwise it overwrites the history file.
+below),
+or if the number of history entries entered
+during the current shell session is not greater than
+.BR $HISTSIZE ,
+\fBbash\fP appends the entries entered during the current session to
+.BR $HISTFILE .
+If
+.B histappend
+is not set, and the number of entries from the current
+shell session exceeds
+.BR $HISTSIZE ,
+it overwrites the history file with the entries from the current session.
 If
 .SM
 .B HISTFILE
@@ -8769,7 +8808,7 @@ After saving the history, \fBbash\fP truncates the history file
 to contain no more than
 .SM
 .B HISTFILESIZE
-lines as described above.
+entries as described above.
 .PP
 If the
 .SM
@@ -12404,7 +12443,8 @@ If set, the history list is appended to the file named by the value
 of the
 .SM
 .B HISTFILE
-variable when the shell exits, rather than overwriting the file.
+variable when the shell exits, rather than
+potentially overwriting the file.
 .TP 8
 .B histreedit
 If set, and

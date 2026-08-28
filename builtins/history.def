@@ -131,7 +131,7 @@ static int expand_and_print_history (WORD_LIST *);
 int
 history_builtin (WORD_LIST *list)
 {
-  int flags, opt, result, old_history_lines, obase, ind;
+  int flags, opt, result, old_history_lines, obase, ind, using_histfile;
   char *filename, *newfn, *delete_arg, *range;
   intmax_t delete_offset;
 
@@ -266,6 +266,7 @@ history_builtin (WORD_LIST *list)
     }
 
   filename = list ? list->word->word : get_string_value ("HISTFILE");
+  using_histfile = list == NULL;
   result = EXECUTION_SUCCESS;
 
   if (filename == 0 || *filename == 0)
@@ -290,7 +291,11 @@ history_builtin (WORD_LIST *list)
 #endif
 
   if (flags & AFLAG)		/* Append session's history to file. */
-    result = maybe_append_history (filename);
+    {
+      result = maybe_append_history (filename, using_histfile);
+      if (using_histfile)
+	history_lines_this_session = 0;
+    }
   else if (flags & WFLAG)	/* Write entire history. */
     {
       result = write_history (filename);
@@ -299,6 +304,8 @@ history_builtin (WORD_LIST *list)
 	 I/O and permission errors. */
       if (result > 0)
 	history_error (filename, result, 0);
+      if (result == 0 && using_histfile)
+	history_lines_this_session = 0;
     }
   else if (flags & RFLAG)	/* Read entire file. */
     {
@@ -310,6 +317,8 @@ history_builtin (WORD_LIST *list)
 	 I/O and permission errors. */
       if (result > 0)
 	history_error (filename, result, 1);
+      if (result == 0)
+        history_lines_this_session += history_lines_read_from_file;
     }
   else if (flags & NFLAG)	/* Read `new' history from file. */
     {

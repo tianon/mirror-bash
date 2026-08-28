@@ -1,6 +1,6 @@
 /* bashhist.c -- bash interface to the GNU history library. */
 
-/* Copyright (C) 1993-2024 Free Software Foundation, Inc.
+/* Copyright (C) 1993-2026 Free Software Foundation, Inc.
 
    This file is part of GNU Bash, the Bourne Again SHell.
 
@@ -447,7 +447,7 @@ save_history (void)
 #endif
 
 int
-maybe_append_history (char *filename)
+maybe_append_history (char *filename, int is_histfile)
 {
   int fd, result, histlen;
   struct stat buf;
@@ -471,10 +471,13 @@ maybe_append_history (char *filename)
       if (histlen > 0 && history_lines_this_session > histlen)
 	history_lines_this_session = histlen;	/* reset below anyway */
       result = append_history (history_lines_this_session, filename);
-      /* Pretend we already read these lines from the file because we just
+      /* Pretend we already read these lines from $HISTFILE because we just
 	 added them */
-      history_lines_in_file += history_lines_this_session;
-      history_lines_this_session = 0;
+      if (is_histfile)
+	{
+	  history_lines_in_file += history_lines_this_session;
+	  history_lines_this_session = 0;
+	}
     }
   else
     history_lines_this_session = 0;	/* reset if > where_history() */
