@@ -1024,6 +1024,7 @@ rl_redisplay (void)
       while (local_prompt_newlines[newlines+1] != -1)
 	{
 	  temp = local_prompt_newlines[newlines+1];
+	  CHECK_INV_LBREAKS ();
 	  inv_lbreaks[++newlines] = temp;
 	}  
 
@@ -2261,11 +2262,12 @@ update_line (char *old, char *old_face, char *new, char *new_face, int current_l
   od = ofd - old;	/* index of first difference in visible line */
   nd = nfd - new;	/* nd, od are buffer indexes */
   if (current_line == 0 && !_rl_horizontal_scroll_mode &&
-      _rl_term_cr && lendiff > prompt_visible_length && _rl_last_c_pos > 0 &&
+      _rl_term_cr && lendiff > prompt_visible_length && _rl_last_c_pos >= 0 &&
       (((od > 0 || nd > 0) && (od <= prompt_last_invisible || nd <= prompt_last_invisible)) ||
 		((od >= lendiff) && _rl_last_c_pos < PROMPT_ENDING_INDEX)))
     {
-      _rl_cr ();
+      if (_rl_last_c_pos > 0)
+	_rl_cr ();
       if (modmark)
 	_rl_output_some_chars ("*", 1);
       _rl_output_some_chars (local_prompt, lendiff);
