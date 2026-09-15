@@ -3522,8 +3522,9 @@ _rl_redisplay_after_sigwinch (void)
   else
     rl_crlf ();
 
-  if (_rl_screenwidth < prompt_visible_length)
-    _rl_reset_prompt ();		/* update local_prompt_newlines array */
+  /* Let expand_prompt() update local_prompt_newlines and local_prompt_invis_chars
+    arrays */
+  _rl_reset_prompt ();
 
   /* Redraw only the last line of a multi-line prompt. */
   t = strrchr (rl_display_prompt, '\n');
