@@ -317,6 +317,7 @@ extern int line_isblank (const char *);
 extern int assignment (const char *, int);
 
 extern int sh_unset_nodelay_mode (int);
+extern int sh_setnodelay (int);
 extern int sh_setclexec (int);
 extern int sh_validfd (int);
 extern int fd_ispipe (int);
