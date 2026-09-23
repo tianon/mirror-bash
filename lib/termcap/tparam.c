@@ -1,6 +1,6 @@
 /* tparam.c - merge parameters into a termcap entry string. */
 
-/* Copyright (C) 1985, 1986, 1993,1994, 1995, 1998, 2001,2003,2005,2006,2008,2009 Free Software Foundation, Inc.
+/* Copyright (C) 1985, 1986, 1993,1994, 1995, 1998, 2001,2003,2005,2006,2008,2009,2026 Free Software Foundation, Inc.
 
    This file is part of GNU Bash, the Bourne Again SHell.
 
@@ -38,11 +38,16 @@ extern char *realloc ();
 #include <string.h>
 #endif
 
+#if defined (HAVE_STDDEF_H)
+#include <stddef.h>
+#endif
+
 #else /* not HAVE_CONFIG_H */
 
 #ifdef STDC_HEADERS
 #include <stdlib.h>
 #include <string.h>
+#include <stddef.h>
 #else
 char *malloc ();
 char *realloc ();
@@ -97,7 +102,7 @@ xrealloc (void *ptr, size_t size)
 
    The fourth and following args to tparam serve as the parameter values.  */
 
-static char *tparam1 (char *, char *, int, char *, char *, int *);
+static char *tparam1 (char *, char *, int, char *, char *, int *, int);
 
 /* VARARGS 2 */
 char *
@@ -109,11 +114,11 @@ tparam (char *string, char *outstring, int len, int arg0, int arg1, int arg2, in
   arg[1] = arg1;
   arg[2] = arg2;
   arg[3] = arg3;
-  return tparam1 (string, outstring, len, NULL, NULL, arg);
+  return tparam1 (string, outstring, len, NULL, NULL, arg, 4);
 }
 
-__private_extern__ char *BC;
-__private_extern__ char *UP;
+/*__private_extern__*/ char *BC;
+/*__private_extern__*/ char *UP;
 
 static char tgoto_buf[50];
 
@@ -126,11 +131,18 @@ tgoto (char *cm, int hpos, int vpos)
     return NULL;
   args[0] = vpos;
   args[1] = hpos;
-  return tparam1 (cm, tgoto_buf, 50, UP, BC, args);
+  return tparam1 (cm, tgoto_buf, 50, UP, BC, args, 2);
 }
 
+#define CHECK_OVERFLOW(n) \
+  do { \
+    ptrdiff_t x = argp - orig_argp;	/* where we are now */ \
+    if (((int)x + n ) > nargs) \
+      goto overflow; \
+  } while (0)
+
 static char *
-tparam1 (char *string, char *outstring, int len, char *up, char *left, int *argp)
+tparam1 (char *string, char *outstring, int len, char *up, char *left, int *argp, int nargs)
 {
   register int c;
   register char *p = string;
@@ -142,6 +154,8 @@ tparam1 (char *string, char *outstring, int len, char *up, char *left, int *argp
   int *old_argp = argp;
   int doleft = 0;
   int doup = 0;
+
+  int *orig_argp = argp;
 
   outend = outstring + len;
 
@@ -196,6 +210,7 @@ tparam1 (char *string, char *outstring, int len, char *up, char *left, int *argp
 	    onedigit:
 	      *op++ = tem % 10 + '0';
 	      argp++;
+	      CHECK_OVERFLOW (1);
 	      break;
 
 	    case 'C':
@@ -225,14 +240,18 @@ tparam1 (char *string, char *outstring, int len, char *up, char *left, int *argp
 	      *op++ = tem ? tem : 0200;
 	    case 'f':		/* %f means discard next arg.  */
 	      argp++;
+	      CHECK_OVERFLOW (1);	/* are we past argp[nargs - 1]? */
 	      break;
 
 	    case 'b':		/* %b means back up one arg (and re-use it).  */
-	      argp--;
+	      if (argp > orig_argp)
+		argp--;
 	      break;
 
 	    case 'r':		/* %r means interchange following two args.  */
+	      CHECK_OVERFLOW(0);
 	      argp[0] = argp[1];
+	      CHECK_OVERFLOW(1);
 	      argp[1] = tem;
 	      old_argp++;
 	      break;
@@ -269,7 +288,9 @@ tparam1 (char *string, char *outstring, int len, char *up, char *left, int *argp
 	      break;
 
 	    case 'i':		/* %i means add one to arg, */
+	      CHECK_OVERFLOW(0);
 	      argp[0] ++;	/* and leave it to be output later.  */
+	      CHECK_OVERFLOW(1);
 	      argp[1] ++;	/* Increment the following arg, too!  */
 	      break;
 
@@ -278,11 +299,13 @@ tparam1 (char *string, char *outstring, int len, char *up, char *left, int *argp
 
 	    case 'n':		/* %n means xor each of next two args with 140.  */
 	      argp[0] ^= 0140;
+	      CHECK_OVERFLOW(1);
 	      argp[1] ^= 0140;
 	      break;
 
 	    case 'm':		/* %m means xor each of next two args with 177.  */
 	      argp[0] ^= 0177;
+	      CHECK_OVERFLOW(1);
 	      argp[1] ^= 0177;
 	      break;
 
@@ -300,6 +323,7 @@ tparam1 (char *string, char *outstring, int len, char *up, char *left, int *argp
       ordinary:
 	*op++ = c;
     }
+overflow:
   *op = 0;
   while (doup-- > 0)
     strcat (op, up);

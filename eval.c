@@ -277,8 +277,15 @@ alrm_catcher (int i)
 static void
 alrm_handler(int i)
 {
-  printf ("\007%s\n", _("timed out waiting for input: auto-logout"));
+  char *msg;
+
+  msg = _("timed out waiting for input: auto-logout");
+  printf ("\007%s\n", msg);
   fflush (stdout);
+
+#if defined (SYSLOG_HISTORY)
+  bash_syslog_history (msg);
+#endif
 
   tcflush (fileno (stdin), TCIFLUSH);
   bash_logout ();	/* run ~/.bash_logout if this is a login shell */

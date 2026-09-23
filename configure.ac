@@ -21,7 +21,7 @@ dnl Process this file with autoconf to produce a configure script.
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_REVISION([for Bash 5.4, version 5.085])dnl
+AC_REVISION([for Bash 5.4, version 5.086])dnl
 
 define(bashvers, 5.4)
 define(relstatus, devel)
@@ -816,6 +816,7 @@ AC_CHECK_HEADERS(sys/pte.h sys/stream.h sys/select.h sys/file.h sys/ioctl.h \
 		 sys/mman.h sys/param.h sys/random.h sys/socket.h sys/stat.h \
 		 sys/time.h sys/times.h sys/types.h sys/wait.h)
 AC_CHECK_HEADERS(netinet/in.h arpa/inet.h)
+AC_CHECK_HEADERS([malloc.h malloc/malloc.h])
 
 dnl sys/ptem.h requires definitions from sys/stream.h on systems where it
 dnl exists
@@ -900,6 +901,12 @@ AC_CHECK_FUNCS(strlcat)
 
 AC_CHECK_FUNCS(memfd_create shm_open shm_mkstemp)
 
+if test "$opt_bash_malloc" = "no" ; then
+AC_CHECK_FUNCS(malloc_usable_size malloc_size)
+else
+AC_DEFINE(HAVE_MALLOC_USABLE_SIZE)
+fi
+
 AC_REPLACE_FUNCS(getcwd memset)
 AC_REPLACE_FUNCS(strcasecmp strcasestr strerror strftime strnlen strpbrk strstr)
 AC_REPLACE_FUNCS(strtod strtol strtoul strtoll strtoull strtoumax)
@@ -952,7 +959,7 @@ dnl Checks for lib/intl and related code (uses some of the output from
 dnl BASH_GNU_GETTEXT)
 dnl
 
-AC_CHECK_HEADERS([argz.h errno.h fcntl.h malloc.h stdio_ext.h])
+AC_CHECK_HEADERS([argz.h errno.h fcntl.h stdio_ext.h])
 
 dnl AC_FUNC_MALLOC
 AC_DEFINE([HAVE_MALLOC])

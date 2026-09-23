@@ -3,7 +3,7 @@
 /* This file works under BSD, System V, minix, and Posix systems.  It does
    not implement job control. */
 
-/* Copyright (C) 1987-2024 Free Software Foundation, Inc.
+/* Copyright (C) 1987-2026 Free Software Foundation, Inc.
 
    This file is part of GNU Bash, the Bourne Again SHell.
 
@@ -95,6 +95,8 @@ int job_control = 0;
 
 /* and don't want job notifications */
 int want_job_notifications = 0;
+
+int waitonce = 0;
 
 int running_in_background = 0;	/* can't tell without job control */
 

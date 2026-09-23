@@ -239,6 +239,8 @@ pid_t last_procsub_pid = NO_PID;
    where the shell would defer them. */
 int want_job_notifications = 0;
 
+int waitonce = 0;
+
 /* Functions local to this file. */
 
 void debug_print_pgrps (void);

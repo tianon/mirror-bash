@@ -5391,7 +5391,7 @@ or there is an error loading a new builtin from a shared object.
 @item help
 @btindex help
 @example
-help [-dms] [@var{pattern}]
+help [-dmsL] [@var{pattern}]
 @end example
 
 Display helpful information about builtin commands.
@@ -5410,6 +5410,10 @@ Display a short description of each @var{pattern}
 Display the description of each @var{pattern} in a manpage-like format
 @item -s
 Display only a short usage synopsis for each @var{pattern}
+@item -L
+When displaying a list of all the builtins and shell compound commands,
+display each item using a single column
+instead of using multiple columns.
 @end table
 
 If @var{pattern} contains pattern matching characters

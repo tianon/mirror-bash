@@ -13360,3 +13360,50 @@ parse.y
 builtins/history.def
 	- history_builtin: history -r should increase history_lines_this_session
 	  only if *not* reading from $HISTFILE
+
+				    9/8
+				    ---
+configure.ac,config.h.in
+	- check for malloc.h, malloc/malloc.h, malloc_usable_size(), and
+	  malloc_size()
+
+				    9/9
+				    ---
+lib/termcap/tparam.c
+	- tparam1: takes a new argument, the number of elements in ARGS
+	- tparam1: add bounds checks for overflow due to malicious termcap
+	  entry directives that consume or advance elements in ARGS
+	  Report from "monsterd0n" <kaslovdmitri1@gmail.com>
+
+lib/termcap/termcap.c
+	- tgetent: ignore the buffer passed to tgetent and use a locally-
+	  allocated buffer (TERMENTBUF), keeping track of its size in a local
+	  variable (ENTBUFSIZE). This prevents crashes from an excessively
+	  long malicious termcap entry
+	- find_usable_size: new function to attempt to determine the usable
+	  area in the buffer passed to tgetstr; max at TERMSTR_BUFFER_MAX (1024)
+	  if functions aren't available
+	- tgetstr: attempt to find bounds in buffer passed to tgetstr right
+	  after tgetent fetches a new termcap entry
+	- tgetstr: if we can detect the end of the buffer passed to tgetstr,
+	  check for overflow when copying malicious termcap capability strings.
+	  This prevents crashes due to excessively long malicious capability
+	  strings
+	  Report from "monsterd0n" <kaslovdmitri1@gmail.com>
+
+eval.c
+	- alrm_handler: if SYSLOG_HISTORY is defined, send the timeout message
+	  to syslog as well
+	  From https://savannah.gnu.org/patch/?10542
+
+builtins/help.def
+	- help_builtin: new -L option to display all help topics, one per line
+	- disprow, wdisprow: new functions to display one help topic per line,
+	  single-byte and wide-character versions
+	- increase portion of short doc displayed in multi-column or single-
+	  column mode to 256 chars in single-byte locales (multibyte locales
+	  use wide chars and allocate the buffer dynamically)
+
+doc/bash.1,doc/bashref.texi
+	- help: document new -L option
+	  Feature suggestion from https://lists.gnu.org/archive/html/bug-bash/2026-06/msg00064.html

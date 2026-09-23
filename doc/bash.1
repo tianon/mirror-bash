@@ -5,7 +5,7 @@
 .\"	Case Western Reserve University
 .\"	chet.ramey@case.edu
 .\"
-.\"	Last Change: Thu Aug 27 12:59:58 EDT 2026
+.\"	Last Change: Wed Sep  9 14:19:33 EDT 2026
 .\"
 .\" For bash_builtins, strip all but "SHELL BUILTIN COMMANDS" section
 .\" For rbash, strip all but "RESTRICTED SHELL" section
@@ -22,7 +22,7 @@
 .ds zX \" empty
 .if \n(zZ=1 .ig zZ
 .if \n(zY=1 .ig zY
-.TH BASH 1 "2026 August 27" "GNU Bash 5.4"
+.TH BASH 1 "2026 September 9" "GNU Bash 5.4"
 .\"
 .ie \n(.g \{\
 .ds ' \(aq
@@ -10761,7 +10761,7 @@ The return status is zero unless a
 .I name
 is not found or an invalid option is supplied.
 .TP
-\fBhelp\fP [\fB\-dms\fP] [\fIpattern\fP]
+\fBhelp\fP [\fB\-dmsL\fP] [\fIpattern\fP]
 Display helpful information about builtin commands.
 If
 .I pattern
@@ -10785,6 +10785,11 @@ Display the description of each \fIpattern\fP in a manpage-like format
 .TP
 .B \-s
 Display only a short usage synopsis for each \fIpattern\fP
+.TP
+.B \-L
+When displaying a list of all the builtins and shell compound commands,
+display each item using a single column
+instead of using multiple columns.
 .PD
 .RE
 .IP

@@ -1,6 +1,6 @@
 /* termcap.c - Work-alike for termcap, plus extra features. */
 
-/* Copyright (C) 1985, 1986, 1993,1994, 1995, 1998, 2001,2003,2005,2006,2008,2009 Free Software Foundation, Inc.
+/* Copyright (C) 1985, 1986, 1993,1994, 1995, 1998, 2001,2003,2005,2006,2008,2009,2026 Free Software Foundation, Inc.
 
    This file is part of GNU Bash, the Bourne Again SHell.
 
@@ -46,6 +46,10 @@ extern char *realloc ();
 #include <string.h>
 #endif
 
+#ifdef HAVE_STDDEF_H
+#include <stddef.h>
+#endif
+
 #else /* not HAVE_CONFIG_H */
 
 #ifdef HAVE_STDLIB_H
@@ -66,7 +70,18 @@ char *realloc ();
 
 #include <fcntl.h>
 
+#ifdef HAVE_STDDEF_H
+#include <stddef.h>
+#endif
+
 #endif /* not HAVE_CONFIG_H */
+
+#ifdef HAVE_MALLOC_H
+#  include <malloc.h>
+#endif
+#ifdef HAVE_MALLOC_MALLOC_H
+#  include <malloc/malloc.h>
+#endif
 
 #ifndef NULL
 #define NULL (char *) 0
@@ -98,6 +113,8 @@ int bufsize = 128;
 #ifndef TERMCAP_FILE
 #define TERMCAP_FILE "/etc/termcap"
 #endif
+
+#define TERMSTR_BUFSIZE_MAX	1024
 
 #ifndef emacs
 static void memory_out (void);
@@ -140,6 +157,28 @@ static char *term_entry;
 
 static char *find_capability (char *, char *);
 static char *tgetst1 (char *, char **);
+
+/* This means that the data in termentbuf is valid and we should try to
+   find the end of the memory buffer pointed to by *area in tgetstr so
+   we can perform some bounds checking. */
+static int reset_strbuf = 0;
+
+static char *tgetstr_base = NULL;
+static char *tgetstr_end = NULL;
+
+static size_t area_bufsize = 0;
+
+static inline size_t
+find_usable_size (char *ptr)
+{
+#if defined (HAVE_MALLOC_USABLE_SIZE)
+  return (malloc_usable_size (ptr));
+#elif defined (HAVE_MALLOC_SIZE)
+  return (malloc_size (ptr));
+#else
+  return TERMSTR_BUFSIZE_MAX;	/* cap it at 1024 */
+#endif
+}
 
 /* Search entry BP for capability CAP.
    Return a pointer to the capability (in BP) if found,
@@ -226,9 +265,23 @@ tgetst1 (char *ptr, char **area)
       while ((c = *p++) && c != ':' && c != '\n')
 	;
       ret = (char *) xmalloc (p - ptr + 1);
+      reset_strbuf = 0;
     }
   else
     ret = *area;
+
+  if (reset_strbuf)
+    {
+      /* set up to detect overflow of AREA if we can */
+      tgetstr_base = ret;
+      area_bufsize = find_usable_size (tgetstr_base);
+      tgetstr_end = tgetstr_base + area_bufsize;
+      reset_strbuf = 0;
+    }
+
+  if (tgetstr_end && ret >= tgetstr_end)
+    /* catch overflow early? */
+    return NULL;
 
   /* Copy the string value, stopping at null or colon.
      Also process ^ and \ abbreviations.  */
@@ -267,6 +320,12 @@ tgetst1 (char *ptr, char **area)
 	    }
 	}
       *r++ = c;
+      /* check for overflow, just bail out if we can detect it */
+      if (tgetstr_end && r >= tgetstr_end)
+        {
+          r--;
+          break;
+        }
     }
   *r = '\0';
   /* Update *AREA.  */
@@ -431,6 +490,9 @@ valid_filename_p (fn)
    0 if the data base is accessible but the type NAME is not defined
    in it, and some other value otherwise.  */
 
+static char *termentbuf = NULL;
+static size_t entbufsize = 0;
+
 __private_extern__
 int
 tgetent (char *bp, char *name)
@@ -438,10 +500,11 @@ tgetent (char *bp, char *name)
   register char *termcap_name;
   register int fd;
   struct buffer buf;
-  register char *bp1;
+  char *lbp, *bp1;
   char *bp2;
+  ptrdiff_t bpoff;
   char *term;
-  int malloc_size = 0;
+  size_t malloc_size = 0;
   register int c;
   char *tcenv = NULL;		/* TERMCAP value, if it contains :tc=.  */
   char *indirect = NULL;	/* Terminal type in :tc= in TERMCAP value.  */
@@ -453,20 +516,23 @@ tgetent (char *bp, char *name)
   if (!strcmp (name, "internal"))
     {
       term = INTERNAL_TERMINAL;
-      if (!bp)
+      malloc_size = 1 + strlen (term);
+      if (malloc_size > entbufsize)
 	{
-	  malloc_size = 1 + strlen (term);
-	  bp = (char *) xmalloc (malloc_size);
+	  entbufsize = malloc_size;
+	  lbp = (char *) xrealloc (termentbuf, entbufsize);
 	}
-      strcpy (bp, term);
+      strcpy (lbp, term);
       goto ret;
     }
 #endif /* INTERNAL_TERMINAL */
 
+#if 0
   /* For compatibility with programs like `less' that want to
      put data in the termcap buffer themselves as a fallback.  */
   if (bp)
     term_entry = bp;
+#endif
 
   termcap_name = getenv ("TERMCAP");
   if (termcap_name && *termcap_name == '\0')
@@ -493,10 +559,15 @@ tgetent (char *bp, char *name)
       indirect = tgetst1 (find_capability (termcap_name, "tc"), (char **) 0);
       if (!indirect)
 	{
-	  if (!bp)
-	    bp = termcap_name;
-	  else
-	    strcpy (bp, termcap_name);
+	  /* use termentbuf to avoid overflow from a too-long environment
+	     termcap entry */
+	  malloc_size = strlen (termcap_name) + 1;
+	  if (malloc_size > entbufsize)
+	    {
+	      entbufsize = malloc_size;
+	      termentbuf = xrealloc (termentbuf, entbufsize);
+	    }
+	  lbp = strcpy (termentbuf, termcap_name);
 	  goto ret;
 	}
       else
@@ -527,17 +598,19 @@ tgetent (char *bp, char *name)
   buf.beg = (char *) xmalloc (buf.size + 1);
   term = indirect ? indirect : name;
 
-  if (!bp)
+  malloc_size = indirect ? strlen (tcenv) + 1 : buf.size;
+  if (malloc_size > entbufsize)
     {
-      malloc_size = indirect ? strlen (tcenv) + 1 : buf.size;
-      bp = (char *) xmalloc (malloc_size);
+      entbufsize = malloc_size;
+      lbp = (char *)xrealloc (termentbuf, entbufsize);
     }
-  bp1 = bp;
+  lbp = termentbuf;
+  bp1 = lbp;
 
   if (indirect)
     /* Copy the data from the environment variable.  */
     {
-      strcpy (bp, tcenv);
+      strcpy (lbp, tcenv);
       bp1 += strlen (tcenv);
     }
 
@@ -548,8 +621,13 @@ tgetent (char *bp, char *name)
 	{
 	  close (fd);
 	  free (buf.beg);
-	  if (malloc_size)
-	    free (bp);
+	  if (entbufsize)
+	    {
+	      free (termentbuf);		/* XXX */
+	      lbp = termentbuf = NULL;
+	      entbufsize = 0;
+	    }
+	  term_entry = bp;		/* XXX */
 	  return 0;
 	}
 
@@ -557,13 +635,14 @@ tgetent (char *bp, char *name)
       if (term != name)
 	free (term);
 
-      /* If BP is malloc'd by us, make sure it is big enough.  */
-      if (malloc_size)
+      /* LBP is malloc'd by us, so make sure it is big enough.  */
+      bpoff = bp1 - lbp;	/* bp1 = end of data in termentbuf */
+      malloc_size = bpoff + buf.size;
+      if (malloc_size > entbufsize)
 	{
-	  malloc_size = bp1 - bp + buf.size;
-	  termcap_name = (char *) xrealloc (bp, malloc_size);
-	  bp1 += termcap_name - bp;
-	  bp = termcap_name;
+	  entbufsize = malloc_size;
+	  lbp = (char *) xrealloc (termentbuf, entbufsize);
+	  bp1 = lbp + bpoff;
 	}
 
       bp2 = bp1;
@@ -587,11 +666,15 @@ tgetent (char *bp, char *name)
   close (fd);
   free (buf.beg);
 
-  if (malloc_size)
-    bp = (char *) xrealloc (bp, bp1 - bp + 1);
+  entbufsize = bp1 - lbp + 1;
+  lbp = (char *) xrealloc (lbp, entbufsize);
 
  ret:
-  term_entry = bp;
+  term_entry = lbp;
+  if (!bp)
+    bp = lbp;
+
+  reset_strbuf = 1;
   return 1;
 }
 

@@ -757,6 +757,12 @@
 /* Define if you have the locale_charset function. */
 #undef HAVE_LOCALE_CHARSET
 
+/* Define if you have the malloc_size function. */
+#undef HAVE_MALLOC_SIZE
+
+/* Define if you have the malloc_usable_size function. */
+#undef HAVE_MALLOC_USABLE_SIZE
+
 /* Define if you have the mbrlen function. */
 #undef HAVE_MBRLEN
 
@@ -1050,6 +1056,12 @@
 /* Define if you have the <locale.h> header file.  */
 #undef HAVE_LOCALE_H
 
+/* Define if you have the <malloc.h> header file. */
+#undef HAVE_MALLOC_H
+
+/* Define if you have the <malloc/malloc.h> header file (macOS). */
+#undef HAVE_MALLOC_MALLOC_H
+
 /* Define if you have the <mbstr.h> header file.  */
 #undef HAVE_MBSTR_H
 
@@ -1265,9 +1277,6 @@
 #undef HAVE_FCNTL_H
 
 #undef HAVE_INTTYPES_H_WITH_UINTMAX
-
-/* Define if you have the <malloc.h> header file. */
-#undef HAVE_MALLOC_H
 
 #undef HAVE_STDINT_H_WITH_UINTMAX
 
