@@ -13407,3 +13407,26 @@ builtins/help.def
 doc/bash.1,doc/bashref.texi
 	- help: document new -L option
 	  Feature suggestion from https://lists.gnu.org/archive/html/bug-bash/2026-06/msg00064.html
+
+				   9/24
+				   ----
+execute_cmd.c
+	- execute_pipeline: when executing the last element of a pipeline
+	  with `lastpipe' enabled, make sure to block SIGCHLD around the
+	  call to append_process because we are manipulating the job list
+	  and job struct
+	  Report and fix from Markus Wangler <markus@team-wangler.de>
+
+jobs.c
+	- append_process: rearrange code to further shrink the window when
+	  manipulating the pipeline
+
+				   9/25
+				   ----
+error.c
+	- file_error: most callers do not anticipate this will exit the shell
+	  if `errexit' is enabled, which it does because it calls report_error.
+	  Change to call internal_error instead and audit callers, especially
+	  the `exec' builtin, since the `execfail' shopt is supposed to
+	  inhibit this.
+	  Report from Zev Weiss <zev@bewilderbeest.net>

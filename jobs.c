@@ -1642,7 +1642,8 @@ add_process (char *name, pid_t pid)
 }
 
 /* Create a (dummy) PROCESS with NAME, PID, and STATUS, and make it the last
-   process in jobs[JID]->pipe.  Used by the lastpipe code. */
+   process in jobs[JID]->pipe.  Used by the lastpipe code. Must be called
+   with SIGCHLD blocked. */
 void
 append_process (char *name, pid_t pid, int status, int jid)
 {
@@ -1658,8 +1659,8 @@ append_process (char *name, pid_t pid, int status, int jid)
 
   for (p = jobs[jid]->pipe; p->next != jobs[jid]->pipe; p = p->next)
     ;
-  p->next = t;
   t->next = jobs[jid]->pipe;
+  p->next = t;
 }
 
 #if 0

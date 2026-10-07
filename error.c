@@ -125,7 +125,7 @@ get_name_for_error (void)
 void
 file_error (const char *filename)
 {
-  report_error ("%s: %s", filename, strerror (errno));
+  internal_error ("%s: %s", filename, strerror (errno));
 }
 
 void
@@ -163,7 +163,7 @@ programming_error (const char *format, ...)
 }
 
 /* Print an error message and, if `set -e' has been executed, exit the
-   shell.  Used in this file by file_error and programming_error.  Used
+   shell.  Used in this file by programming_error.  Used
    outside this file mostly to report substitution and expansion errors,
    and for bad invocation options. */
 void

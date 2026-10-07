@@ -2769,6 +2769,7 @@ execute_pipeline (COMMAND *command, int asynchronous, int pipe_in, int pipe_out,
 
   begin_unwind_frame ("lastpipe-exec");
   lstdin = -2;		/* -1 is special, meaning fd 0 is closed */
+  lastpipe_jid = NO_JOB;
   /* If the `lastpipe' option is set with shopt, and job control is not
      enabled, execute the last element of non-async pipelines in the
      current shell environment. */
@@ -2807,7 +2808,8 @@ execute_pipeline (COMMAND *command, int asynchronous, int pipe_in, int pipe_out,
     restore_stdin (lstdin);
 
 #if defined (JOB_CONTROL)
-  UNBLOCK_CHILD (oset);
+  if (lastpipe_jid == NO_JOB)	/* already unblocked above */
+    UNBLOCK_CHILD (oset);
 #endif
 
   QUIT;
@@ -2817,7 +2819,9 @@ execute_pipeline (COMMAND *command, int asynchronous, int pipe_in, int pipe_out,
 #if defined (JOB_CONTROL)
       if (INVALID_JOB (lastpipe_jid) == 0)
         {
+	  BLOCK_CHILD (set, oset);
           append_process (savestring (the_printed_command_except_trap), dollar_dollar_pid, exec_result, lastpipe_jid);
+	  UNBLOCK_CHILD (oset);
           lstdin = wait_for (lastpid, 0);
         }
       else
@@ -2893,7 +2897,7 @@ execute_list (COMMAND *command, int asynchronous, int pipe_in, int pipe_out, str
   QUIT;
 
   n = count_nodes (command);
-/*itrace("execute_list: count_nodes returns %d", n);*/
+  /*itrace("execute_list: count_nodes returns %d", n);*/
   csind = cssize = n + 1;
   cstack = (COMMAND **) xreallocarray (NULL, cssize, sizeof (COMMAND *));
 
