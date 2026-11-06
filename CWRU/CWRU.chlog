@@ -13524,3 +13524,27 @@ redir.c
 	  with zreadc/zreadcintr/zreadn and invalidate the buffered data
 	  if so
 	  Report from Edgar MAGDELAINE <edgarmagdelaine@hotmail.fr>
+
+				   11/4
+				   ----
+lib/readline/bind.c
+	- rl_generic_bind: make sure to cast prevkey to unsigned char because
+	  we use it as an index into a keymap
+	  Report and fix from Can Ozkan <can.ozkan@esat.kuleuven.be>
+
+				   11/6
+				   ----
+lib/readline/complete.c
+	- _rl_abort_completion: new function, fakes a signal to clean up the
+	  saved match list state, then calls _rl_abort_internal
+	- get_y_or_n: if we read ^G or get a read error, return -1 and let
+	  the caller handle it instead of calling _rl_abort_internal()
+	- _rl_internal_pager, display_matches: if get_y_or_n returns -1, call
+	  _rl_abort_completion to clean up the completion state and longjmp
+	  back to reading input
+	Report from Sergio Herreros <sergioherrerosp@gmail.com>
+
+lib/readline/util.c,lib/readline/rlprivate.h
+	- _rl_abort_internal: now a void function with noreturn attribute;
+	  changed callers to accommodate
+

@@ -95,7 +95,7 @@ _rl_walphabetic (WCHAR_T wc)
 #endif
 
 /* How to abort things. */
-int
+void
 _rl_abort_internal (void)
 {
   if (RL_ISSTATE (RL_STATE_TIMEOUT) == 0)
@@ -115,13 +115,13 @@ _rl_abort_internal (void)
   _rl_command_to_execute = 0;
 
   _rl_longjmp (_rl_top_level, 1);
-  return (0);
 }
 
 int
 rl_abort (int count, int key)
 {
-  return (_rl_abort_internal ());
+  _rl_abort_internal ();
+  return 0;
 }
 
 int

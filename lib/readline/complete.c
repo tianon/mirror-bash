@@ -129,6 +129,7 @@ static int path_isdir (const char *);
 static char *rl_quote_filename (char *, int, char *);
 
 static void _rl_complete_sigcleanup (int, void *);
+static void _rl_abort_completion (void)  __attribute__((noreturn));
 
 static void set_completion_defaults (int);
 static int get_y_or_n (int);
@@ -540,6 +541,19 @@ _rl_complete_sigcleanup (int sig, void *ptr)
     }
 }
 
+static void
+_rl_abort_completion ()
+{
+  if (_rl_sigcleanup && _rl_sigcleanup == _rl_complete_sigcleanup)
+    {
+      _rl_sigcleanup (SIGINT, _rl_sigcleanarg);
+      _rl_sigcleanup = 0;
+      _rl_sigcleanarg = 0;
+    }
+  _rl_complete_display_matches_interrupt = 0;
+  _rl_abort_internal ();
+}
+      
 /************************************/
 /*				    */
 /*    Completion utility functions  */
@@ -611,7 +625,7 @@ get_y_or_n (int for_pager)
       if (c == 'n' || c == 'N' || c == RUBOUT)
 	return (0);
       if (c == ABORT_CHAR || c < 0)
-	_rl_abort_internal ();
+	return -1;
       if (for_pager && (c == NEWLINE || c == RETURN))
 	return (2);
       if (for_pager && (c == 'q' || c == 'Q'))
@@ -642,6 +656,11 @@ _rl_internal_pager (int lines)
       int n;
       n = _rl_screenheight / 2;
       return (lines > n) ? (lines - n) : -1;
+    }
+  else if (i < 0)
+    {
+      _rl_abort_completion ();
+      return 0;
     }
   else
     return 0;
@@ -1812,14 +1831,17 @@ display_matches (char **matches)
       rl_crlf ();
       fprintf (rl_outstream, "Display all %d possibilities? (y or n)", len);
       fflush (rl_outstream);
-      if ((completion_y_or_n = get_y_or_n (0)) == 0)
+      if ((completion_y_or_n = get_y_or_n (0)) <= 0)
 	{
 	  rl_crlf ();
 
 	  rl_forced_update_display ();
 	  rl_display_fixed = 1;
 
-	  return;
+	  if (completion_y_or_n < 0)
+	    _rl_abort_completion ();
+	  else
+	    return;
 	}
     }
 

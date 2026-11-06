@@ -410,7 +410,12 @@ rl_generic_bind (int type, const char *keyseq, char *data, Keymap map)
     }
 
   prevmap = map;
-  prevkey = keys[0];
+  prevkey = (unsigned char)keys[0];
+  if (prevkey >= KEYMAP_SIZE)
+    {
+      xfree (keys);
+      return -1;
+    }
 
   /* Bind keys, making new keymaps as necessary. */
   for (i = 0; i < keys_len; i++)

@@ -87,4 +87,8 @@ extern void setup_history_ignore (const char *);
 
 extern char *last_history_line (void);
 
+#ifdef BASH_SYSLOG_HISTORY
+extern void bash_syslog_history (const char *);
+#endif
+
 #endif /* _BASHHIST_H_ */

@@ -516,7 +516,7 @@ extern void _rl_audit_tty (char *);
 
 extern int _rl_tropen (void);
 
-extern int _rl_abort_internal (void);
+extern void _rl_abort_internal (void)  __attribute__((noreturn));
 extern int _rl_null_function (int, int);
 extern char *_rl_strindex (const char *, const char *);
 extern int _rl_strcaseeqn (const char *, const char *, size_t, int);
