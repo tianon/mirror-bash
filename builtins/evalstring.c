@@ -386,10 +386,11 @@ parse_and_execute (char *string, const char *from_file, int flags)
 		 XXX - change that if we want the function context to be
 		 unwound. */
 	      if (exit_immediately_on_error && variable_context)
-	        {
-	          discard_unwind_frame ("pe_dispose");
-	          reset_local_contexts (); /* not in a function */
-	        }
+		{
+	          if (command)
+		    discard_unwind_frame ("pe_dispose");
+		  reset_local_contexts (); /* not in a function */
+		}
 	      should_jump_to_top_level = 1;
 	      goto out;
 	    case FORCE_EOF:	      

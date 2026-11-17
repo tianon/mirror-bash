@@ -1,10 +1,10 @@
 	rsh1.sub
-./rsh1.sub: line 22: /bin/sh: restricted
-./rsh1.sub: line 24: sh: not found
+./rsh1.sub: line 22: x: restricted
+./rsh1.sub: line 24: a: restricted
 ./rsh1.sub: line 25: a: command not found
 	rsh2.sub
 ./rsh2.sub: line 23: hash: /bin/sh: restricted
-./rsh2.sub: line 25: hash: sh: not found
+./rsh2.sub: line 25: hash: sh: restricted
 ./rsh2.sub: line 26: a: command not found
 ./rsh.tests: line 26: cd: restricted
 ./rsh.tests: line 27: PATH: readonly variable

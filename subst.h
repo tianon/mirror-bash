@@ -75,6 +75,7 @@
 #define SX_COMPLETE	0x0400	/* extracting word for completion */
 #define SX_STRIPDQ	0x0800	/* strip double quotes when extracting double-quoted string */
 #define SX_NOERROR	0x1000	/* don't print parser error messages */
+#define SX_SKIPDQ	0x2000	/* leave embedded double quotes intact when extracting double-quoted string */
 
 /* Remove backslashes which are quoting backquotes from STRING.  Modifies
    STRING, and returns a pointer to it. */

@@ -129,7 +129,7 @@ static int path_isdir (const char *);
 static char *rl_quote_filename (char *, int, char *);
 
 static void _rl_complete_sigcleanup (int, void *);
-static void _rl_abort_completion (void)  __attribute__((noreturn));
+static void _rl_abort_completion (void);  __attribute__((noreturn));
 
 static void set_completion_defaults (int);
 static int get_y_or_n (int);

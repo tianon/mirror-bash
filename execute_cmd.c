@@ -5699,7 +5699,12 @@ execute_subshell_builtin_or_function (WORD_LIST *words, REDIRECT *redirects,
 
   do_piping (pipe_in, pipe_out);
 
-  if (do_redirections (redirects, RX_ACTIVE|RX_UNDOABLE) != 0)
+  if (signal_is_trapped (0))
+    r = do_redirections (redirects, RX_ACTIVE|RX_UNDOABLE);
+  else
+    r = do_redirections (redirects, RX_ACTIVE);
+
+  if (r != 0)
     exit (EXECUTION_FAILURE);
 
   has_exec_redirects = (builtin == exec_builtin) && redirection_undo_list;
@@ -5783,6 +5788,9 @@ execute_subshell_builtin_or_function (WORD_LIST *words, REDIRECT *redirects,
 	  redirection_undo_list = signal_is_trapped (0) ? saved_undo_list : NULL;
 	  discard_unwind_frame ("subshell-saved-redirects");
 	}
+      else if (signal_is_trapped (0) == 0)
+	redirection_undo_list = NULL;
+
       undo_partial_redirects ();
 
       subshell_exit (subshell_exit_value);

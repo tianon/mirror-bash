@@ -13548,3 +13548,52 @@ lib/readline/util.c,lib/readline/rlprivate.h
 	- _rl_abort_internal: now a void function with noreturn attribute;
 	  changed callers to accommodate
 
+				   11/06
+				   -----
+variables.c,builtins/hash.def
+	- in a restricted shell, disallow `hash -p' and assigning to BASH_CMDS.
+	  Report from https://savannah.gnu.org/bugs/index.php?68870
+
+				   11/9
+				   ----
+subst.h
+	- SX_SKIPDQ: new flag value for string_extract_double_quoted, means to
+	  leave unescaped double quotes intact in the returned string for the
+	  caller to handle
+
+subst.c
+	- string_extract_double_quoted: if (FLAGS & SX_SKIPDQ), treat unescaped
+	  double quotes in the string the same as SX_STRIPDQ, but leave them
+	  in the returned string
+	- expand_word_internal: if we have an unescaped double quote in a
+	  double-quoted string, add it only if FLAGS does not include
+	  W_EXPANDRHS, indicating that we're expanding the rhs of a parameter
+	  expansion and the caller will deal with them
+	- parameter_brace_expand_rhs: if processing a double-quoted string,
+	  call string_extract_double_quoted with SX_SKIPDQ to leave unescaped
+	  double quotes in place for a subsequent expand_string_for_rhs to
+	  deal with. Fixes bug with double-quoted variable expansions on the
+	  rhs potentially expanding the wrong variable name
+	  Report from https://savannah.gnu.org/bugs/index.php?68886
+
+				   11/10
+				   -----
+execute_cmd.c
+	- execute_subshell_builtin_or_function: if we're not going to be running
+	  an exit trap, don't bother trying to make redirections undoable
+	  Report from Koichi Murase <myoga.murase@gmail.com>
+
+				   11/11
+				   -----
+execute_cmd.c
+	- parameter_brace_expand_rhs: make the use of SX_STRIPDQ/SX_SKIPDQ
+	  dependent on the compatibility level; if <= 53, use the same
+	  SX_STRIPDQ flag as in previous versions
+
+builtins/evalstring.c
+	- parse_and_execute: when encountering an error while executing a
+	  shell function with errexit enabled, we should only discard the
+	  most recent `pe_dispose' unwind-protect if COMMAND is non-null,
+	  since that is when we set it and we don't want to stomp on a
+	  previous unwind-protect frame
+	  Report from Константин Адзер <adzerki@gmail.com>

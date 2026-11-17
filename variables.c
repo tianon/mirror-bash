@@ -1719,31 +1719,15 @@ static SHELL_VAR *
 assign_hashcmd (SHELL_VAR *self, char *value, arrayind_t ind, char *key)
 {
 #if defined (RESTRICTED_SHELL)
-  char *full_path, *newfn;
-
   if (restricted)
     {
-      if (absolute_program (value))
-	{
-	  newfn = printable_filename (value, 0);
-	  sh_restricted (newfn);
-	  if (newfn != value)
-	    free (newfn);
-	  return (SHELL_VAR *)NULL;
-	}
-      /* If we are changing the hash table in a restricted shell, make sure the
-	 target pathname can be found using a $PATH search. */
-      full_path = find_user_command (value);
-      if (full_path == 0 || *full_path == 0 || executable_file (full_path) == 0)
-	{
-	  newfn = printable_filename (value, 0);
-	  sh_notfound (newfn);
-	  if (newfn != value)
-	    free (newfn);
-	  free (full_path);
-	  return ((SHELL_VAR *)NULL);
-	}
-      free (full_path);
+      char *newfn;
+
+      newfn = printable_filename (key, 0);
+      sh_restricted (newfn);
+      if (newfn != key)
+	free (newfn);
+      return ((SHELL_VAR *)NULL);
     }
 #endif
   phash_insert (key, value, 0, 0);

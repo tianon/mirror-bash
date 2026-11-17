@@ -26,34 +26,33 @@ RREESSTTRRIICCTTEEDD SSHHEELLLL
      *      Specifying a filename containing a slash as an argument to the  hhiiss--
             ttoorryy builtin command.
 
-     *      Specifying  a  filename  containing a slash as an argument to the --pp
-            option to the hhaasshh builtin command.
+     *      Using the --pp option to the hhaasshh builtin command.
 
-     *      Importing  function  definitions  from  the  shell  environment   at
+     *      Importing   function  definitions  from  the  shell  environment  at
             startup.
 
      *      Parsing the values of BBAASSHHOOPPTTSS and SSHHEELLLLOOPPTTSS from the shell environ-
             ment at startup.
 
-     *      Redirecting  output  using the >, >|, <>, >&, &>, and >> redirection
+     *      Redirecting output using the >, >|, <>, >&, &>, and  >>  redirection
             operators.
 
-     *      Using the eexxeecc builtin command to replace  the  shell  with  another
+     *      Using  the  eexxeecc  builtin  command to replace the shell with another
             command.
 
-     *      Adding  or  deleting  builtin commands with the --ff and --dd options to
+     *      Adding or deleting builtin commands with the --ff and  --dd  options  to
             the eennaabbllee builtin command.
 
      *      Using the eennaabbllee builtin command to enable disabled shell builtins.
 
      *      Specifying the --pp option to the ccoommmmaanndd builtin command.
 
-     *      Turning  off  restricted  mode  with  sseett  ++rr  or   sshhoopptt   --uu   rree--
+     *      Turning   off   restricted   mode  with  sseett  ++rr  or  sshhoopptt  --uu  rree--
             ssttrriicctteedd__sshheellll.
 
      These restrictions are enforced after any startup files are read.
 
-     When  a command that is found to be a shell script is executed, rrbbaasshh turns
+     When a command that is found to be a shell script is executed, rrbbaasshh  turns
      off any restrictions in the shell spawned to execute the script.
 
 SSEEEE AALLSSOO

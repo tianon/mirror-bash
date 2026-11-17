@@ -9254,7 +9254,8 @@ to specify a search path.
 Specifying a filename containing a slash as an argument to the @code{history}
 builtin command.
 @item
-Specifying a filename containing a slash as an argument to the @option{-p}
+Using the
+@option{-p}
 option to the @code{hash} builtin command.
 @item
 Importing function definitions from the shell environment at startup.
@@ -10057,6 +10058,18 @@ Bash will not try to execute a shell function whose name contains a slash.
 Previous versions disallowed this in @sc{posix} mode but allowed it by
 default.
 @end ignore
+@end itemize
+
+@item compat53 (set using BASH_COMPAT)
+@itemize @bullet
+@item
+When expanding the right-hand side of a word expansion operator
+(e.g., @samp{-}) that is enclosed in double quotes,
+embedded double quotes delimit variable expansions instead of being
+stripped.
+Previous versions stripped them for compatibility with historical
+versions of the Bourne shell.
+
 @end itemize
 
 @end table

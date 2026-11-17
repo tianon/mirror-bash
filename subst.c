@@ -845,10 +845,16 @@ string_extract (const char *string, size_t *sindex, const char *charlist, int fl
 /* Extract the contents of STRING as if it is enclosed in double quotes.
    SINDEX, when passed in, is the offset of the character immediately
    following the opening double quote; on exit, SINDEX is left pointing after
-   the closing double quote.  If STRIPDQ is non-zero, unquoted double
-   quotes are stripped and the string is terminated by a null byte.
-   Backslashes between the embedded double quotes are processed.  If STRIPDQ
-   is zero, an unquoted `"' terminates the string. */
+   the closing double quote.  FLAGS can be any of the SX_XXX flags in subst.h.
+   If (flags & SX_STRIPDQ) is non-zero, unescaped double quotes are stripped
+   and the string is terminated by a null byte.
+   If (flags & SX_SKIPDQ) is non-zero, unescaped double quotes are left in
+   place to be handled by the caller, but otherwise the behavior is the same
+   as for SX_STRIPDQ.
+   SX_STRIPDQ and SX_SKIPDQ are mutually exclusive; SX_STRIPDQ has higher priority.
+   Backslashes between the embedded double quotes are processed. If flags
+   contains neither SX_STRIPDQ nor SX_SKIPDQ, an unescaped `"' terminates
+   the string. */
 static char *
 string_extract_double_quoted (const char *string, size_t *sindex, int flags)
 {
@@ -864,7 +870,7 @@ string_extract_double_quoted (const char *string, size_t *sindex, int flags)
   slen = strlen (string + *sindex) + *sindex;
   send = string + slen;
 
-  stripdq = (flags & SX_STRIPDQ);
+  stripdq = (flags & SX_STRIPDQ) ? 1 : ((flags & SX_SKIPDQ) ? 2 : 0);
 
   pass_next = backquote = dquote = 0;
   temp = (char *)xmalloc (1 + slen - *sindex);
@@ -991,11 +997,16 @@ add_one_character:
 	goto add_one_character;
 
       /* c == '"' */
-      if (stripdq)
+      if (stripdq == 1)
 	{
 	  dquote ^= 1;
 	  i++;
 	  continue;
+	}
+      else if (stripdq == 2)
+	{
+	  dquote ^= 1;
+	  goto add_one_character;
 	}
 
       break;
@@ -8284,8 +8295,11 @@ parameter_brace_expand_rhs (char *name, char *value,
      embedded unescaped double quotes (for sh backwards compatibility). */
   if ((quoted & (Q_HERE_DOCUMENT|Q_DOUBLE_QUOTES)) && *value)
     {
+      int flag;
+
       sindex = 0;
-      temp = string_extract_double_quoted (value, &sindex, SX_STRIPDQ);
+      flag = (shell_compatibility_level <= 53) ? SX_STRIPDQ : SX_SKIPDQ;
+      temp = string_extract_double_quoted (value, &sindex, flag);
     }
   else
     temp = value;
@@ -12058,7 +12072,7 @@ add_twochars:
 
 	case '"':
 	  /* XXX - revisit this */
-	  if ((quoted & (Q_DOUBLE_QUOTES|Q_HERE_DOCUMENT)) && ((quoted & Q_ARITH) == 0))
+	  if ((quoted & (Q_DOUBLE_QUOTES|Q_HERE_DOCUMENT)) && ((quoted & Q_ARITH) == 0) && ((word->flags & W_EXPANDRHS) == 0))
 	    goto add_character;
 
 	  t_index = ++sindex;

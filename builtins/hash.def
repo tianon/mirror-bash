@@ -156,27 +156,11 @@ hash_builtin (WORD_LIST *list)
 #if defined (RESTRICTED_SHELL)
   if (restricted && pathname)
     {
-      if (absolute_program (pathname))
-	{
-	  newfn = printable_filename (pathname, 0);
-	  sh_restricted (newfn);
-	  if (newfn != pathname)
-	    free (newfn);
-	  return (EXECUTION_FAILURE);
-	}
-      /* If we are changing the hash table in a restricted shell, make sure the
-	 target pathname can be found using a $PATH search. */
-      w = find_user_command (pathname);
-      if (w == 0 || *w == 0 || executable_file (w) == 0)
-	{
-	  newfn = printable_filename (pathname, 0);
-	  sh_notfound (newfn);
-	  if (newfn != pathname)
-	    free (newfn);
-	  free (w);
-	  return (EXECUTION_FAILURE);
-	}
-      free (w);
+      newfn = printable_filename (pathname, 0);
+      sh_restricted (newfn);
+      if (newfn != pathname)
+	free (newfn);
+      return (EXECUTION_FAILURE);
     }
 #endif
 
